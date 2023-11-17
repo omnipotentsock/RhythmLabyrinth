@@ -1,4 +1,6 @@
-import java.org.javatuples.Pair;
+package CLG6Phase2;
+
+import jtuples.Pair;
 
 public class PuzzleInterpretation implements Interpretation {
     private double impact;

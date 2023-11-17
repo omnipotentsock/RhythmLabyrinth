@@ -1,3 +1,5 @@
+package CLG6Phase2;
+
 public class BattleInterpretationFactory implements InterpretationFactory {
     private Battle target;
     @Override

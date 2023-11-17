@@ -1,3 +1,5 @@
+package CLG6Phase2;
+
 public class PuzzleInterpretationFactory implements InterpretationFactory {
     private Puzzle target;
     @Override

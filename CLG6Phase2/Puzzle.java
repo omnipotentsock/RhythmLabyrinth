@@ -1,3 +1,5 @@
+package CLG6Phase2;
+
 public class Puzzle implements MiniGame {
     private PuzzleInterpretationFactory puzzleInterpretationFactory;
     @Override

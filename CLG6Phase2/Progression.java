@@ -1,5 +1,7 @@
+package CLG6Phase2;
+
 import java.lang.Double;
-import java.org.javatuples.*;
+import jtuples.*;
 import java.util.HashMap;
 
 public class Progression {

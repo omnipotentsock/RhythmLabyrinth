@@ -1,3 +1,5 @@
+package CLG6Phase2;
+
 public class Battle implements MiniGame {
     private BattleInterpretationFactory battleInterpretationFactory;
     @Override
