@@ -1,10 +1,7 @@
-package AdventureModel.Movement;
+package AdventureModel;
 
-import AdventureModel.Movement.Passage;
-import AdventureModel.Movement.PassageTable;
-
-import java.awt.*;
 import java.io.Serializable;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -19,34 +16,17 @@ public class Room implements Serializable {
     /**
      * The number of the room.
      */
-    private final int roomNumber;
+    private int roomNumber;
 
     /**
      * The name of the room.
      */
-    private final String roomName;
+    private String roomName;
 
     /**
      * The description of the room.
      */
-    private final String roomDescription;
-
-    /**
-    * The image of the room.
-    */
-    private final Image roomImage = null; // TODO: Implement initialization of roomImage
-
-    /**
-     * The minigame in the room.
-     */
-//    private Minigame minigame = null;
-    private final String minigame = ""; // TODO: Create/Locate Minigame abstract class and implement initialization of
-                                        // minigame.
-
-    /**
-     * The status of completion of the minigame.
-     */
-    private boolean minigameCompleted = false;
+    private String roomDescription;
 
     /**
      * The passage table for the room.
@@ -59,26 +39,18 @@ public class Room implements Serializable {
     private boolean isVisited;
 
     /**
-     * A queue storing all the forced interactions to occur when the player enters the room
-     */
-    private ForcedQueue queue;
-
-
-    /**
      * AdvGameRoom constructor.
      *
      * @param roomName: The name of the room.
      * @param roomNumber: The number of the room.
      * @param roomDescription: The description of the room.
      */
-
-    public Room(String roomName, int roomNumber, String roomDescription, String adventureName, ForcedQueue queue){
+    public Room(String roomName, int roomNumber, String roomDescription, String adventureName){
         this.roomName = roomName;
         this.roomNumber = roomNumber;
         this.roomDescription = roomDescription;
         this.adventureName = adventureName;
         this.isVisited = false;
-        this.queue = queue;
     }
 
     /**
@@ -162,28 +134,5 @@ public class Room implements Serializable {
         return this.motionTable;
     }
 
-    /**
-     * Method that returns if the minigame in the room is completed.
-     * @return: minigameCompleted's value
-     */
-    public boolean isMinigameCompleted(){
-        return minigameCompleted;
-    }
 
-
-    public String getAdventureName() {
-        return adventureName;
-    }
-
-    public Image getRoomImage() {
-        return roomImage;
-    }
-
-    public String getMinigame() {
-        return minigame;
-    }
-
-    public ForcedQueue getQueue() {
-        return queue;
-    }
 }
