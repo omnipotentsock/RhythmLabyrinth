@@ -249,7 +249,8 @@ public class AdventureGameView {
         stopArticulation(); //if speaking, stop
 
         if (text.equalsIgnoreCase("LOOK") || text.equalsIgnoreCase("L")) {
-            String roomDesc = this.model.getPlayer().getCurrentRoom().getRoomDescription();
+            String roomDesc = this.model.getPlayer().getCurrentRoom().getRoomDescription() + "\n\nAvailable moves:" +
+                    this.model.getPlayer().getCurrentRoom().getCommands();
             roomDescLabel.setText(roomDesc);
             articulateRoomDescription(); //all we want, if we are looking, is to repeat description.
             return;
@@ -257,7 +258,6 @@ public class AdventureGameView {
             showInstructions();
             return;
         } else if (text.equalsIgnoreCase("COMMANDS") || text.equalsIgnoreCase("C")) {
-            showCommands(); //this is new!  We did not have this command in A1
             return;
         }
 
@@ -288,20 +288,6 @@ public class AdventureGameView {
     }
 
 
-    /**
-     * showCommands
-     * __________________________
-     *
-     * update the text in the GUI (within roomDescLabel)
-     * to show all the moves that are possible from the 
-     * current room.
-     */
-    private void showCommands() {
-        Room currentRoom = this.model.getPlayer().getCurrentRoom();
-        String commands = currentRoom.getCommands();
-        this.roomDescLabel.setText("Available Commands: " + commands);
-
-    }
 
 
     /**
@@ -371,7 +357,8 @@ public class AdventureGameView {
      */
     private void formatText(String textToDisplay) {
         if (textToDisplay == null || textToDisplay.isBlank()) {
-            String roomDesc = this.model.getPlayer().getCurrentRoom().getRoomDescription() + "\n";
+            String roomDesc = this.model.getPlayer().getCurrentRoom().getRoomDescription() + "\n\nAvailable moves: " +
+                    this.model.getPlayer().getCurrentRoom().getCommands();
             roomDescLabel.setText(roomDesc);
         } else roomDescLabel.setText(textToDisplay);
         roomDescLabel.setStyle("-fx-text-fill: white;");
