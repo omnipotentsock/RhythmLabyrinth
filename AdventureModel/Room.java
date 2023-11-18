@@ -1,5 +1,6 @@
 package AdventureModel;
 
+import java.awt.*;
 import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
@@ -16,17 +17,34 @@ public class Room implements Serializable {
     /**
      * The number of the room.
      */
-    private int roomNumber;
+    private final int roomNumber;
 
     /**
      * The name of the room.
      */
-    private String roomName;
+    private final String roomName;
 
     /**
      * The description of the room.
      */
-    private String roomDescription;
+    private final String roomDescription;
+
+    /**
+    * The image of the room.
+    */
+    private final Image roomImage = null; // TODO: Implement initialization of roomImage
+
+    /**
+     * The minigame in the room.
+     */
+//    private Minigame minigame = null;
+    private final String minigame = ""; // TODO: Create/Locate Minigame abstract class and implement initialization of
+                                        // minigame.
+
+    /**
+     * The status of completion of the minigame.
+     */
+    private boolean minigameCompleted = false;
 
     /**
      * The passage table for the room.
@@ -134,5 +152,24 @@ public class Room implements Serializable {
         return this.motionTable;
     }
 
+    /**
+     * Method that returns if the minigame in the room is completed.
+     * @return: minigameCompleted's value
+     */
+    public boolean isMinigameCompleted(){
+        return minigameCompleted;
+    }
 
+
+    public String getAdventureName() {
+        return adventureName;
+    }
+
+    public Image getRoomImage() {
+        return roomImage;
+    }
+
+    public String getMinigame() {
+        return minigame;
+    }
 }
