@@ -29,7 +29,6 @@ public class AdventureLoader {
      */
     public void loadGame() throws IOException {
         parseRooms();
-        parseObjects();
         parseSynonyms();
         this.game.setHelpText(parseOtherFile("help"));
     }
@@ -89,29 +88,6 @@ public class AdventureLoader {
     }
 
      /**
-     * Parse Objects File
-     */
-    public void parseObjects() throws IOException {
-
-        String objectFileName = this.adventureName + "/objects.txt";
-        BufferedReader buff = new BufferedReader(new FileReader(objectFileName));
-
-        while (buff.ready()) {
-            String objectName = buff.readLine();
-            String objectDescription = buff.readLine();
-            String objectLocation = buff.readLine();
-            String separator = buff.readLine();
-            if (separator != null && !separator.isEmpty())
-                System.out.println("Formatting Error!");
-            int i = Integer.parseInt(objectLocation);
-            Room location = this.game.getRooms().get(i);
-            AdventureObject object = new AdventureObject(objectName, objectDescription, location);
-            location.addGameObject(object);
-        }
-
-    }
-
-     /**
      * Parse Synonyms File
      */
     public void parseSynonyms() throws IOException {
@@ -129,7 +105,7 @@ public class AdventureLoader {
     }
 
     /**
-     * Parse Files other than Rooms, Objects and Synonyms
+     * Parse Files other than Rooms and Synonyms
      *
      * @param fileName the file to parse
      */
