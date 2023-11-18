@@ -1,10 +1,5 @@
 package AdventureModel;
 
-import AdventureModel.Characters.Player;
-import AdventureModel.Movement.Passage;
-import AdventureModel.Movement.PassageTable;
-import AdventureModel.Movement.Room;
-
 import java.io.*;
 import java.util.*;
 
@@ -116,6 +111,9 @@ public class AdventureGame implements Serializable {
         //try the blocked passages first
         Passage chosen = null;
         for (Passage entry : possibilities) {
+            System.out.println(entry.getIsBlocked());
+            System.out.println(entry.getKeyName());
+
             chosen = entry; //the passage is unlocked
         }
 
