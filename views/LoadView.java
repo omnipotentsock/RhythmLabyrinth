@@ -13,8 +13,9 @@ import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 
-import java.io.*;
-import java.util.Arrays;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.ObjectInputStream;
 
 
 /**
@@ -89,25 +90,6 @@ public class LoadView {
     }
 
     /**
-     * Retrieve Games/Saved/ directory, creates Saved directory if it doesn't exist.
-     *
-     * @return File object of Saved directory
-     */
-    private File getSavedDir(){
-        String separator = System.getProperty("file.separator");
-
-        String currDir = new File("").getAbsolutePath();
-        String relativePath = separator + "Games" + separator + "Saved";
-        String savedPath = new File(currDir).getAbsolutePath() + relativePath;
-        File saved = new File(savedPath);
-
-        if (!saved.exists()){
-            boolean success = saved.mkdir();
-        }
-        return saved;
-    }
-
-    /**
      * Get Files to display in the on screen ListView
      * Populate the listView attribute with .ser file names
      * Files will be located in the Games/Saved directory
@@ -115,15 +97,7 @@ public class LoadView {
      * @param listView the ListView containing all the .ser files in the Games/Saved directory.
      */
     private void getFiles(ListView<String> listView) {
-
-        File saved = getSavedDir();
-        File[] fileArray = saved.listFiles();
-
-        if (fileArray != null) {
-            for (File f : fileArray) {
-                listView.getItems().add(f.getName());
-            }
-        }
+        throw new UnsupportedOperationException("getFiles is not implemented");
     }
 
     /**
@@ -138,20 +112,7 @@ public class LoadView {
      */
     private void selectGame(Label selectGameLabel, ListView<String> GameList) throws IOException {
         //saved games will be in the Games/Saved folder!
-        File saved = getSavedDir();
-        String path = saved.getAbsolutePath() +
-                System.getProperty("file.separator") +
-                GameList.getSelectionModel().getSelectedItem();
-
-        try{
-            adventureGameView.model = loadGame(path);
-            adventureGameView.updateScene("Game successfully loaded.");
-            System.out.println(path);
-        }
-        catch (Exception e){
-            System.out.println("Hory shitto exception found: " + e);
-            this.adventureGameView.model.setUpGame();
-        }
+        throw new UnsupportedOperationException("selectGame is not implemented");
     }
 
     /**
