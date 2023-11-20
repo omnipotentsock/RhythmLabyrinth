@@ -7,9 +7,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Random;
 
-/**
- * The puzzle class.
- */
+
 public class Puzzle {
     private Integer sequenceLength; // CPU Sequence that user must complete
     private ArrayList<Integer> sequenceArray = new ArrayList<Integer>(); // The array in which the sequence is stored
@@ -17,12 +15,7 @@ public class Puzzle {
     private static ArrayList<Integer> userSequence = new ArrayList<Integer>(); // The array in which the user has input their sequence
 
 
-    /**
-     * Uses the button combination for puzzles.
-     * A 3x3 grid of buttons will appear
-     * and the user is expected to select the correct sequence of buttons.
-     * If not, the user will fail the puzzle.
-     */
+    // The actual button being pressed
     public class SequenceButton {
         public static void main(String[] args) {
             JFrame frame = new JFrame("3x3 Button Grid");
@@ -78,7 +71,6 @@ public class Puzzle {
     }
 
     public class pressingCPUSequence {
-
         private JButton button;
 
         public void AutoButtonPressExample() {
@@ -142,6 +134,3 @@ public class Puzzle {
 
 // TODO: * Find a way for the CPU to press the buttons on its own at first
 // TODO: * Adjust the program so that the button can run in place
-// TODO: * Add documentation on the methods using /** as the docstrings (refer to assignment for good example)
-// TODO: * in order for the InterpretationFactory pattern to work, the Battle and Puzzle classes each need to have a respective BattleInterpretationFactory and PuzzleInterpretationFactory attribute (line 7).
-// TODO: thus make sure to add that as a parameter or an attribute
