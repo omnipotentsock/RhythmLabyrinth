@@ -1,4 +1,6 @@
-package CLG6Phase2;
+package Minigames;
+
+import Interpretations.Interpretation;
 
 public interface MiniGame {
     Object execute();

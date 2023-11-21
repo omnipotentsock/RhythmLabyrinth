@@ -1,6 +1,8 @@
-package CLG6Phase2;
+package Outcomes;
 
 import java.lang.Double;
+
+import Endings.Ending;
 import jtuples.*;
 import java.util.HashMap;
 

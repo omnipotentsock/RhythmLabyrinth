@@ -1,4 +1,6 @@
-package CLG6Phase2;
+package Interpretations;
+
+import Minigames.MiniGame;
 
 public interface InterpretationFactory {
     Interpretation createInterpretation();

@@ -1,6 +1,6 @@
-package CLG6Phase2;
+package Endings;
 
-public class PerformanceEnding implements Ending{
+public class MediocreEnding implements Ending {
     private EndingDisplayer endingDisplayer;
     @Override
     public void displayEnding() {

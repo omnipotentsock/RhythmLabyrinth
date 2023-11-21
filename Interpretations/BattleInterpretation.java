@@ -1,16 +1,17 @@
-package CLG6Phase2;
+package Interpretations;
 
+import Minigames.Battle;
 import jtuples.Pair;
 
-public class PuzzleInterpretation implements Interpretation {
+public class BattleInterpretation implements Interpretation {
     private double impact;
-    private Puzzle target;
+    private Battle target;
     @Override
     public Pair<String, Double> interpret() {
         throw new UnsupportedOperationException();
     }
 
-    public PuzzleInterpretation(Puzzle target) {
+    public BattleInterpretation(Battle target) {
         this.target = target;
         this.impact = 0D;
     }

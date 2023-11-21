@@ -1,4 +1,7 @@
-package CLG6Phase2;
+package Minigames;
+
+import Interpretations.BattleInterpretationFactory;
+import Interpretations.Interpretation;
 
 public class Battle implements MiniGame {
     private BattleInterpretationFactory battleInterpretationFactory;

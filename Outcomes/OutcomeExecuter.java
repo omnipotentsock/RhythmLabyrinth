@@ -1,4 +1,7 @@
-package CLG6Phase2;
+package Outcomes;
+
+import Endings.EndingDisplayer;
+import Minigames.MiniGame;
 
 import java.util.List;
 

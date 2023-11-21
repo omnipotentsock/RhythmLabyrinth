@@ -1,4 +1,4 @@
-package CLG6Phase2;
+package Endings;
 
 public class EndingDisplayer {
     private Ending state;

@@ -1,4 +1,7 @@
-package CLG6Phase2;
+package Minigames;
+
+import Interpretations.Interpretation;
+import Interpretations.PuzzleInterpretationFactory;
 
 public class Puzzle implements MiniGame {
     private PuzzleInterpretationFactory puzzleInterpretationFactory;
