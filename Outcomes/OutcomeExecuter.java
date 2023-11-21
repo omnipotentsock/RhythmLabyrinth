@@ -15,6 +15,9 @@ public class OutcomeExecuter {
             this.record.update(miniGame.formInterpretation().interpret());
         }
         this.endingDisplayer.changeEnding(this.record.getEnding());
-        this.endingDisplayer.displayEnding();
+        this.endingDisplayer.executeEnding();
+    }
+    public List<MiniGame> getMiniGames() {
+        return miniGames;
     }
 }

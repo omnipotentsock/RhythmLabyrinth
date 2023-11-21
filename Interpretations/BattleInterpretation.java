@@ -4,7 +4,7 @@ import Minigames.Battle;
 import jtuples.Pair;
 
 public class BattleInterpretation implements Interpretation {
-    private double impact;
+    private Double impact;
     private Battle target;
     @Override
     public Pair<String, Double> interpret() {

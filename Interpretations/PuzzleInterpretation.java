@@ -4,7 +4,7 @@ import Minigames.Puzzle;
 import jtuples.Pair;
 
 public class PuzzleInterpretation implements Interpretation {
-    private double impact;
+    private Double impact;
     private Puzzle target;
     @Override
     public Pair<String, Double> interpret() {

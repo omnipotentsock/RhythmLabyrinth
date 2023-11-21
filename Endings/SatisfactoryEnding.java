@@ -1,9 +1,12 @@
 package Endings;
 
 public class SatisfactoryEnding implements Ending{
-    private EndingDisplayer endingDisplayer;
     @Override
-    public void displayEnding() {
+    public void executeEnding() {
         throw new UnsupportedOperationException();
+    }
+    @Override
+    public String getID() {
+        return "SATISFACTORY";
     }
 }
