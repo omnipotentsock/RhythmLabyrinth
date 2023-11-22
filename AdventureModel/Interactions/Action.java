@@ -2,7 +2,7 @@ package AdventureModel.Interactions;
 
 import AdventureModel.Minigames.*;
 
-public class Action{
+public class Action extends Interaction{
 
     private final Minigame minigame;
 
@@ -19,6 +19,16 @@ public class Action{
         if (this.minigame != null){
             this.minigame.execute(); //TODO: MAKE SURE WHAT THE METHOD FOR STARTING A MINIGAME WILL BE BEFORE MERGEREQ
         }
+    }
+
+    @Override
+    protected void setDialogueText(String text) {
+        // TODO: IMPLEMENT SOMEHOW
+    }
+
+    @Override
+    protected void setRefreshing(boolean refresh) {
+        // TODO: IMPLEMENT SOMEHOW
     }
 
 }
