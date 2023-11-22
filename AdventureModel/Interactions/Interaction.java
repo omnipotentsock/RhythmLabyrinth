@@ -1,4 +1,10 @@
 package AdventureModel.Interactions;
 
-public interface Interaction {
+public abstract class Interaction {
+
+
+    abstract void execute();
+    protected abstract void setDialogueText(String text);
+    protected abstract void setRefreshing(boolean refresh);
+
 }
