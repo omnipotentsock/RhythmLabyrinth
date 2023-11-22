@@ -1,5 +1,6 @@
 package AdventureModel;
 
+import AdventureModel.Characters.Player;
 import AdventureModel.Movement.Passage;
 import AdventureModel.Movement.PassageTable;
 import AdventureModel.Movement.Room;
