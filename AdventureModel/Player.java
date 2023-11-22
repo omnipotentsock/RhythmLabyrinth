@@ -1,7 +1,8 @@
 package AdventureModel;
 
+import AdventureModel.Movement.Room;
+
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  * This class keeps track of the progress

@@ -1,4 +1,6 @@
-package AdventureModel;
+package AdventureModel.Movement;
+
+import AdventureModel.Movement.Passage;
 
 import java.io.Serializable;
 import java.util.*;
@@ -28,7 +30,7 @@ public class PassageTable implements Serializable {
      * @param entry A Passage which keeps track of a
      *             particular exit from a room.
      */
-    void addDirection(Passage entry) {
+    public void addDirection(Passage entry) {
         passageTable.add(entry);
     }
 

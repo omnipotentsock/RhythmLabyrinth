@@ -1,8 +1,10 @@
-package AdventureModel;
+package AdventureModel.Movement;
+
+import AdventureModel.Movement.Passage;
+import AdventureModel.Movement.PassageTable;
 
 import java.awt.*;
 import java.io.Serializable;
-import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;

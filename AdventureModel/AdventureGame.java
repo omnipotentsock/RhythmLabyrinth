@@ -1,5 +1,9 @@
 package AdventureModel;
 
+import AdventureModel.Movement.Passage;
+import AdventureModel.Movement.PassageTable;
+import AdventureModel.Movement.Room;
+
 import java.io.*;
 import java.util.*;
 
