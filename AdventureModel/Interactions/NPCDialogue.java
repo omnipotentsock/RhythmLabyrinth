@@ -1,7 +1,6 @@
 package AdventureModel.Interactions;
 
 import AdventureModel.Characters.NPC;
-import views.AdventureGameView;
 
 public class NPCDialogue extends Interaction{
 
@@ -12,34 +11,31 @@ public class NPCDialogue extends Interaction{
 
     /**
      * Constructor with refresh value
-     * @param str
-     * Input string to be parsed
+     * @param text
+     * Dialogue text
+     *
+     * @param refresh
+     * Value to hold if refresh value exists
      */
-    public NPCDialogue(String str){
-
-        // NPCDialogue: Why was it lonely?-true-WOLF
-        String[] dialogue = str.split("-");
-
-        String text = dialogue[0];
-        boolean refresh = Boolean.parseBoolean(dialogue[1]);
-        String npcToken = dialogue[2];
-        NPC speaker = new NPC(npcToken); // TODO: Make it find NPC based on NPC token
-
-        this.setDialogueText(text); this.setRefreshing(refresh); this.speaker = speaker;
+    public NPCDialogue(String text, boolean refresh, NPC npc){
+        this.setDialogueText(text);
+        this.setRefreshing(refresh);
+        this.speaker = npc;
     }
 
-    public void execute(AdventureGameView adventureGameView) {
-        String s = "Jimothy:\n" + dialogueText;
-        // TODO: Update picture to NPC picture, Display text on GUI
-        adventureGameView.updateScene(s);
+    @Override
+    public void execute() {
+        System.out.println("Name: Jimothy"); // TODO: Update picture to NPC picture
+        System.out.println(dialogueText); // TODO: Display text on GUI
     }
 
+    @Override
     protected void setDialogueText(String text) {
         this.dialogueText = text;
     }
+
+    @Override
     protected void setRefreshing(boolean refresh) {
         this.refreshing = refresh;
     }
-    public boolean getRefreshing(){ return this.refreshing;}
-    public String getDialogueText(){return this.dialogueText;}
 }

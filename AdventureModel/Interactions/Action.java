@@ -1,44 +1,24 @@
 package AdventureModel.Interactions;
 
 import AdventureModel.Minigames.*;
-import AdventureModel.Minigames.Battle.Battle;
-import views.AdventureGameView;
 
-public class Action extends Interaction{
+public class Action{
 
-    /**
-     * Minigame object to be executed
-     */
-    private final Minigame minigame = new Battle(); // Temporary test
-//    private final Minigame minigame = null;
-    private String dialogueText;
-    private String afterText;
-    private boolean refreshing;
+    private final Minigame minigame;
 
-    public Action(String str){ // TODO: GET MINIGAME? IDK
-        // Currently str = "Yes>Wolf is attacking you!&M001&He backs away."
-        String[] parsed = str.split("&", -1);
-        // parsed is ["Wolf is attacking you!","M001","He backs away."]
-        this.dialogueText = parsed[0];
-        this.afterText = parsed[2];
+    public Action(){
+        this.minigame = null;
+    }
 
-        String minigameID = parsed[1];
-        this.refreshing = false;
+    public Action(Minigame minigame){
+        this.minigame = minigame;
     }
 
     // NOTE!! Action instances are never in Room.forcedQueue! They are executed after Option instance is executed!!
-    public void execute(AdventureGameView adventureGameView){
-            adventureGameView.updateScene(this.dialogueText + "\nMINIGAME\n " + this.afterText, this.minigame.minigameType);
-            this.minigame.execute(adventureGameView); //TODO: MAKE SURE WHAT THE METHOD FOR STARTING A MINIGAME WILL BE BEFORE MERGEREQ
-
+    public void execute(){
+        if (this.minigame != null){
+            this.minigame.execute(); //TODO: MAKE SURE WHAT THE METHOD FOR STARTING A MINIGAME WILL BE BEFORE MERGEREQ
+        }
     }
-    protected void setDialogueText(String text) {
-        // TODO: IMPLEMENT SOMEHOW
-    }
-    protected void setRefreshing(boolean refresh) {
-        // TODO: IMPLEMENT SOMEHOW
-    }
-    public boolean getRefreshing(){ return this.refreshing;}
-    public String getDialogueText(){return this.dialogueText;}
 
 }

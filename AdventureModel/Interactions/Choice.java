@@ -1,11 +1,5 @@
 package AdventureModel.Interactions;
 
-import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
-import views.AdventureGameView;
-
 import java.util.ArrayList;
 
 public class Choice extends Interaction{
@@ -13,63 +7,26 @@ public class Choice extends Interaction{
     String dialogueText; // String holding text that shows above options
     boolean refreshing = true; // Should the interaction be refreshed
 
-    ArrayList<ChoiceOption> options = new ArrayList<ChoiceOption>(); // List of options
-
-    /**
-     * Constructor for the Choice object
-     *
-     * @param choiceString
-     * String to be delimited and parsed for the dialogueText, refreshing, and options attributes
-     */
-    public Choice(String choiceString){
-
-        // Choice: Do you interrupt him?-false-Yes>Wolf is attacking you!&M001&He backs away./>No&NULL&They do not notice you
-        // At this point, choiceString should be "Do you interrupt him?-false-Yes>Wolf is attacking you!&M001&He backs away./>No&NULL&They do not notice you"
-
-        String[] choice = choiceString.split("-", 3); // ["Do you want to attack him?", "false", "Yes>Wolf is attacking you!&M001&He backs away./>No&NULL&They do not notice you"]
-
-        String dialogueText = choice[0];
-        boolean refresh = Boolean.parseBoolean(choice[1]);
-
-        this.setDialogueText(dialogueText);
-        this.setRefreshing(refresh);
-
-        String[] options = choice[2].split("/");
-
-        // Over here, options should be ["Yes>Wolf is attacking you!&M001&He backs away./No>&NULL&They do not notice you"]
-        for (String option : options){
-            this.options.add(new ChoiceOption(option));
-        }
-    }
-
-    /**
-     * Displays choice dialogue with input (buttons or textField) to choose option
-     */
+    ArrayList<ChoiceOption> options; // List of options
     @Override
-    public void execute(AdventureGameView adventureGameView) {
+    public void execute() {
 
-        // TODO: Display choice dialogue and options retrieved below
-        String s = this.dialogueText;
-//        HBox clickableOptions = new HBox();
-//        for (ChoiceOption option : this.options){
-//            // TODO: Populate optionsView with option buttons
-////            s += "\n\tOption: " + option.getOptionText();
-//            Button button = new Button(option.getOptionText());
-//            button.setOnAction(e -> {
-//                option.execute(adventureGameView);
-//            });
-//            clickableOptions.getChildren().add(button);
-//        }
-//        clickableOptions.setAlignment(Pos.BOTTOM_CENTER);
-        adventureGameView.updateScene(s, this);
+        System.out.println(this.dialogueText); // TODO: Display choice dialogue and options retrieved below
+
+        for (ChoiceOption option : this.options){
+            System.out.println(option.getOptionText()); // TODO: Populate optionsView with option buttons
+        }
 
         // TODO: Feel free to add imports to AdventureGame or whatever to make sure you can figure out what option is clicked or however you can make this work
     }
 
-    protected void setDialogueText(String text) {this.dialogueText = text;}
-    protected void setRefreshing(boolean refresh) {this.refreshing = refresh;}
-    public boolean getRefreshing(){ return this.refreshing;}
-    public String getDialogueText(){return this.dialogueText;}
+    @Override
+    protected void setDialogueText(String text) {
+        this.dialogueText = text;
+    }
 
-    public ArrayList<ChoiceOption> getOptions() { return this.options; }
+    @Override
+    protected void setRefreshing(boolean refresh) {
+        this.refreshing = refresh;
+    }
 }

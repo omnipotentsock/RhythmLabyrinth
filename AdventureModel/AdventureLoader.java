@@ -38,7 +38,7 @@ public class AdventureLoader {
      /**
      * Parse Rooms File
      */
-    private void parseRooms() throws IOException {
+    private void parseRooms() throws IOException { // TODO: UPDATE READER
 
         int roomNumber;
 
