@@ -1,4 +1,4 @@
-package AdventureModel;
+package AdventureModel.Characters;
 
 import AdventureModel.Movement.Room;
 import AdventureModel.Outcomes.OutcomeDeterminer;
