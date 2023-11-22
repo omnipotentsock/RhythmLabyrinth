@@ -1,6 +1,7 @@
 package AdventureModel;
 
 import AdventureModel.Movement.Room;
+import AdventureModel.Outcomes.OutcomeDeterminer;
 
 import java.io.Serializable;
 
@@ -13,6 +14,8 @@ public class Player implements Serializable {
      * The current room that the player is located in.
      */
     private Room currentRoom;
+
+    private OutcomeDeterminer outcome = new OutcomeDeterminer();
 
 
     /**
@@ -41,4 +44,7 @@ public class Player implements Serializable {
     }
 
 
+    public OutcomeDeterminer getOutcome() {
+        return outcome;
+    }
 }
