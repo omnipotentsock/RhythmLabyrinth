@@ -1,4 +1,4 @@
-package AdventureModel;
+package AdventureModel.Movement;
 
 import java.io.Serializable;
 
