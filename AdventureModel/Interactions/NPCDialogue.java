@@ -11,16 +11,19 @@ public class NPCDialogue extends Interaction{
 
     /**
      * Constructor with refresh value
-     * @param text
-     * Dialogue text
-     *
-     * @param refresh
-     * Value to hold if refresh value exists
+     * @param str
+     * Input string to be parsed
      */
-    public NPCDialogue(String text, boolean refresh, NPC npc){
-        this.setDialogueText(text);
-        this.setRefreshing(refresh);
-        this.speaker = npc;
+    public NPCDialogue(String str){
+
+        // NPCDialogue: Why was it lonely?-true-WOLF
+        String[] dialogue = str.split("-");
+
+        String text = dialogue[0];
+        boolean refresh = Boolean.parseBoolean(dialogue[1]);
+        NPC speaker = new NPC(); // TODO: Make it find NPC based on NPC token
+
+        this.setDialogueText(text); this.setRefreshing(refresh); this.speaker = speaker;
     }
 
     @Override
