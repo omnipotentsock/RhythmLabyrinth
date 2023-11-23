@@ -2,10 +2,9 @@ package AdventureModel.Movement;
 
 import AdventureModel.Interactions.Interaction;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ForcedQueue implements Serializable {
+public class ForcedQueue {
 
     private ArrayList<Interaction> list = new ArrayList<>();
 
@@ -42,9 +41,5 @@ public class ForcedQueue implements Serializable {
                 this.list.add(i);
             }
         }
-    }
-
-    public boolean is_empty(){
-        return this.list.isEmpty();
     }
 }

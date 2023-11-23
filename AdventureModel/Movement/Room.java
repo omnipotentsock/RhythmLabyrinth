@@ -59,6 +59,12 @@ public class Room implements Serializable {
     private boolean isVisited;
 
     /**
+     * A queue storing all the forced interactions to occur when the player enters the room
+     */
+    private ForcedQueue queue;
+
+
+    /**
      * AdvGameRoom constructor.
      *
      * @param roomName: The name of the room.
@@ -71,6 +77,14 @@ public class Room implements Serializable {
         this.roomDescription = roomDescription;
         this.adventureName = adventureName;
         this.isVisited = false;
+    }
+    public Room(String roomName, int roomNumber, String roomDescription, String adventureName, ForcedQueue queue){
+        this.roomName = roomName;
+        this.roomNumber = roomNumber;
+        this.roomDescription = roomDescription;
+        this.adventureName = adventureName;
+        this.isVisited = false;
+        this.queue = queue;
     }
 
     /**
@@ -173,5 +187,9 @@ public class Room implements Serializable {
 
     public String getMinigame() {
         return minigame;
+    }
+
+    public ForcedQueue getQueue() {
+        return queue;
     }
 }
