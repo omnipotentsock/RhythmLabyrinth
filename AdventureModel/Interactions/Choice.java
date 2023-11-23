@@ -41,13 +41,8 @@ public class Choice extends Interaction{
         // TODO: Feel free to add imports to AdventureGame or whatever to make sure you can figure out what option is clicked or however you can make this work
     }
 
-    @Override
-    protected void setDialogueText(String text) {
-        this.dialogueText = text;
-    }
-
-    @Override
-    protected void setRefreshing(boolean refresh) {
-        this.refreshing = refresh;
-    }
+    protected void setDialogueText(String text) {this.dialogueText = text;}
+    protected void setRefreshing(boolean refresh) {this.refreshing = refresh;}
+    public boolean getRefreshing(){ return this.refreshing;}
+    public String getDialogueText(String text){return this.dialogueText;}
 }

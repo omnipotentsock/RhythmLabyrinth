@@ -20,17 +20,15 @@ public class SingleDialogue extends Interaction {
         this.setDialogueText(text); this.setRefreshing(refresh);
     }
 
-    @Override
     public void execute() {
         System.out.println(dialogueText); // TODO: Display text on GUI
     }
-    @Override
     protected void setDialogueText(String text) {
         this.dialogueText = text;
     }
-
-    @Override
     protected void setRefreshing(boolean refresh) {
         this.refreshing = refresh;
     }
+    public boolean getRefreshing(){ return this.refreshing;}
+    public String getDialogueText(String text){return this.dialogueText;}
 }
