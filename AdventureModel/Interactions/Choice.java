@@ -14,7 +14,7 @@ public class Choice extends Interaction{
         // Choice: Do you want to attack him?-true-Yes>M0001/No>NULL
         // At this point, choiceString should be "Do you want to attack him?-true-Yes>M0001/No>NULL"
 
-        String[] choice = choiceString.split("-"); // ["Do you want to attack him?", "true", "Yes>M0001/No>NULL"]
+        String[] choice = choiceString.split("-", 3); // ["Do you want to attack him?", "true", "Yes>M0001/No>NULL"]
 
         String dialogueText = choice[0];
         boolean refresh = Boolean.parseBoolean(choice[1]);

@@ -1,0 +1,76 @@
+R001
+Outside building
+--forced
+SDialogue: You enter the cave, lit dimly by glowing ashes.-true
+SDialogue: You notice a bloodied corpse on the floor, upon which a white lamb-like being crouches over, holding an ethereal white bow.-false
+SDialogue: Hovering around its shoulder, a purple wolf head floats restlessly about.-false
+NPCDialogue: LAMB! Tell me a story.-false-WOLF
+NPCDialogue: There was once a pale man with dark hair who was very lonely.-false-LAMB
+NPCDialogue: Why was it lonely?-false-WOLF
+Choice: Do you interrupt him?-false-Yes>Wolf is attacking you!&M001&He backs away./No>&NULL&They do not notice you.
+--passages
+WEST       R002
+NORTH      3
+SOUTH      4
+
+R002
+End of road
+--forced
+SDialogue: You are at the end of a road at the top of a small hill. You can see a small building in the valley to the east.-true
+Action: A wild Pokemon
+-----
+EAST       R001
+WEST       3
+
+3
+Inside building
+You are inside a building, a well house for a large spring. The exit door is to the south.  There is another room to the north, but the door is barred by a shimmering curtain.
+-----
+SOUTH      1
+WEST       5
+NORTH      6
+
+4
+Valley beside a stream
+You are in a valley in the forest beside a stream tumbling along a rocky bed.  The stream is flowing to the south.
+-----
+NORTH      1
+SOUTH      5
+
+5
+Slit in rock
+At your feet all the water of the stream splashes into a two-inch slit in the rock.  To the south, the streambed is bare rock.
+-----
+NORTH      4
+SOUTH      6
+
+6
+Curtain1
+You are passing through a curtain!
+-----
+FORCED    7
+
+7
+Curtain2
+You are passing through another curtain!
+-----
+FORCED    8
+
+8
+Curtain3
+Yet another curtain here!
+-----
+FORCED    10
+
+9
+Missing Treasures
+You can pass through this curtain only if you're carrying all the treasures.  You don't yet have all of them.
+-----
+FORCED     3
+
+10
+Victory
+You have collected all the treasures and are admitted to the Adventurer's Hall of Fame.  Congratulations!
+-----
+FORCED     0
+
