@@ -6,16 +6,18 @@ public class SingleDialogue extends Interaction {
     private boolean refreshing; // Should the interaction be refreshed
 
     /**
-     * Constructor with refresh value
-     * @param text
-     * Dialogue text
-     *
-     * @param refresh
-     * Value to hold if refresh value exists
+     * Constructor
+     * @param str
+     * Input String to be parsed
      */
-    public SingleDialogue(String text, boolean refresh){
-        this.setDialogueText(text);
-        this.setRefreshing(refresh);
+    public SingleDialogue(String str){
+
+        // SDialogue: There was once a pale man with dark hair who was very lonely.-true
+        String[] dialogue = str.split("-");
+        String text = dialogue[0];
+        boolean refresh = Boolean.parseBoolean(dialogue[1]);
+
+        this.setDialogueText(text); this.setRefreshing(refresh);
     }
 
     @Override
