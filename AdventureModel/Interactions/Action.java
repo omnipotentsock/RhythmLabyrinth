@@ -4,18 +4,20 @@ import AdventureModel.Minigames.*;
 
 public class Action extends Interaction{
 
-    private final Minigame minigame;
+    private final Minigame minigame = null;
     private String dialogueText;
+    private String afterText;
     private boolean refreshing;
 
-    public Action(){
-        this.minigame = null;
-    }
+    public Action(String str, boolean refresh){ // TODO: GET MINIGAME? IDK
+        // Currently str = "Yes>Wolf is attacking you!&M001&He backs away."
+        String[] parsed = str.split("&", -1);
+        // parsed is ["Wolf is attacking you!","M001","He backs away."]
+        this.dialogueText = parsed[0];
+        this.afterText = parsed[2];
 
-    public Action(Minigame minigame, boolean refresh){ // TODO: GET MINIGAME? IDK
-        this.minigame = minigame;
-        this.dialogueText = "";
-        this.refreshing = true;
+        String minigameID = parsed[1];
+        this.refreshing = refresh;
     }
 
     // NOTE!! Action instances are never in Room.forcedQueue! They are executed after Option instance is executed!!

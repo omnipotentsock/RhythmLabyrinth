@@ -26,5 +26,17 @@ public class BasicAdventureTest {
         System.out.println(savedPath);
     }
 
+    @Test
+    void generalTest(){
+        String str = "Yes>Wolf is attacking you!&M001&He backs away.";
+        String[] st = str.split("&", -1);
+
+        for (String s : st){
+            System.out.println("yuh: " + s);
+        }
+
+        System.out.println(st.length);
+    }
+
 
 }

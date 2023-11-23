@@ -10,7 +10,7 @@ public class ChoiceOption {
         String[] optionSet = s.split(">");
 
         this.optionText = optionSet[0];
-        String minigameID = optionSet[1]; // TODO: Use minigameID to find minigame and set attribute to Action
+        this.action = new Action(optionSet[1], false);
     }
 
     // NOTE!! Option instances are never in Room.forcedQueue! They are only executed after Option button is clicked!!
