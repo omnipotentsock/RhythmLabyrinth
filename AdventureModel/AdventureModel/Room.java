@@ -68,13 +68,7 @@ public class Room implements Serializable {
      * @param roomNumber: The number of the room.
      * @param roomDescription: The description of the room.
      */
-    public Room(String roomName, int roomNumber, String roomDescription, String adventureName){
-        this.roomName = roomName;
-        this.roomNumber = roomNumber;
-        this.roomDescription = roomDescription;
-        this.adventureName = adventureName;
-        this.isVisited = false;
-    }
+
     public Room(String roomName, int roomNumber, String roomDescription, String adventureName, ForcedQueue queue){
         this.roomName = roomName;
         this.roomNumber = roomNumber;
