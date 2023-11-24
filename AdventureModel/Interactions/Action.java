@@ -9,7 +9,7 @@ public class Action extends Interaction{
     private String afterText;
     private boolean refreshing;
 
-    public Action(String str, boolean refresh){ // TODO: GET MINIGAME? IDK
+    public Action(String str){ // TODO: GET MINIGAME? IDK
         // Currently str = "Yes>Wolf is attacking you!&M001&He backs away."
         String[] parsed = str.split("&", -1);
         // parsed is ["Wolf is attacking you!","M001","He backs away."]
@@ -17,7 +17,7 @@ public class Action extends Interaction{
         this.afterText = parsed[2];
 
         String minigameID = parsed[1];
-        this.refreshing = refresh;
+        this.refreshing = false;
     }
 
     // NOTE!! Action instances are never in Room.forcedQueue! They are executed after Option instance is executed!!
