@@ -13,6 +13,9 @@ public class ChoiceOption {
         this.action = new Action(optionSet[1]);
     }
 
+    /**
+     * Executes the respective action. Triggered when option is chosen.
+     */
     // NOTE!! Option instances are never in Room.forcedQueue! They are only executed after Option button is clicked!!
     public void execute() {
         this.action.execute();

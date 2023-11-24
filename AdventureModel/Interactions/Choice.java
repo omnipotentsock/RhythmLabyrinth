@@ -9,6 +9,12 @@ public class Choice extends Interaction{
 
     ArrayList<ChoiceOption> options = new ArrayList<ChoiceOption>(); // List of options
 
+    /**
+     * Constructor for the Choice object
+     *
+     * @param choiceString
+     * String to be delimited and parsed for the dialogueText, refreshing, and options attributes
+     */
     public Choice(String choiceString){
 
         // Choice: Do you want to attack him?-true-Yes>M0001/No>NULL
@@ -29,6 +35,10 @@ public class Choice extends Interaction{
             this.options.add(new ChoiceOption(option));
         }
     }
+
+    /**
+     * Displays choice dialogue with input (buttons or textField) to choose option
+     */
     @Override
     public void execute() {
 
