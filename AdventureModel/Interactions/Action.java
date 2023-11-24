@@ -4,6 +4,9 @@ import AdventureModel.Minigames.*;
 
 public class Action extends Interaction{
 
+    /**
+     * Minigame object to be executed
+     */
     private final Minigame minigame = null;
     private String dialogueText;
     private String afterText;
