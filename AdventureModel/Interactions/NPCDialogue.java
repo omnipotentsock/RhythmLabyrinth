@@ -22,7 +22,7 @@ public class NPCDialogue extends Interaction{
         String text = dialogue[0];
         boolean refresh = Boolean.parseBoolean(dialogue[1]);
         String npcToken = dialogue[2];
-        NPC speaker = new NPC(); // TODO: Make it find NPC based on NPC token
+        NPC speaker = new NPC(npcToken); // TODO: Make it find NPC based on NPC token
 
         this.setDialogueText(text); this.setRefreshing(refresh); this.speaker = speaker;
     }
