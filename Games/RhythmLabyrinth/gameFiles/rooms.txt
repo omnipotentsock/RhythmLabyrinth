@@ -42,7 +42,7 @@ SOUTH      R05
 R05
 Slit in rock
 --queue
-Sdialogue: At your feet all the water of the stream splashes into a two-inch slit in the rock.  To the south, the streambed is bare rock.-true
+SDialogue: At your feet all the water of the stream splashes into a two-inch slit in the rock.  To the south, the streambed is bare rock.-true
 --passages
 NORTH      R04
 SOUTH      R10
