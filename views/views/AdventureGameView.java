@@ -1,26 +1,27 @@
 package views;
 
 import AdventureModel.AdventureGame;
-import AdventureModel.Interactions.Interaction;
-import AdventureModel.Movement.ForcedQueue;
-import AdventureModel.Movement.Room;
+import AdventureModel.AdventureObject;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.AccessibleRole;
 import javafx.scene.Scene;
-import javafx.scene.control.*;
+import javafx.scene.control.Label;
+import javafx.scene.control.OverrunStyle;
+import javafx.scene.control.ScrollPane;
+import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.input.KeyCode;
+import javafx.scene.layout.*;
 import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
-import javafx.scene.layout.*;
-import javafx.scene.input.KeyCode;
 import javafx.scene.text.Font;
 import javafx.stage.Stage;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.util.Duration;
-import javafx.scene.AccessibleRole;
 
 import java.io.File;
 
@@ -60,7 +61,6 @@ public class AdventureGameView {
         this.model = model;
         this.stage = stage;
         intiUI();
-        this.updateScene("", "move");
     }
 
     /**
@@ -69,7 +69,7 @@ public class AdventureGameView {
     public void intiUI() {
 
         // setting up the stage
-        this.stage.setTitle("moha2683's Adventure Game"); //Replace <YOUR UTORID> with your UtorID
+        this.stage.setTitle("<ashfaqr3>'s Adventure Game"); //Replace <YOUR UTORID> with your UtorID [DONE X]
 
         //Inventory + Room items
         objectsInInventory.setSpacing(10);
@@ -156,8 +156,8 @@ public class AdventureGameView {
         commandLabel.setStyle("-fx-text-fill: white;");
         commandLabel.setFont(new Font("Arial", 16));
 
-        System.out.println("PRE");
         updateScene(""); //method displays an image and whatever text is supplied
+        updateItems(); //update items shows inventory and objects in rooms
 
         // adding the text area and submit button to a VBox
         VBox textEntry = new VBox();
@@ -174,7 +174,6 @@ public class AdventureGameView {
         this.stage.setScene(scene);
         this.stage.setResizable(false);
         this.stage.show();
-//        updateScene("", "move"); //method displays an image and whatever text is supplied
 
     }
 
@@ -228,11 +227,17 @@ public class AdventureGameView {
      * graph by invoking requestFocus method.
      */
     private void addTextHandlingEvent() {
-        inputTextField.setOnKeyPressed(e ->{
-            if (e.getCode() == KeyCode.ENTER){
-                String inputText = this.inputTextField.getText();
-                submitEvent(inputText);
-                inputTextField.setText("");
+        //add your code here!
+        inputTextField.setOnKeyPressed(event -> {
+            KeyCode inputKey = event.getCode();
+            if (inputKey == KeyCode.ENTER) { // Checks if the attribute is the ENTER key
+                // User pressed ENTER key
+                String inputText = inputTextField.getText().trim(); // Remove leading and trailing whitespaces
+                submitEvent(inputText); // Process the stripped string
+            }
+            else if (inputKey == KeyCode.TAB) { // Checks if the attribute is the TAB key
+                // User pressed TAB key
+                gridPane.requestFocus();
             }
         });
     }
@@ -250,15 +255,16 @@ public class AdventureGameView {
         stopArticulation(); //if speaking, stop
 
         if (text.equalsIgnoreCase("LOOK") || text.equalsIgnoreCase("L")) {
-            String roomDesc = this.model.getPlayer().getCurrentRoom().getRoomDescription() + "\n\nAvailable moves:" +
-                    this.model.getPlayer().getCurrentRoom().getCommands();
-            roomDescLabel.setText(roomDesc);
+            String roomDesc = this.model.getPlayer().getCurrentRoom().getRoomDescription();
+            String objectString = this.model.getPlayer().getCurrentRoom().getObjectString();
+            if (!objectString.isEmpty()) roomDescLabel.setText(roomDesc + "\n\nObjects in this room:\n" + objectString);
             articulateRoomDescription(); //all we want, if we are looking, is to repeat description.
             return;
         } else if (text.equalsIgnoreCase("HELP") || text.equalsIgnoreCase("H")) {
             showInstructions();
             return;
         } else if (text.equalsIgnoreCase("COMMANDS") || text.equalsIgnoreCase("C")) {
+            showCommands(); //this is new!  We did not have this command in A1
             return;
         }
 
@@ -266,29 +272,64 @@ public class AdventureGameView {
         String output = this.model.interpretAction(text); //process the command!
 
         if (output == null || (!output.equals("GAME OVER") && !output.equals("FORCED") && !output.equals("HELP"))) {
-            updateScene(output, "move");
+            updateScene(output);
+            updateItems();
         } else if (output.equals("GAME OVER")) {
             updateScene("");
+            updateItems();
             PauseTransition pause = new PauseTransition(Duration.seconds(10));
             pause.setOnFinished(event -> {
                 Platform.exit();
             });
             pause.play();
         } else if (output.equals("FORCED")) {
-            String roomDesc = this.model.getPlayer().getCurrentRoom().getRoomDescription();
-            updateScene(roomDesc + "\n\nObjects in this room:\n");
-            PauseTransition pause = new PauseTransition(Duration.seconds(3));
-            pause.setOnFinished(event -> {
-                        submitEvent("FORCED");
-                    }
-                    );
-            pause.play();
+            //write code here to handle "FORCED" events!
+            //Your code will need to display the image in the
+            //current room and pause, then transition to
+            //the forced room.
 
+            // Display the image of the current room
+            // String currentRoomImage = this.model.getPlayer().getCurrentRoom().getRoomImage();
+            String currentRoomImage = String.valueOf(this.model.getPlayer().getCurrentRoom());
+            ImageView roomImageView = new ImageView(new Image(currentRoomImage));
+            roomImageView.setFitWidth(600);
+            roomImageView.setPreserveRatio(true);
+            roomDescLabel.setGraphic(roomImageView);
 
+            // Pause before transitioning
+            PauseTransition forcedPause = new PauseTransition(Duration.seconds(3));
+            forcedPause.setOnFinished(event -> {
+                // Perform the transition to the forced room (add your code here)
+            });
+            forcedPause.play();
         }
     }
 
 
+    /**
+     * showCommands
+     * __________________________
+     *
+     * update the text in the GUI (within roomDescLabel)
+     * to show all the moves that are possible from the 
+     * current room.
+     */
+    private void showCommands() {
+        StringBuilder commandsText = new StringBuilder("Available Commands:\n");
+
+        // Get the list of available moves from the current room
+        String[] availableCommands = new String[]{this.model.getPlayer().getCurrentRoom().getCommands()};
+
+        for (String command : availableCommands) {
+            commandsText.append("- ").append(command).append("\n");
+        }
+
+        // Update the room description label with the available commands
+        roomDescLabel.setText(commandsText.toString());
+        roomDescLabel.setStyle("-fx-text-fill: white;");
+        roomDescLabel.setFont(new Font("Arial", 16));
+        roomDescLabel.setAlignment(Pos.CENTER);
+    }
 
 
     /**
@@ -298,7 +339,7 @@ public class AdventureGameView {
      * Show the current room, and print some text below it.
      * If the input parameter is not null, it will be displayed
      * below the image.
-     * Otherwise, the current room description will be displayed
+     * Otherwise, the current room description will be dispplayed
      * below the image.
      * 
      * @param textToDisplay the text to display below the image.
@@ -323,48 +364,6 @@ public class AdventureGameView {
         if (textToDisplay == null || textToDisplay.isBlank()) articulateRoomDescription();
     }
 
-    public void updateScene(String textToDisplay, String key) { // TODO: Implement MOVE
-
-        if (key.equals("instructions")) {
-            roomImageView.setImage(null);
-            roomImageView.setFitWidth(0);
-            roomImageView.setFitHeight(0);
-
-            formatText(textToDisplay); //format the text to display
-            roomDescLabel.setPrefWidth(500);
-            roomDescLabel.setPrefHeight(500);
-            roomDescLabel.setTextOverrun(OverrunStyle.CLIP);
-            roomDescLabel.setWrapText(true);
-            VBox roomPane = new VBox(roomImageView, roomDescLabel);
-            roomPane.setPadding(new Insets(10));
-            roomPane.setAlignment(Pos.TOP_CENTER);
-            roomPane.setStyle("-fx-background-color: #000000;");
-
-            gridPane.add(roomPane, 1, 1);
-            stage.sizeToScene();
-
-            //finally, articulate the description
-            if (textToDisplay == null || textToDisplay.isBlank()) articulateRoomDescription();
-        } else if (key.equals("move")) {
-            System.out.println("MOVED?");
-            updateScene("");
-            Room room = this.model.getPlayer().getCurrentRoom();
-            Interaction i;
-            ForcedQueue q = room.getQueue();
-            while (!q.is_empty()){
-                i = q.dequeue();
-                try{
-                    Thread.sleep(800);
-                    updateScene(i.getDialogueText());
-                    i.execute(this);
-                }
-                catch (Exception e){
-                    System.out.println("Dang");
-                }
-            }
-        }
-    }
-
     /**
      * formatText
      * __________________________
@@ -375,9 +374,10 @@ public class AdventureGameView {
      */
     private void formatText(String textToDisplay) {
         if (textToDisplay == null || textToDisplay.isBlank()) {
-            String roomDesc = this.model.getPlayer().getCurrentRoom().getRoomDescription() + "\n\nAvailable moves: " +
-                    this.model.getPlayer().getCurrentRoom().getCommands();
-            roomDescLabel.setText(roomDesc);
+            String roomDesc = this.model.getPlayer().getCurrentRoom().getRoomDescription() + "\n";
+            String objectString = this.model.getPlayer().getCurrentRoom().getObjectString();
+            if (objectString != null && !objectString.isEmpty()) roomDescLabel.setText(roomDesc + "\n\nObjects in this room:\n" + objectString);
+            else roomDescLabel.setText(roomDesc);
         } else roomDescLabel.setText(textToDisplay);
         roomDescLabel.setStyle("-fx-text-fill: white;");
         roomDescLabel.setFont(new Font("Arial", 16));
@@ -408,7 +408,84 @@ public class AdventureGameView {
         roomImageView.setFocusTraversable(true);
     }
 
-    /*
+    /**
+     * updateItems
+     * __________________________
+     *
+     * This method is partially completed, but you are asked to finish it off.
+     *
+     * The method should populate the objectsInRoom and objectsInInventory Vboxes.
+     * Each Vbox should contain a collection of nodes (Buttons, ImageViews, you can decide)
+     * Each node represents a different object.
+     * 
+     * Images of each object are in the assets 
+     * folders of the given adventure game.
+     */
+    public void updateItems() {
+
+        //write some code here to add images of objects in a given room to the objectsInRoom Vbox
+        //write some code here to add images of objects in a player's inventory room to the objectsInInventory Vbox
+        //please use setAccessibleText to add "alt" descriptions to your images!
+        //the path to the image of any is as follows:
+        //this.model.getDirectoryName() + "/objectImages/" + objectName + ".jpg";
+
+        // MY CODE:
+
+        // Clear the existing items in the VBoxes
+        objectsInRoom.getChildren().clear();
+        objectsInInventory.getChildren().clear();
+
+        // Populate objects in the current room
+        for (AdventureObject objectName : this.model.getPlayer().getCurrentRoom().objectsInRoom) {
+            // Create an ImageView for the object's image
+            ImageView objectImageView = new ImageView(new Image(
+                    this.model.getDirectoryName() + "/objectImages/" + objectName + ".jpg"
+            ));
+            objectImageView.setFitHeight(100); // Set image height
+            objectImageView.setPreserveRatio(true); // Preserve image ratio
+
+            // Set the alt description for accessibility
+            objectImageView.setAccessibleText("Image of " + objectName);
+
+            // Add the object image to the objectsInRoom VBox
+            objectsInRoom.getChildren().add(objectImageView);
+        }
+
+        // Populate objects in the player's inventory
+        for (String objectName : this.model.getPlayer().getInventory()) {
+            // Create an ImageView for the object's image
+            ImageView objectImageView = new ImageView(new Image(
+                    this.model.getDirectoryName() + "/objectImages/" + objectName + ".jpg"
+            ));
+            objectImageView.setFitHeight(100); // Set image height
+            objectImageView.setPreserveRatio(true); // Preserve image ratio
+
+            // Set the alt description for accessibility
+            objectImageView.setAccessibleText("Image of " + objectName);
+
+            // Add the object image to the objectsInInventory VBox
+            objectsInInventory.getChildren().add(objectImageView);
+        }
+
+        // STARTER CODE:
+
+        ScrollPane scO = new ScrollPane(objectsInRoom);
+        scO.setPadding(new Insets(10));
+        scO.setStyle("-fx-background: #000000; -fx-background-color:transparent;");
+        scO.setFitToWidth(true);
+        gridPane.add(scO,0,1);
+
+        ScrollPane scI = new ScrollPane(objectsInInventory);
+        scI.setFitToWidth(true);
+        scI.setStyle("-fx-background: #000000; -fx-background-color:transparent;");
+        gridPane.add(scI,2,1);
+
+
+    }
+
+    /**
+     * showInstructions
+     * __________________________
      * Show the game instructions.
      *
      * If helpToggle is FALSE:
@@ -423,13 +500,22 @@ public class AdventureGameView {
      * -- Again, REMOVE whatever nodes are within the cell beforehand!
      */
     public void showInstructions() {
-
         if (!helpToggle) {
-            updateScene(this.model.getInstructions(), "instructions");
+            String instructions = this.model.getInstructions();
+            Label instructionsLabel = new Label(instructions);
+            instructionsLabel.setStyle("-fx-text-fill: white;");
+            instructionsLabel.setFont(new Font("Arial", 16));
+            instructionsLabel.setAlignment(Pos.CENTER);
+
+            gridPane.add(instructionsLabel, 1, 1);
             helpToggle = true;
-        } else {
+            addInstructionEvent();
+        }
+        else {
+            // Check if the argument is valid
+            getRoomImage();
             updateScene("");
-            submitEvent("LOOK");
+            updateItems();
             helpToggle = false;
         }
     }
