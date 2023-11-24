@@ -114,7 +114,7 @@ public class AdventureLoader {
      * Parse Synonyms File
      */
     public void parseSynonyms() throws IOException {
-        String synonymsFileName = this.adventureName + "/synonyms.txt";
+        String synonymsFileName = this.adventureName + "/gameFiles/synonyms.txt";
         BufferedReader buff = new BufferedReader(new FileReader(synonymsFileName));
         String line = buff.readLine();
         while(line != null){
@@ -134,7 +134,7 @@ public class AdventureLoader {
      */
     public String parseOtherFile(String fileName) throws IOException {
         String text = "";
-        fileName = this.adventureName + "/" + fileName + ".txt";
+        fileName = this.adventureName + "/gameFiles/" + fileName + ".txt";
         BufferedReader buff = new BufferedReader(new FileReader(fileName));
         String line = buff.readLine();
         while (line != null) { // while not EOF
