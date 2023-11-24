@@ -1,5 +1,9 @@
 package AdventureModel;
 
+import AdventureModel.Interactions.Action;
+import AdventureModel.Interactions.Choice;
+import AdventureModel.Interactions.NPCDialogue;
+import AdventureModel.Interactions.SingleDialogue;
 import AdventureModel.Movement.*;
 
 import java.io.BufferedReader;
@@ -41,8 +45,7 @@ public class AdventureLoader {
     private void parseRooms() throws IOException { // TODO: UPDATE READER
 
         int roomNumber;
-
-        String roomFileName = this.adventureName + "/rooms.txt";
+        String roomFileName = this.adventureName + "/gameFiles/rooms.txt";
         BufferedReader buff = new BufferedReader(new FileReader(roomFileName));
 
         while (buff.ready()) {
@@ -55,16 +58,34 @@ public class AdventureLoader {
             String roomName = buff.readLine();
 
             // now we need to get the description
-            String roomDescription = "";
+
             String line = buff.readLine();
-            while (!line.equals("-----")) {
-                roomDescription += line + "\n";
+            line = buff.readLine();
+            String[] query = new String[2];
+            ForcedQueue queue = new ForcedQueue();
+            while (!line.equals("--passages")) {
+                query = line.split(" ", 2);
+
+                switch (query[0]){
+                    case "SDialogue:":
+                        queue.enqueue(new SingleDialogue(query[1]));
+                        break;
+                    case "NPCDialogue:":
+                        queue.enqueue(new NPCDialogue(query[1]));
+                        break;
+                    case "Choice:":
+                        queue.enqueue(new Choice(query[1]));
+                        break;
+                    case "Action:":
+                        queue.enqueue(new Action(query[1]));
+                        break;
+                }
+
                 line = buff.readLine();
             }
-            roomDescription += "\n";
 
             // now we make the room object
-            Room room = new Room(roomName, roomNumber, roomDescription, adventureName);
+            Room room = new Room(roomName, roomNumber, "", adventureName, queue);
 
             // now we make the motion table
             line = buff.readLine(); // reads the line after "-----"

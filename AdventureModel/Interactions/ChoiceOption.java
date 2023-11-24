@@ -10,7 +10,7 @@ public class ChoiceOption {
         String[] optionSet = s.split(">");
 
         this.optionText = optionSet[0];
-        this.action = new Action(optionSet[1], false);
+        this.action = new Action(optionSet[1]);
     }
 
     // NOTE!! Option instances are never in Room.forcedQueue! They are only executed after Option button is clicked!!

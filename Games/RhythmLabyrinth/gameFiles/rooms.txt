@@ -1,4 +1,4 @@
-R01
+001
 Outside building
 --queue
 SDialogue: You enter the cave, lit dimly by glowing ashes.-true
@@ -9,45 +9,45 @@ NPCDialogue: There was once a pale man with dark hair who was very lonely.-false
 NPCDialogue: Why was it lonely?-false-WOLF
 Choice: Do you interrupt him?-false-Yes>Wolf is attacking you!&M001&He backs away./No>&NULL&They do not notice you.
 --passages
-WEST       R02
-NORTH      R03
-SOUTH      R04
+WEST       002
+NORTH      003
+SOUTH      004
 
-R02
+002
 End of road
 --queue
 SDialogue: You are at the end of a road at the top of a small hill. You can see a small building in the valley to the east.-true
 Action: A wild Pokemon has appeared!&M0002&
 --passages
-EAST       R01
-WEST       R03
+EAST       001
+WEST       003
 
-R03
+003
 Inside building
 --queue
 SDialogue: You are inside a building, a well house for a large spring.-true
 --passages
-SOUTH      R01
-WEST       R05
-NORTH      R10
+SOUTH      001
+WEST       005
+NORTH      010
 
-R04
+004
 Valley beside a stream
 --queue
 SDialogue: You are in a valley in the forest beside a stream tumbling along a rocky bed.  The stream is flowing to the south.-true
 --passages
-NORTH      R01
-SOUTH      R05
+NORTH      001
+SOUTH      005
 
-R05
+005
 Slit in rock
 --queue
 SDialogue: At your feet all the water of the stream splashes into a two-inch slit in the rock.  To the south, the streambed is bare rock.-true
 --passages
-NORTH      R04
-SOUTH      R10
+NORTH      004
+SOUTH      010
 
-R010
+010
 Victory
 SDialogue: You have collected all the treasures and are admitted to the Adventurer's Hall of Fame.  Congratulations!-true
 --passages
