@@ -213,6 +213,11 @@ public class Puzzle implements MiniGame {
                 index = i;
             }
         }
+        if (currCorrect) {
+            if ((userSequence.size() - index) > maxConsecutive) {
+                maxConsecutive = userSequence.size() - index;
+            }
+        }
         return Double.valueOf(maxConsecutive / (this.accuracy() * this.sequenceLength));
     }
 }
