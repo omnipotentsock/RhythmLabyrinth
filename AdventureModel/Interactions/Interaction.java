@@ -1,6 +1,14 @@
 package AdventureModel.Interactions;
 
-public abstract class Interaction {
+import java.io.Serializable;
+
+/**
+ * Interaction class that is extended by all kinds of interactions that will go inside queue.
+ *
+ * https://docs.oracle.com/javase/8/javafx/api/javafx/scene/control/Dialog.html
+ */
+public abstract class Interaction implements Serializable {
+
 
     abstract void execute();
     protected abstract void setDialogueText(String text);
