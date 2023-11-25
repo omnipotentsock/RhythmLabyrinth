@@ -152,7 +152,7 @@ public class AdventureGameView {
         commandLabel.setStyle("-fx-text-fill: white;");
         commandLabel.setFont(new Font("Arial", 16));
 
-        updateScene(""); //method displays an image and whatever text is supplied
+        updateScene("", "move"); //method displays an image and whatever text is supplied
 
         // adding the text area and submit button to a VBox
         VBox textEntry = new VBox();
@@ -260,7 +260,7 @@ public class AdventureGameView {
         String output = this.model.interpretAction(text); //process the command!
 
         if (output == null || (!output.equals("GAME OVER") && !output.equals("FORCED") && !output.equals("HELP"))) {
-            updateScene(output);
+            updateScene(output, "move");
         } else if (output.equals("GAME OVER")) {
             updateScene("");
             PauseTransition pause = new PauseTransition(Duration.seconds(10));
@@ -317,7 +317,7 @@ public class AdventureGameView {
         if (textToDisplay == null || textToDisplay.isBlank()) articulateRoomDescription();
     }
 
-    public void updateScene(String textToDisplay, String key) {
+    public void updateScene(String textToDisplay, String key) { // TODO: Implement MOVE
 
         if (key.equals("instructions")) {
             roomImageView.setImage(null);
@@ -339,7 +339,10 @@ public class AdventureGameView {
 
             //finally, articulate the description
             if (textToDisplay == null || textToDisplay.isBlank()) articulateRoomDescription();
-        } else {updateScene(textToDisplay);}
+        } else if (key.equals("move")) {
+            System.out.println("MOVED?");
+            updateScene(textToDisplay);
+        }
     }
 
     /**
