@@ -33,7 +33,7 @@ public class AdventureLoader {
      /**
      * Load game from directory
      */
-    public void loadGame() throws IOException {
+    public void loadGame() throws IOException { // TODO: Parse Minigames and NPCs
         parseRooms();
         parseSynonyms();
         this.game.setHelpText(parseOtherFile("help"));
