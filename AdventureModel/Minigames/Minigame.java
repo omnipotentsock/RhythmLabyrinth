@@ -1,6 +1,8 @@
 package AdventureModel.Minigames;
 
-public class Minigame {
+import java.io.Serializable;
+
+public class Minigame implements Serializable {
     public void execute() {
     }
 }

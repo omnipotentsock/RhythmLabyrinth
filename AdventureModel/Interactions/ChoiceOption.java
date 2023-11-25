@@ -1,6 +1,8 @@
 package AdventureModel.Interactions;
 
-public class ChoiceOption {
+import java.io.Serializable;
+
+public class ChoiceOption implements Serializable {
     private String optionText;
 
     private Action action;
