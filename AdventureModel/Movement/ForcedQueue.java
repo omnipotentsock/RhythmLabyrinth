@@ -2,9 +2,10 @@ package AdventureModel.Movement;
 
 import AdventureModel.Interactions.Interaction;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 
-public class ForcedQueue {
+public class ForcedQueue implements Serializable {
 
     private ArrayList<Interaction> list = new ArrayList<>();
 

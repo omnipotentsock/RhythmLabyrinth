@@ -1,5 +1,7 @@
 package AdventureModel.Outcomes;
 
-public class OutcomeDeterminer {
+import java.io.Serializable;
+
+public class OutcomeDeterminer implements Serializable {
     ;
 }

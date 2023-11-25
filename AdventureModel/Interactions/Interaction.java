@@ -1,6 +1,8 @@
 package AdventureModel.Interactions;
 
-public abstract class Interaction {
+import java.io.Serializable;
+
+public abstract class Interaction implements Serializable {
 
     abstract void execute();
     protected abstract void setDialogueText(String text);

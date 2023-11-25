@@ -6,9 +6,10 @@ import javafx.scene.image.ImageView;
 import java.io.BufferedReader;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
+import java.io.Serializable;
 
 
-public class NPC {
+public class NPC implements Serializable {
 
     private String identifier;
     private Image image;

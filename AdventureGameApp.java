@@ -8,7 +8,7 @@ import java.io.IOException;
 /**
  * Class AdventureGameApp.
  */
-public class AdventureGameApp extends  Application {
+public class AdventureGameApp extends Application {
 
     AdventureGame model;
     AdventureGameView view;
