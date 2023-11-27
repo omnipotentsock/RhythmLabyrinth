@@ -42,7 +42,7 @@ public class AdventureLoader {
      /**
      * Parse Rooms File
      */
-    private void parseRooms() throws IOException { // TODO: UPDATE READER
+    private void parseRooms() throws IOException {
 
         int roomNumber;
         String roomFileName = this.adventureName + "/gameFiles/rooms.txt";

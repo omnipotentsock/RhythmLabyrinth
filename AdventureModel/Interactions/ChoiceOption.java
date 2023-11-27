@@ -1,5 +1,7 @@
 package AdventureModel.Interactions;
 
+import views.AdventureGameView;
+
 import java.io.Serializable;
 
 public class ChoiceOption implements Serializable {
@@ -19,8 +21,8 @@ public class ChoiceOption implements Serializable {
      * Executes the respective action. Triggered when option is chosen.
      */
     // NOTE!! Option instances are never in Room.forcedQueue! They are only executed after Option button is clicked!!
-    public void execute() {
-        this.action.execute();
+    public void execute(AdventureGameView adventureGameView) {
+        this.action.execute(adventureGameView);
     }
 
     public String getOptionText() {
