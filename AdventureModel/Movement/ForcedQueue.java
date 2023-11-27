@@ -43,4 +43,8 @@ public class ForcedQueue implements Serializable {
             }
         }
     }
+
+    public boolean is_empty(){
+        return this.list.isEmpty();
+    }
 }
