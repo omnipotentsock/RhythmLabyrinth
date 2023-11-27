@@ -1,7 +1,8 @@
-package AdventureModel.Minigames;
+package AdventureModel.Minigames.Puzzle;
 
 import AdventureModel.Interpretations.Interpretation;
 import AdventureModel.Interpretations.PuzzleInterpretationFactory;
+import AdventureModel.Minigames.MiniGame;
 
 import javax.swing.*;
 import java.awt.*;
@@ -190,11 +191,7 @@ public class Puzzle implements MiniGame {
         int maxConsecutive = 0;
         for (int i = 0; i < userSequence.size(); i++) {
             // If 'current' was correct the last time, then that means previous is now correct.
-            if (currCorrect) {
-                prevCorrect = true;
-            } else {
-                prevCorrect = false;
-            }
+            prevCorrect = currCorrect;
             //##################################################################################
             if (Objects.equals(userSequence.get(i), this.sequenceArray.get(i))) {
                 correctCounter++;
