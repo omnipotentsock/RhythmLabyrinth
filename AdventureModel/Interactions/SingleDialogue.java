@@ -1,5 +1,7 @@
 package AdventureModel.Interactions;
 
+import views.AdventureGameView;
+
 public class SingleDialogue extends Interaction {
 
     private String dialogueText; // String to hold dialogue text to be displayed
@@ -20,8 +22,9 @@ public class SingleDialogue extends Interaction {
         this.setDialogueText(text); this.setRefreshing(refresh);
     }
 
-    public void execute() {
+    public void execute(AdventureGameView adventureGameView) {
         System.out.println(dialogueText); // TODO: Display text on GUI
+        adventureGameView.updateScene(dialogueText);
     }
     protected void setDialogueText(String text) {
         this.dialogueText = text;
@@ -30,5 +33,5 @@ public class SingleDialogue extends Interaction {
         this.refreshing = refresh;
     }
     public boolean getRefreshing(){ return this.refreshing;}
-    public String getDialogueText(String text){return this.dialogueText;}
+    public String getDialogueText(){return this.dialogueText;}
 }

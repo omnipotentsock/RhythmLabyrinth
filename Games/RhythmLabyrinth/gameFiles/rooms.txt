@@ -7,7 +7,7 @@ SDialogue: Hovering around its shoulder, a purple wolf head floats restlessly ab
 NPCDialogue: LAMB! Tell me a story.-false-WOLF
 NPCDialogue: There was once a pale man with dark hair who was very lonely.-false-LAMB
 NPCDialogue: Why was it lonely?-false-WOLF
-Choice: Do you interrupt him?-false-Yes>Wolf is attacking you!&M001&He backs away./>No&NULL&They do not notice you.
+Choice: Do you interrupt him?-false-Yes>Wolf is attacking you!&M001&He backs away./No>&NULL&They do not notice you.
 --passages
 WEST       002
 NORTH      003

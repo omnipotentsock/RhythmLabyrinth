@@ -1,5 +1,7 @@
 package AdventureModel.Interactions;
 
+import views.AdventureGameView;
+
 import java.io.Serializable;
 
 /**
@@ -10,10 +12,10 @@ import java.io.Serializable;
 public abstract class Interaction implements Serializable {
 
 
-    abstract void execute();
+    public abstract void execute(AdventureGameView adventureGameView);
     protected abstract void setDialogueText(String text);
     protected abstract void setRefreshing(boolean refresh);
     public abstract boolean getRefreshing();
-    public abstract String getDialogueText(String text);
+    public abstract String getDialogueText();
 
 }
