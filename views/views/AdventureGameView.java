@@ -1,7 +1,9 @@
 package views;
 
 import AdventureModel.AdventureGame;
-import AdventureModel.Room;
+import AdventureModel.Interactions.Interaction;
+import AdventureModel.Movement.ForcedQueue;
+import AdventureModel.Movement.Room;
 import javafx.animation.PauseTransition;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
@@ -12,16 +14,12 @@ import javafx.scene.media.Media;
 import javafx.scene.media.MediaPlayer;
 import javafx.scene.paint.Color;
 import javafx.scene.layout.*;
-import javafx.scene.input.KeyEvent; //you will need these!
 import javafx.scene.input.KeyCode;
 import javafx.scene.text.Font;
-import javafx.scene.text.Text;
-import javafx.scene.text.TextFlow;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.util.Duration;
-import javafx.event.EventHandler; //you will need this too!
 import javafx.scene.AccessibleRole;
 
 import java.io.File;
@@ -62,6 +60,7 @@ public class AdventureGameView {
         this.model = model;
         this.stage = stage;
         intiUI();
+        this.updateScene("", "move");
     }
 
     /**
@@ -157,7 +156,8 @@ public class AdventureGameView {
         commandLabel.setStyle("-fx-text-fill: white;");
         commandLabel.setFont(new Font("Arial", 16));
 
-        updateScene("", "move"); //method displays an image and whatever text is supplied
+        System.out.println("PRE");
+        updateScene(""); //method displays an image and whatever text is supplied
 
         // adding the text area and submit button to a VBox
         VBox textEntry = new VBox();
@@ -174,6 +174,7 @@ public class AdventureGameView {
         this.stage.setScene(scene);
         this.stage.setResizable(false);
         this.stage.show();
+//        updateScene("", "move"); //method displays an image and whatever text is supplied
 
     }
 
@@ -346,7 +347,21 @@ public class AdventureGameView {
             if (textToDisplay == null || textToDisplay.isBlank()) articulateRoomDescription();
         } else if (key.equals("move")) {
             System.out.println("MOVED?");
-            updateScene(textToDisplay);
+            updateScene("");
+            Room room = this.model.getPlayer().getCurrentRoom();
+            Interaction i;
+            ForcedQueue q = room.getQueue();
+            while (!q.is_empty()){
+                i = q.dequeue();
+                try{
+                    Thread.sleep(800);
+                    updateScene(i.getDialogueText());
+                    i.execute(this);
+                }
+                catch (Exception e){
+                    System.out.println("Dang");
+                }
+            }
         }
     }
 

@@ -1,6 +1,7 @@
 package AdventureModel.Interactions;
 
 import AdventureModel.Characters.NPC;
+import views.AdventureGameView;
 
 public class NPCDialogue extends Interaction{
 
@@ -27,9 +28,10 @@ public class NPCDialogue extends Interaction{
         this.setDialogueText(text); this.setRefreshing(refresh); this.speaker = speaker;
     }
 
-    public void execute() {
-        System.out.println("Name: Jimothy"); // TODO: Update picture to NPC picture
-        System.out.println(dialogueText); // TODO: Display text on GUI
+    public void execute(AdventureGameView adventureGameView) {
+        String s = "Jimothy:\n" + dialogueText;
+        System.out.println(s); // TODO: Update picture to NPC picture, Display text on GUI
+        adventureGameView.updateScene(s);
     }
 
     protected void setDialogueText(String text) {
@@ -39,5 +41,5 @@ public class NPCDialogue extends Interaction{
         this.refreshing = refresh;
     }
     public boolean getRefreshing(){ return this.refreshing;}
-    public String getDialogueText(String text){return this.dialogueText;}
+    public String getDialogueText(){return this.dialogueText;}
 }

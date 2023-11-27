@@ -42,4 +42,8 @@ public class ForcedQueue {
             }
         }
     }
+
+    public boolean is_empty(){
+        return this.list.isEmpty();
+    }
 }
