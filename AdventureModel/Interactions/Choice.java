@@ -44,11 +44,11 @@ public class Choice extends Interaction{
     @Override
     public void execute(AdventureGameView adventureGameView) {
 
-        System.out.println(this.dialogueText); // TODO: Display choice dialogue and options retrieved below
+        // TODO: Display choice dialogue and options retrieved below
         String s = this.dialogueText;
 
         for (ChoiceOption option : this.options){
-            System.out.println(option.getOptionText()); // TODO: Populate optionsView with option buttons
+            // TODO: Populate optionsView with option buttons
             s += "\n\tOption: " + option.getOptionText();
         }
 

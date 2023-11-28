@@ -1,5 +1,7 @@
 package AdventureModel;
 
+import AdventureModel.Movement.Room;
+
 import java.io.Serializable;
 import java.util.ArrayList;
 

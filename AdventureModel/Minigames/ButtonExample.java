@@ -1,4 +1,4 @@
-package views;
+package AdventureModel.Minigames;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;

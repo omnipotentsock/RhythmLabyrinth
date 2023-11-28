@@ -1,4 +1,4 @@
-package views;
+package AdventureModel.Minigames;
 
 import javax.swing.*;
 import java.awt.*;
@@ -28,7 +28,7 @@ public class Puzzle {
             // Create buttons and add them to the panel
             for (int i = 1; i <= 9; i++) {
                 JButton button = new JButton(Integer.toString(i));
-                button.addActionListener(new views.SequenceButton.ButtonClickListener());
+                button.addActionListener(new AdventureModel.Minigames.SequenceButton.ButtonClickListener());
                 panel.add(button);
             }
 

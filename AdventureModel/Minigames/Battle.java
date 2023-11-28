@@ -1,4 +1,4 @@
-package views;
+package AdventureModel.Minigames;
 
 public class Battle {
 
