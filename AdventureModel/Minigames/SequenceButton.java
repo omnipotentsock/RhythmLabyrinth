@@ -1,4 +1,4 @@
-package AdventureModel.Minigames.Puzzle;
+package AdventureModel.Minigames;
 
 import javax.swing.*;
 import java.awt.*;
