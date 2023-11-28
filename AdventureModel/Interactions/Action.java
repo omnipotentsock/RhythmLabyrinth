@@ -28,7 +28,7 @@ public class Action extends Interaction{
     public void execute(AdventureGameView adventureGameView){
         if (this.minigame != null){
             adventureGameView.updateScene(this.dialogueText + "\nMINIGAME\n " + this.afterText);
-            this.minigame.run(); //TODO: MAKE SURE WHAT THE METHOD FOR STARTING A MINIGAME WILL BE BEFORE MERGEREQ
+            this.minigame.execute(); //TODO: MAKE SURE WHAT THE METHOD FOR STARTING A MINIGAME WILL BE BEFORE MERGEREQ
         }
     }
     protected void setDialogueText(String text) {
