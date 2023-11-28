@@ -1,4 +1,0 @@
-
-M0001 Battle <insert parameters here lol, separated by />
-
-M0002 Puzzle <insert parameters here lol>
