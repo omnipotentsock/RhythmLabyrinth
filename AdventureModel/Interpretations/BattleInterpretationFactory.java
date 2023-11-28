@@ -1,6 +1,6 @@
 package AdventureModel.Interpretations;
 
-import AdventureModel.Minigames.Battle;
+import AdventureModel.Minigames.Battle.Battle;
 import AdventureModel.Minigames.MiniGame;
 
 public class BattleInterpretationFactory implements InterpretationFactory {

@@ -6,7 +6,7 @@ import AdventureModel.Endings.Ending;
 import AdventureModel.Endings.MediocreEnding;
 import AdventureModel.Endings.PerformanceEnding;
 import AdventureModel.Endings.SatisfactoryEnding;
-import AdventureModel.jtuples.*;
+import jtuples.*;
 
 import java.util.*;
 

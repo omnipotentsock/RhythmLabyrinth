@@ -1,6 +1,6 @@
 package AdventureModel.Interpretations;
 
-import AdventureModel.jtuples.Pair;
+import jtuples.Pair;
 
 public interface Interpretation {
     final String performanceEnding = "PERFORMANCE_ENDING";

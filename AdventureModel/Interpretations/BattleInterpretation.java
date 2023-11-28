@@ -1,7 +1,7 @@
 package AdventureModel.Interpretations;
 
-import AdventureModel.Minigames.Battle;
-import AdventureModel.jtuples.Pair;
+import AdventureModel.Minigames.Battle.Battle;
+import jtuples.Pair;
 
 public class BattleInterpretation implements Interpretation {
     private Double impact;

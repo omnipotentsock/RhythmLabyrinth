@@ -1,7 +1,7 @@
 package AdventureModel.Interpretations;
 
-import AdventureModel.Minigames.Puzzle;
-import AdventureModel.jtuples.Pair;
+import AdventureModel.Minigames.Puzzle.Puzzle;
+import jtuples.Pair;
 
 public class PuzzleInterpretation implements Interpretation {
     private Double impact;

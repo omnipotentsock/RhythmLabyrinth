@@ -1,7 +1,7 @@
 package AdventureModel.Interpretations;
 
 import AdventureModel.Minigames.MiniGame;
-import AdventureModel.Minigames.Puzzle;
+import AdventureModel.Minigames.Puzzle.Puzzle;
 
 public class PuzzleInterpretationFactory implements InterpretationFactory {
     private Puzzle target;
