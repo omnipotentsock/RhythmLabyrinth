@@ -115,8 +115,6 @@ public class AdventureGame implements Serializable {
         //try the blocked passages first
         Passage chosen = null;
         for (Passage entry : possibilities) {
-            System.out.println(entry.getIsBlocked());
-            System.out.println(entry.getKeyName());
 
             chosen = entry; //the passage is unlocked
         }

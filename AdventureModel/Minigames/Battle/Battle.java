@@ -1,4 +1,4 @@
-package AdventureModel.Minigames;
+package AdventureModel.Minigames.Battle;
 
 public class Battle {
 

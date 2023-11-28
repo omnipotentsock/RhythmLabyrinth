@@ -26,10 +26,9 @@ public class Action extends Interaction{
 
     // NOTE!! Action instances are never in Room.forcedQueue! They are executed after Option instance is executed!!
     public void execute(AdventureGameView adventureGameView){
-        if (this.minigame != null){
             adventureGameView.updateScene(this.dialogueText + "\nMINIGAME\n " + this.afterText);
-            this.minigame.execute(); //TODO: MAKE SURE WHAT THE METHOD FOR STARTING A MINIGAME WILL BE BEFORE MERGEREQ
-        }
+//            this.minigame.execute(); //TODO: MAKE SURE WHAT THE METHOD FOR STARTING A MINIGAME WILL BE BEFORE MERGEREQ
+
     }
     protected void setDialogueText(String text) {
         // TODO: IMPLEMENT SOMEHOW

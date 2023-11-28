@@ -140,7 +140,7 @@ public class AdventureGameView {
         objLabel.setAlignment(Pos.CENTER);
         objLabel.setStyle("-fx-text-fill: white;");
         objLabel.setFont(new Font("Arial", 16));
-        addEnterEvent();
+        addClickEvent();
 
         Label invLabel =  new Label("Your Inventory");
         invLabel.setAlignment(Pos.CENTER);
@@ -156,8 +156,8 @@ public class AdventureGameView {
         commandLabel.setStyle("-fx-text-fill: white;");
         commandLabel.setFont(new Font("Arial", 16));
 
-        System.out.println("PRE");
         updateScene(""); //method displays an image and whatever text is supplied
+        queueCycle();
 
         // adding the text area and submit button to a VBox
         VBox textEntry = new VBox();
@@ -246,7 +246,7 @@ public class AdventureGameView {
      * click the left mouse KEY. If the user clicks
      * the left mouse key, queueCycle.
      */
-    private void addEnterEvent() {
+    private void addClickEvent() {
         roomDescLabel.setOnMouseClicked((click) -> queueCycle());
         roomDescLabel.requestFocus();
     }
@@ -281,8 +281,7 @@ public class AdventureGameView {
 
         if (output == null || (!output.equals("GAME OVER") && !output.equals("FORCED") && !output.equals("HELP"))) {
             updateScene(output);
-            this.model.getPlayer().getCurrentRoom().getQueue().refresh();
-            this.queueCycle();
+            queueCycle();
         } else if (output.equals("GAME OVER")) {
             updateScene("");
             PauseTransition pause = new PauseTransition(Duration.seconds(10));
@@ -361,13 +360,6 @@ public class AdventureGameView {
 
             //finally, articulate the description
             if (textToDisplay == null || textToDisplay.isBlank()) articulateRoomDescription();
-        } else if (key.equals("move")) {
-            System.out.println("MOVED?");
-            updateScene("");
-            Room room = this.model.getPlayer().getCurrentRoom();
-            Interaction i;
-            ForcedQueue q = room.getQueue();
-            roomDescLabel.setText(q.dequeue().getDialogueText());
         }
     }
 
@@ -377,7 +369,7 @@ public class AdventureGameView {
         if (!q.is_empty()) {
             Interaction i = q.dequeue();
             i.execute(this);
-        }
+        } else {q.refresh();}
     }
 
     /**
@@ -390,7 +382,7 @@ public class AdventureGameView {
      */
     private void formatText(String textToDisplay) {
         if (textToDisplay == null || textToDisplay.isBlank()) {
-            queueCycle();
+            ;
         } else roomDescLabel.setText(textToDisplay);
         roomDescLabel.setStyle("-fx-text-fill: white;");
         roomDescLabel.setFont(new Font("Arial", 16));
