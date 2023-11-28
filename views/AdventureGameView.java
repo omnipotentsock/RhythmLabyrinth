@@ -60,7 +60,6 @@ public class AdventureGameView {
         this.model = model;
         this.stage = stage;
         intiUI();
-        this.updateScene("", "move");
     }
 
     /**
@@ -141,6 +140,7 @@ public class AdventureGameView {
         objLabel.setAlignment(Pos.CENTER);
         objLabel.setStyle("-fx-text-fill: white;");
         objLabel.setFont(new Font("Arial", 16));
+        addEnterEvent();
 
         Label invLabel =  new Label("Your Inventory");
         invLabel.setAlignment(Pos.CENTER);
@@ -237,6 +237,20 @@ public class AdventureGameView {
         });
     }
 
+    /**
+     * addEnterEvent
+     * __________________________
+     * Add an event handler to the roomDescLabel attribute
+     *
+     * Your event handler should respond when users
+     * click the left mouse KEY. If the user clicks
+     * the left mouse key, queueCycle.
+     */
+    private void addEnterEvent() {
+        roomDescLabel.setOnMouseClicked((click) -> queueCycle());
+        roomDescLabel.requestFocus();
+    }
+
 
     /**
      * submitEvent
@@ -266,7 +280,9 @@ public class AdventureGameView {
         String output = this.model.interpretAction(text); //process the command!
 
         if (output == null || (!output.equals("GAME OVER") && !output.equals("FORCED") && !output.equals("HELP"))) {
-            updateScene(output, "move");
+            updateScene(output);
+            this.model.getPlayer().getCurrentRoom().getQueue().refresh();
+            this.queueCycle();
         } else if (output.equals("GAME OVER")) {
             updateScene("");
             PauseTransition pause = new PauseTransition(Duration.seconds(10));
@@ -351,17 +367,16 @@ public class AdventureGameView {
             Room room = this.model.getPlayer().getCurrentRoom();
             Interaction i;
             ForcedQueue q = room.getQueue();
-            while (!q.is_empty()){
-                i = q.dequeue();
-                try{
-                    Thread.sleep(800);
-                    updateScene(i.getDialogueText());
-                    i.execute(this);
-                }
-                catch (Exception e){
-                    System.out.println("Dang");
-                }
-            }
+            roomDescLabel.setText(q.dequeue().getDialogueText());
+        }
+    }
+
+    private void queueCycle(){
+        Room room = this.model.getPlayer().getCurrentRoom();
+        ForcedQueue q = room.getQueue();
+        if (!q.is_empty()) {
+            Interaction i = q.dequeue();
+            i.execute(this);
         }
     }
 
@@ -375,9 +390,7 @@ public class AdventureGameView {
      */
     private void formatText(String textToDisplay) {
         if (textToDisplay == null || textToDisplay.isBlank()) {
-            String roomDesc = this.model.getPlayer().getCurrentRoom().getRoomDescription() + "\n\nAvailable moves: " +
-                    this.model.getPlayer().getCurrentRoom().getCommands();
-            roomDescLabel.setText(roomDesc);
+            queueCycle();
         } else roomDescLabel.setText(textToDisplay);
         roomDescLabel.setStyle("-fx-text-fill: white;");
         roomDescLabel.setFont(new Font("Arial", 16));
