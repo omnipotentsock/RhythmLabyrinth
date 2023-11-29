@@ -1,5 +1,11 @@
 package AdventureModel;
 
+import AdventureModel.Interactions.Action;
+import AdventureModel.Interactions.Choice;
+import AdventureModel.Interactions.NPCDialogue;
+import AdventureModel.Interactions.SingleDialogue;
+import AdventureModel.Movement.*;
+
 import java.io.BufferedReader;
 import java.io.FileReader;
 import java.io.IOException;
@@ -27,9 +33,8 @@ public class AdventureLoader {
      /**
      * Load game from directory
      */
-    public void loadGame() throws IOException {
+    public void loadGame() throws IOException { // TODO: Parse Minigames and NPCs
         parseRooms();
-        parseObjects();
         parseSynonyms();
         this.game.setHelpText(parseOtherFile("help"));
     }
@@ -40,8 +45,7 @@ public class AdventureLoader {
     private void parseRooms() throws IOException {
 
         int roomNumber;
-
-        String roomFileName = this.adventureName + "/rooms.txt";
+        String roomFileName = this.adventureName + "/gameFiles/rooms.txt";
         BufferedReader buff = new BufferedReader(new FileReader(roomFileName));
 
         while (buff.ready()) {
@@ -54,16 +58,34 @@ public class AdventureLoader {
             String roomName = buff.readLine();
 
             // now we need to get the description
-            String roomDescription = "";
+
             String line = buff.readLine();
-            while (!line.equals("-----")) {
-                roomDescription += line + "\n";
+            line = buff.readLine();
+            String[] query = new String[2];
+            ForcedQueue queue = new ForcedQueue();
+            while (!line.equals("--passages")) {
+                query = line.split(" ", 2);
+
+                switch (query[0]){
+                    case "SDialogue:":
+                        queue.enqueue(new SingleDialogue(query[1]));
+                        break;
+                    case "NPCDialogue:":
+                        queue.enqueue(new NPCDialogue(query[1]));
+                        break;
+                    case "Choice:":
+                        queue.enqueue(new Choice(query[1]));
+                        break;
+                    case "Action:":
+                        queue.enqueue(new Action(query[1]));
+                        break;
+                }
+
                 line = buff.readLine();
             }
-            roomDescription += "\n";
 
             // now we make the room object
-            Room room = new Room(roomName, roomNumber, roomDescription, adventureName);
+            Room room = new Room(roomName, roomNumber, "", adventureName, queue);
 
             // now we make the motion table
             line = buff.readLine(); // reads the line after "-----"
@@ -89,33 +111,10 @@ public class AdventureLoader {
     }
 
      /**
-     * Parse Objects File
-     */
-    public void parseObjects() throws IOException {
-
-        String objectFileName = this.adventureName + "/objects.txt";
-        BufferedReader buff = new BufferedReader(new FileReader(objectFileName));
-
-        while (buff.ready()) {
-            String objectName = buff.readLine();
-            String objectDescription = buff.readLine();
-            String objectLocation = buff.readLine();
-            String separator = buff.readLine();
-            if (separator != null && !separator.isEmpty())
-                System.out.println("Formatting Error!");
-            int i = Integer.parseInt(objectLocation);
-            Room location = this.game.getRooms().get(i);
-            AdventureObject object = new AdventureObject(objectName, objectDescription, location);
-            location.addGameObject(object);
-        }
-
-    }
-
-     /**
      * Parse Synonyms File
      */
     public void parseSynonyms() throws IOException {
-        String synonymsFileName = this.adventureName + "/synonyms.txt";
+        String synonymsFileName = this.adventureName + "/gameFiles/synonyms.txt";
         BufferedReader buff = new BufferedReader(new FileReader(synonymsFileName));
         String line = buff.readLine();
         while(line != null){
@@ -129,13 +128,13 @@ public class AdventureLoader {
     }
 
     /**
-     * Parse Files other than Rooms, Objects and Synonyms
+     * Parse Files other than Rooms and Synonyms
      *
      * @param fileName the file to parse
      */
     public String parseOtherFile(String fileName) throws IOException {
         String text = "";
-        fileName = this.adventureName + "/" + fileName + ".txt";
+        fileName = this.adventureName + "/gameFiles/" + fileName + ".txt";
         BufferedReader buff = new BufferedReader(new FileReader(fileName));
         String line = buff.readLine();
         while (line != null) { // while not EOF

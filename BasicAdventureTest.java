@@ -16,13 +16,6 @@ public class BasicAdventureTest {
     }
 
     @Test
-    void getObjectString() throws IOException {
-        AdventureGame game = new AdventureGame("TinyGame");
-        String objects = game.player.getCurrentRoom().getObjectString();
-        assertEquals("a water bird", objects);
-    }
-
-    @Test
     void getSavedDir() {
         String separator = System.getProperty("file.separator");
 

@@ -1,6 +1,7 @@
 package views;
 
 import AdventureModel.AdventureGame;
+import javafx.animation.PauseTransition;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
@@ -12,12 +13,14 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Font;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.util.Duration;
 
 import java.io.*;
+import java.util.Arrays;
 
 
 /**
- * Class views.LoadView.
+ * Class LoadView.
  *
  * Loads Serialized adventure games.
  */
@@ -145,6 +148,12 @@ public class LoadView {
         try{
             adventureGameView.model = loadGame(path);
             adventureGameView.updateScene("Game successfully loaded.");
+            PauseTransition pause = new PauseTransition(Duration.seconds(2));
+            pause.setOnFinished(event -> {
+                        adventureGameView.updateScene("", "move");
+                    }
+            );
+            pause.play();
             System.out.println(path);
         }
         catch (Exception e){

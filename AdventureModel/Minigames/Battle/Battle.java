@@ -1,16 +1,9 @@
 package AdventureModel.Minigames.Battle;
 
-import AdventureModel.Interpretations.BattleInterpretationFactory;
-import AdventureModel.Interpretations.Interpretation;
-import AdventureModel.Minigames.MiniGame;
-
-public class Battle implements MiniGame {
-    private BattleInterpretationFactory battleInterpretationFactory;
-
-    @Override
-    public Interpretation formInterpretation() {
-        this.battleInterpretationFactory.accept(this);
-        return this.battleInterpretationFactory.createInterpretation();
-    }
+public class Battle {
 
 }
+
+// Todo: Transport RandomButton to this class
+// Todo: Find a way so that it only displays the current button
+// todo: and that the button only changes when you click on it and/or the time window passes

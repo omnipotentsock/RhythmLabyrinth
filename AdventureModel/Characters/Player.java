@@ -1,9 +1,9 @@
-package AdventureModel;
+package AdventureModel.Characters;
 
 import AdventureModel.Movement.Room;
+import AdventureModel.Outcomes.OutcomeDeterminer;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 
 /**
  * This class keeps track of the progress
@@ -14,6 +14,8 @@ public class Player implements Serializable {
      * The current room that the player is located in.
      */
     private Room currentRoom;
+
+    private OutcomeDeterminer outcome = new OutcomeDeterminer();
 
 
     /**
@@ -42,4 +44,7 @@ public class Player implements Serializable {
     }
 
 
+    public OutcomeDeterminer getOutcome() {
+        return outcome;
+    }
 }

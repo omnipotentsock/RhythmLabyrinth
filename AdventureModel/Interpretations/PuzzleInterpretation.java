@@ -13,7 +13,7 @@ public class PuzzleInterpretation implements Interpretation {
      * towards, based on the Puzzle's unique accuracy cutoffs predetermined by the game file. The
      * impact value will be determined as the ratio between the largest number of consecutively
      * correct inputs to the number of correct inputs in the user input.
-     * @return
+     * @return a Pair of standardized data to be used by OutcomeExecuter's update() method
      */
     @Override
     public Pair<String, Double> interpret() {
