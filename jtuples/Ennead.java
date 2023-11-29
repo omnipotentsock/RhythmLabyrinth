@@ -24,7 +24,6 @@ import jtuples.valueintf.*;
 import java.util.Collection;
 import java.util.Iterator;
 
-import java.org.javatuples.valueintf.IValue0;
 
 /**
  * <p>
