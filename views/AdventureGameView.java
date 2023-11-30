@@ -22,6 +22,7 @@ import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import javafx.scene.AccessibleRole;
 
+import javafx.scene.control.TextArea;
 import java.io.File;
 
 /**
@@ -502,5 +503,15 @@ public class AdventureGameView {
             mediaPlayer.stop(); //shush!
             mediaPlaying = false;
         }
+    }
+    public void setEndingSettings(String pictureFileName, String text) {
+        ImageView imageView = new ImageView(pictureFileName);
+        this.gridPane.getChildren().add(imageView);
+        roomImageView.setPreserveRatio(true);
+        roomImageView.setFitWidth(400);
+        roomImageView.setFitHeight(400);
+
+        TextArea textLabel = new TextArea(text);
+        this.gridPane.getChildren().add(textLabel);
     }
 }

@@ -18,4 +18,7 @@ public class EndingExecuter {
     public void setEnding(Ending ending) {
         this.state = ending;
     }
+    public EndingExecuter() {
+        this.state = null;
+    }
 }

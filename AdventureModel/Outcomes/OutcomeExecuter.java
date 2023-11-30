@@ -3,9 +3,10 @@ package AdventureModel.Outcomes;
 import AdventureModel.Endings.EndingExecuter;
 import AdventureModel.Minigames.MiniGame;
 
+import java.io.Serializable;
 import java.util.List;
 
-public class OutcomeExecuter {
+public class OutcomeExecuter implements Serializable {
     /**
      * This Progression object keeps track of the Player's progress throughout the AdventureGame.
      */
@@ -20,6 +21,17 @@ public class OutcomeExecuter {
      */
     private EndingExecuter endingExecuter;
 
+    /**
+     * This is the constructor method.
+     * @param record a Progression type
+     * @param miniGames a List<MiniGame> type
+     * @param endingExecuter an EndingExecuter type
+     */
+    public OutcomeExecuter(Progression record, List<MiniGame> miniGames, EndingExecuter endingExecuter) {
+        this.record = record;
+        this.miniGames = miniGames;
+        this.endingExecuter = endingExecuter;
+    }
     /**
      * This method iterates through all the MiniGames the Player has completed, determines
      * the appropriate ending, and executes the sequences associated with that ending.

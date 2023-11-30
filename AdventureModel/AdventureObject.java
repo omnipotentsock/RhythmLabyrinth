@@ -1,6 +1,8 @@
 package AdventureModel;
 
 import java.io.Serializable; //you will need this to save the game!
+import AdventureModel.*;
+import AdventureModel.Movement.Room;
 
 /**
  * This class keeps track of the props or the objects in the game.
