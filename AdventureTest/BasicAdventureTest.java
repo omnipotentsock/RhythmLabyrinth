@@ -4,7 +4,10 @@ import java.io.File;
 import java.io.IOException;
 
 import AdventureModel.AdventureGame;
+import AdventureModel.AdventureLoader;
+import javafx.stage.Stage;
 import org.junit.jupiter.api.Test;
+import views.AdventureGameView;
 
 import static org.junit.jupiter.api.Assertions.*;
 

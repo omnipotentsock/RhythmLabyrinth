@@ -6,7 +6,6 @@ import AdventureModel.Minigames.MiniGame;
 import AdventureModel.Movement.Room;
 import AdventureModel.Outcomes.OutcomeExecuter;
 import AdventureModel.Outcomes.Progression;
-import views.AdventureGameView;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -56,7 +55,7 @@ public class Player implements Serializable {
     public OutcomeExecuter getOutcomeExecuter() {
         return outcome;
     }
-    public void executeEnding() {
-        this.outcome.execute();
+    public Ending computeEnding() {
+        return this.outcome.execute();
     }
 }

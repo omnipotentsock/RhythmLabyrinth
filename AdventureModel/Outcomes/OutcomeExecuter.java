@@ -1,5 +1,6 @@
 package AdventureModel.Outcomes;
 
+import AdventureModel.Endings.Ending;
 import AdventureModel.Endings.EndingExecuter;
 import AdventureModel.Minigames.MiniGame;
 
@@ -36,12 +37,12 @@ public class OutcomeExecuter implements Serializable {
      * This method iterates through all the MiniGames the Player has completed, determines
      * the appropriate ending, and executes the sequences associated with that ending.
      */
-    public void execute() {
+    public Ending execute() {
         for (MiniGame miniGame : miniGames) {
             this.record.update(miniGame.formInterpretation().interpret());
         }
         this.endingExecuter.setEnding(this.record.getEnding());
-        this.endingExecuter.executeEnding();
+        return this.endingExecuter.executeEnding();
     }
 
     /**

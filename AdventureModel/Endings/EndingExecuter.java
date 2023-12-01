@@ -9,8 +9,9 @@ public class EndingExecuter {
      * This method calls the executeEnding() method of whichever Ending the state attribute
      * is currently referencing.
      */
-    public void executeEnding() {
+    public Ending executeEnding() {
         this.state.executeEnding();
+        return this.state;
     }
 
     /**

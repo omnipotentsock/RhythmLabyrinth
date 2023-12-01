@@ -3,7 +3,6 @@ package views;
 import AdventureModel.AdventureGame;
 import AdventureModel.Endings.Ending;
 import AdventureModel.Interactions.Interaction;
-import AdventureModel.Minigames.Battle.Battle;
 import AdventureModel.Movement.ForcedQueue;
 import AdventureModel.Movement.Room;
 import javafx.animation.PauseTransition;
@@ -507,8 +506,10 @@ public class AdventureGameView {
         }
     }
     public void displayEndingScene() {
-        this.model.getPlayer().executeEnding();
-        String pictureFileName = this.model.getPlayer().getOutcomeExecuter().getRecord().getEnding().getPicture();
+        // EAction: You got here, somehow&NULL& You are worthy of my challenge! Face me&M0003&Against all odds, you beat me! Face me, warrior of a thousand suns!&M005&Damn son you good.
+        Ending e = this.model.getPlayer().computeEnding();
+
+        String pictureFileName = this.model.getDirectoryName() + "/EndingPictures/" + this.model.getPlayer().getOutcomeExecuter().getRecord().getEnding().getPicture();
         String text = this.model.getPlayer().getOutcomeExecuter().getRecord().getEnding().getMessage();
 
         ImageView imageView = new ImageView(pictureFileName);
