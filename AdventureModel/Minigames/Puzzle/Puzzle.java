@@ -34,6 +34,13 @@ public class Puzzle implements MiniGame {
 
 
     // The actual button being pressed
+    public Puzzle(PuzzleInterpretationFactory puzzleInterpretationFactory, Double perfSatCutoff, Double satMedCutoff) {
+        this.puzzleInterpretationFactory = puzzleInterpretationFactory;
+        this.PerfSatCutoff = perfSatCutoff;
+        this.SatMedCutoff = satMedCutoff;
+        this.creatingSequence();
+        userSequence = new ArrayList<>();
+    }
     public class SequenceButton {
         public static void main(String[] args) {
             JFrame frame = new JFrame("3x3 Button Grid");

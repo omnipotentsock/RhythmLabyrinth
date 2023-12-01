@@ -5,7 +5,6 @@ import views.AdventureGameView;
 import java.io.File;
 
 public class PerformanceEnding implements Ending{
-    private AdventureGameView adventureGameView;
     private final String message = "You have performed well beyond what many others could ever imagine to achieve. A legendary hero!";
     private final String picture = "PerformanceEnding.png";
     /**
@@ -14,9 +13,6 @@ public class PerformanceEnding implements Ending{
      *      - Afterward, display a PerformanceEnding message
      *      - Display PerformanceEnding picture
      */
-    public PerformanceEnding(AdventureGameView adventureGameView) {
-        this.adventureGameView = adventureGameView;
-    }
     @Override
     public void executeEnding() {
         throw new UnsupportedOperationException();
@@ -24,5 +20,13 @@ public class PerformanceEnding implements Ending{
     @Override
     public String getID() {
         return "PERFORMANCE";
+    }
+    @Override
+    public String getMessage() {
+        return message;
+    }
+    @Override
+    public String getPicture() {
+        return picture;
     }
 }

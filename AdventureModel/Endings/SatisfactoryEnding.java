@@ -5,7 +5,6 @@ import views.AdventureGameView;
 import java.io.File;
 
 public class SatisfactoryEnding implements Ending{
-    private AdventureGameView adventureGameView;
     private final String message = "You have saved the world, young one. Well done!";
     private final String picture = "SatisfactoryEnding";
     /**
@@ -14,9 +13,6 @@ public class SatisfactoryEnding implements Ending{
      *      - Afterward, display picture
      *      - Display message
      */
-    public SatisfactoryEnding(AdventureGameView adventureGameView) {
-        this.adventureGameView = adventureGameView;
-    }
     @Override
     public void executeEnding() {
         throw new UnsupportedOperationException();
@@ -24,5 +20,13 @@ public class SatisfactoryEnding implements Ending{
     @Override
     public String getID() {
         return "SATISFACTORY";
+    }
+    @Override
+    public String getMessage() {
+        return message;
+    }
+    @Override
+    public String getPicture() {
+        return picture;
     }
 }

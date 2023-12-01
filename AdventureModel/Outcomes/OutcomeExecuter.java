@@ -59,4 +59,10 @@ public class OutcomeExecuter implements Serializable {
     public int miniGamesCompleted() {
         return this.miniGames.size();
     }
+    public EndingExecuter getEndingExecuter() {
+        return this.endingExecuter;
+    }
+    public Progression getRecord() {
+        return this.record;
+    }
 }

@@ -1,5 +1,7 @@
 package AdventureModel.Endings;
 
+import views.AdventureGameView;
+
 public class EndingExecuter {
     private Ending state;
 

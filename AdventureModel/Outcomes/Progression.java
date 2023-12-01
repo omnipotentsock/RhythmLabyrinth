@@ -13,7 +13,6 @@ import views.AdventureGameView;
 import java.util.*;
 
 public class Progression {
-    private AdventureGameView adventureGameView;
     /**
      * This list consists of all possible AdventureModel.Endings in the game.
      */
@@ -24,9 +23,8 @@ public class Progression {
      * throughout the game.
      */
     private HashMap<String, Double> development;
-    public Progression(AdventureGameView adventureGameView) {
-        this.adventureGameView = adventureGameView;
-        this.endings = new ArrayList<Ending>(Arrays.asList(new MediocreEnding(adventureGameView), new SatisfactoryEnding(adventureGameView), new PerformanceEnding(adventureGameView)));
+    public Progression() {
+        this.endings = new ArrayList<Ending>(Arrays.asList(new MediocreEnding(), new SatisfactoryEnding(), new PerformanceEnding()));
         this.development = new HashMap<>();
         for (Ending ending : endings) {
             development.put(ending.getID(), 0D);
@@ -71,5 +69,8 @@ public class Progression {
             }
         }
         return null;
+    }
+    public List<Ending> getEndings() {
+        return this.endings;
     }
 }

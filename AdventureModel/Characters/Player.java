@@ -26,9 +26,9 @@ public class Player implements Serializable {
     /**
      * Adventure Game Player Constructor
      */
-    public Player(Room currentRoom, AdventureGameView adventureGameView) {
+    public Player(Room currentRoom) {
         this.currentRoom = currentRoom;
-        Progression progression = new Progression(adventureGameView);
+        Progression progression = new Progression();
         List<MiniGame> miniGames = new ArrayList<>();
         EndingExecuter endingExecuter = new EndingExecuter();
         this.outcome = new OutcomeExecuter(progression, miniGames, endingExecuter);

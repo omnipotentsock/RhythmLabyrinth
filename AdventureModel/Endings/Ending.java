@@ -11,4 +11,16 @@ public interface Ending {
      * @return String representation
      */
     String getID();
+
+    /**
+     * This method returns the filename of the picture associated with the Ending.
+     * @return a filename String
+     */
+    String getMessage();
+
+    /**
+     * This method returns a description of the Ending.
+     * @return a description String
+     */
+    String getPicture();
 }

@@ -1,7 +1,9 @@
 package views;
 
 import AdventureModel.AdventureGame;
+import AdventureModel.Endings.Ending;
 import AdventureModel.Interactions.Interaction;
+import AdventureModel.Minigames.Battle.Battle;
 import AdventureModel.Movement.ForcedQueue;
 import AdventureModel.Movement.Room;
 import javafx.animation.PauseTransition;
@@ -504,7 +506,11 @@ public class AdventureGameView {
             mediaPlaying = false;
         }
     }
-    public void setEndingSettings(String pictureFileName, String text) {
+    public void displayEndingScene() {
+        this.model.getPlayer().executeEnding();
+        String pictureFileName = this.model.getPlayer().getOutcomeExecuter().getRecord().getEnding().getPicture();
+        String text = this.model.getPlayer().getOutcomeExecuter().getRecord().getEnding().getMessage();
+
         ImageView imageView = new ImageView(pictureFileName);
         this.gridPane.getChildren().add(imageView);
         roomImageView.setPreserveRatio(true);
@@ -514,4 +520,5 @@ public class AdventureGameView {
         TextArea textLabel = new TextArea(text);
         this.gridPane.getChildren().add(textLabel);
     }
+
 }
