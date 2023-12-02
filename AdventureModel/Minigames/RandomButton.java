@@ -8,14 +8,14 @@ import java.util.Random;
 
 public class RandomButton {
 
-    private final int BUTTON_WIDTH = 100;
-    private final int BUTTON_HEIGHT = 20;
+    private final int BUTTON_WIDTH = 80;
+    private final int BUTTON_HEIGHT = 80;
 
     public RandomButton() {
         JFrame frame = new JFrame();
         frame.setLayout(null);
 
-        Timer timer = new Timer(100, new ActionListener() {
+        Timer timer = new Timer(600, new ActionListener() {
             Random random = new Random();
 
             @Override
@@ -24,6 +24,9 @@ public class RandomButton {
                 button.setBounds(random.nextInt(frame.getContentPane().getWidth() - BUTTON_WIDTH),
                         random.nextInt(frame.getContentPane().getHeight() - BUTTON_HEIGHT), BUTTON_WIDTH,
                         BUTTON_HEIGHT);
+//                button.setAction(e -> {
+//
+//                });
                 for (int tries = 0; tries < 50; tries++) {
                     if (intersectsComponent(button, frame.getContentPane().getComponents())) {
                         button.setBounds(random.nextInt(frame.getContentPane().getWidth() - BUTTON_WIDTH),

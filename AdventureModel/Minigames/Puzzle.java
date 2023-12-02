@@ -1,5 +1,9 @@
 package AdventureModel.Minigames;
 
+import AdventureModel.AdventureGame;
+import javafx.scene.layout.Pane;
+import views.AdventureGameView;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
@@ -8,13 +12,21 @@ import java.util.ArrayList;
 import java.util.Random;
 
 
-public class Puzzle {
+public class Puzzle extends Minigame {
+    public String minigameType;
     private Integer sequenceLength; // CPU Sequence that user must complete
     private ArrayList<Integer> sequenceArray = new ArrayList<Integer>(); // The array in which the sequence is stored
     private static String currDigit; // The current button that the user has selected
     private static ArrayList<Integer> userSequence = new ArrayList<Integer>(); // The array in which the user has input their sequence
 
+    public Puzzle() {
+        super("puzzle");
+    }
+    public void execute(AdventureGameView adventureGameView) {
 
+    }
+    @Override
+    public Pane createGamePane(AdventureGameView adventureGameView) {return null;};
     // The actual button being pressed
     public class SequenceButton {
         public static void main(String[] args) {
