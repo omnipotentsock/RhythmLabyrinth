@@ -4,133 +4,166 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
-
+/**
+ * Class Puzzle
+ * ------------
+ * This is the class that will visualize the puzzle component of the minigame.
+ * It features a 3x3 grid of labelled buttons in which a CPU flashes a certain sequence
+ * and the player must do their best in matching up to said sequence.
+ */
 public class Puzzle {
-    private Integer sequenceLength; // CPU Sequence that user must complete
-    private ArrayList<Integer> sequenceArray = new ArrayList<Integer>(); // The array in which the sequence is stored
-    private static String currDigit; // The current button that the user has selected
-    private static ArrayList<Integer> userSequence = new ArrayList<Integer>(); // The array in which the user has input their sequence
+    public static ArrayList<Integer> sequenceArray = new ArrayList<>();
+    private static ArrayList<Integer> userSequence = new ArrayList<>();
+    private static ArrayList<JButton> buttons = new ArrayList<>();
+    private static int currentIndex = 0;
+    private static int maxSequence = 5;
 
-
-    // The actual button being pressed
-    public class SequenceButton {
-        public static void main(String[] args) {
-            JFrame frame = new JFrame("3x3 Button Grid");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(300, 300);
-
-            // Create a panel with a 3x3 grid layout
-            JPanel panel = new JPanel(new GridLayout(3, 3));
-
-            // Create buttons and add them to the panel
-            for (int i = 1; i <= 9; i++) {
-                JButton button = new JButton(Integer.toString(i));
-                button.addActionListener(new views.SequenceButton.ButtonClickListener());
-                panel.add(button);
-            }
-
-            // Add the panel to the frame
-            frame.add(panel);
-
-            // Set the frame properties
-            frame.setLocationRelativeTo(null);
-            frame.setVisible(true);
-        }
-
-        static class ButtonClickListener implements ActionListener {
-            @Override
-            public void actionPerformed(ActionEvent e) {
-                JButton source = (JButton) e.getSource();
-                currDigit = source.getText();
-                userSequence.add(Integer.parseInt(currDigit));
-                System.out.println("Button " + source.getText() + " clicked");
-            }
-        }
+    public static void main(String[] args) {
+        SwingUtilities.invokeLater(() -> {
+            Puzzle puzzle = new Puzzle();
+            puzzle.createButtonGrid();
+            puzzle.generateSequence();
+            puzzle.runCPUSequence();
+        });
     }
 
-    private void creatingSequence() {
+    /**
+     * createButtonGrid
+     * ----------------
+     * Forms the actual 3x3 grid containing the buttons in GUI form
+     */
+    private void createButtonGrid() {
+        JFrame frame = new JFrame("Color Button Grid");
+        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        frame.setSize(300, 300);
+
+        JPanel panel = new JPanel(new GridLayout(3, 3));
+
+        for (int i = 1; i <= 9; i++) {
+            JButton button = new JButton(Integer.toString(i));
+            button.addActionListener(new ButtonClickListener());
+            buttons.add(button);
+            panel.add(button);
+        }
+
+        frame.add(panel);
+        frame.setLocationRelativeTo(null);
+        frame.setVisible(true);
+    }
+
+    /**
+     * generateSequence
+     * ----------------
+     * Allows the CPU to generate a randomized sequence for the round
+     */
+    private void generateSequence() {
         Random random = new Random();
-
-        int min = 1;
-        int max = 20;
-        sequenceLength = random.nextInt(max - min + 1) + min;
-
-        for (int element = 1; element <= sequenceLength; element++) {
-            Random randomElement = new Random();
-
-            int minElement = 1;
-            int maxElement = 9;
-            int randomElementInRange = randomElement.nextInt(maxElement - minElement + 1) + minElement;
-
-            sequenceArray.add(randomElementInRange);
+        int randomNum = ThreadLocalRandom.current().nextInt(1, maxSequence + 1);
+        for (int i = 0; i < randomNum; i++) {  // Adjust the sequence length as needed
+            int randomIndex = random.nextInt(9);
+            sequenceArray.add(randomIndex);
         }
-
     }
 
-    public class pressingCPUSequence {
-        private JButton button;
-
-        public void AutoButtonPressExample() {
-            JFrame frame = new JFrame("Auto Button Press Example");
-            frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-            frame.setSize(300, 200);
-
-            button = new JButton("Press Me!");
-            button.addActionListener(new ButtonPressListener());
-
-            frame.add(button);
-            frame.setVisible(true);
-
-            autoPressButtons(); // Simulate button presses automatically
-        }
-
-        private void autoPressButtons() {
-            for (int buttonIndex : sequenceArray) {
-                simulateButtonPress(buttonIndex);
-            }
-        }
-
-        private void simulateButtonPress(final int buttonIndex) {
-            // Simulate button press by triggering its ActionListener
-            button.doClick();
-            System.out.println("Button " + buttonIndex + " pressed!");
-            try {
-                Thread.sleep(1000); // Sleep for 1 second between button presses (for demonstration purposes)
-            } catch (InterruptedException e) {
-                e.printStackTrace();
-            }
-        }
-
-        static class ButtonPressListener implements ActionListener {
+    /**
+     * runCPUSequence
+     * --------------
+     * The actual process for the CPU generating a sequence
+     */
+    private void runCPUSequence() {
+        Timer timer = new Timer(1000, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
-                // Handle button press events if needed
-                System.out.println("Button pressed!");
+                if (currentIndex < sequenceArray.size()) {
+                    int buttonIndex = sequenceArray.get(currentIndex);
+                    flashButtonColor(buttons.get(buttonIndex));
+                    currentIndex++;
+                } else {
+                    ((Timer) e.getSource()).stop();
+                }
             }
-        }
+        });
+        timer.start();
+    }
 
-        public void main(String[] args) {
-            new pressingCPUSequence();
+    /**
+     * flashButtonColour
+     * -----------------
+     * Flashes the colour red whenever the CPU chooses a specific button.
+     * @param button
+     */
+    private void flashButtonColor(JButton button) {
+        button.setBackground(Color.RED);  // Adjust the color as needed
+        button.setOpaque(true);
+
+        Timer timer = new Timer(500, new ActionListener() {
+            @Override
+            public void actionPerformed(ActionEvent e) {
+                button.setBackground(null);
+                button.setOpaque(false);
+            }
+        });
+        timer.setRepeats(false);
+        timer.start();
+    }
+
+    /**
+     * ButtonClickListener
+     * -------------------
+     * Records the button index and source pressed in the user sequence
+     */
+    private class ButtonClickListener implements ActionListener {
+        @Override
+        public void actionPerformed(ActionEvent e) {
+            JButton source = (JButton) e.getSource();
+            int buttonIndex = buttons.indexOf(source);
+            // ==BELOW LINE==: records the button that was pressed
+            System.out.println("Button " + (buttonIndex + 1) + " clicked");
+            userSequence.add(buttonIndex);
+            System.out.println(sequenceArray);
+            System.out.println(userSequence);
+            checkUserSequence();
         }
     }
 
 
-    private boolean checkSequence() {
-        for (int element = 1; element <= sequenceLength; element++) {
-            if (sequenceArray.get(element) != userSequence.get(element)) {
+    /**
+     * ComparisonSequence
+     * ------------------
+     * Compares both the CPU sequence and the user sequence and returns the comparison value
+     */
+    private static class ComparisonSequence {
+        public static boolean compare(ArrayList<Integer> sequenceArray, ArrayList<Integer> userSequence) {
+            if (sequenceArray.size() != userSequence.size()) {
                 return false;
             }
-
+            for (int i = 0; i < sequenceArray.size(); i++) {
+                if (!userSequence.get(i).equals(sequenceArray.get(i))) {
+                    return false;
+                }
+            }
+            return true;
         }
-        return true;
+
     }
 
-
+    /**
+     * checkUserSequence
+     * -----------------
+     * Process that actually runs the check on both the user and CPU sequence
+     * and outputs a statement regarding the result
+     */
+    private void checkUserSequence() {
+        if (ComparisonSequence.compare(sequenceArray, userSequence)) {
+            System.out.println("Congratulations! Sequences match!");
+        } else {
+            System.out.println("Incorrect sequence. Try again.");
+        }
+    }
 
 }
-
-// TODO: * Find a way for the CPU to press the buttons on its own at first
-// TODO: * Adjust the program so that the button can run in place
