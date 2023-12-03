@@ -116,6 +116,7 @@ public class AdventureGame implements Serializable {
         //try the blocked passages first
         Passage chosen = null;
         for (Passage entry : possibilities) {
+
             chosen = entry; //the passage is unlocked
         }
 

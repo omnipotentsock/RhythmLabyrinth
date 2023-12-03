@@ -16,7 +16,8 @@ public class Player implements Serializable {
     private Room currentRoom;
 
     private OutcomeDeterminer outcome = new OutcomeDeterminer();
-
+    public double playerHealth = 100;
+    public double totalHealth = 100;
 
     /**
      * Adventure Game Player Constructor
@@ -47,4 +48,7 @@ public class Player implements Serializable {
     public OutcomeDeterminer getOutcome() {
         return outcome;
     }
+
+    public double getPlayerHealth() { return this.playerHealth; }
+    public double loseHealth(int damage) { return this.playerHealth -= damage; }
 }

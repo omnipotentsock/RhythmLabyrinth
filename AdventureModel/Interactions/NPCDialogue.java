@@ -30,7 +30,7 @@ public class NPCDialogue extends Interaction{
 
     public void execute(AdventureGameView adventureGameView) {
         String s = "Jimothy:\n" + dialogueText;
-        System.out.println(s); // TODO: Update picture to NPC picture, Display text on GUI
+        // TODO: Update picture to NPC picture, Display text on GUI
         adventureGameView.updateScene(s);
     }
 
