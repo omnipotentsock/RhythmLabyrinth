@@ -1,11 +1,15 @@
 package views;
 
 import AdventureModel.AdventureGame;
-import AdventureModel.Endings.Ending;
+import AdventureModel.Interactions.Choice;
+import AdventureModel.Interactions.ChoiceOption;
 import AdventureModel.Interactions.Interaction;
+import AdventureModel.Minigames.Battle.Battle;
+import AdventureModel.Minigames.Minigame;
 import AdventureModel.Movement.ForcedQueue;
 import AdventureModel.Movement.Room;
 import javafx.animation.PauseTransition;
+import javafx.animation.Timeline;
 import javafx.application.Platform;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
@@ -23,8 +27,11 @@ import javafx.scene.image.ImageView;
 import javafx.util.Duration;
 import javafx.scene.AccessibleRole;
 
-import javafx.scene.control.TextArea;
 import java.io.File;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Collections;
+import java.util.Random;
 
 /**
  * Class AdventureGameView.
@@ -43,7 +50,8 @@ public class AdventureGameView {
     Button saveButton, loadButton, helpButton; //buttons
     Boolean helpToggle = false; //is help on display?
 
-    GridPane gridPane = new GridPane(); //to hold images and buttons
+    ArrayList<Button> moves = new ArrayList<>();
+    public GridPane gridPane = new GridPane(); //to hold images and buttons
     Label roomDescLabel = new Label(); //to hold room description and/or instructions
     VBox objectsInRoom = new VBox(); //to hold room items
     VBox objectsInInventory = new VBox(); //to hold inventory items
@@ -70,7 +78,7 @@ public class AdventureGameView {
     public void intiUI() {
 
         // setting up the stage
-        this.stage.setTitle("moha2683's Adventure Game"); //Replace <YOUR UTORID> with your UtorID
+        this.stage.setTitle("Rhythm Labyrinth"); //Replace <YOUR UTORID> with your UtorID
 
         //Inventory + Room items
         objectsInInventory.setSpacing(10);
@@ -123,7 +131,7 @@ public class AdventureGameView {
         addInstructionEvent();
 
         HBox topButtons = new HBox();
-        topButtons.getChildren().addAll(saveButton, helpButton, loadButton);
+        topButtons.getChildren().addAll(saveButton, loadButton);
         topButtons.setSpacing(10);
         topButtons.setAlignment(Pos.CENTER);
 
@@ -150,9 +158,10 @@ public class AdventureGameView {
         invLabel.setFont(new Font("Arial", 16));
 
         //add all the widgets to the GridPane
-        gridPane.add( objLabel, 0, 0, 1, 1 );  // Add label
-        gridPane.add( topButtons, 1, 0, 1, 1 );  // Add buttons
-        gridPane.add( invLabel, 2, 0, 1, 1 );  // Add label
+//        gridPane.add( objLabel, 0, 0, 1, 1 );  // Add label
+        gridPane.add( topButtons, 0, 0, 1, 1 );  // Add buttons
+        gridPane.add(helpButton, 2,0);
+//        gridPane.add( invLabel, 2, 0, 1, 1 );  // Add label
 
         Label commandLabel = new Label("What would you like to do?");
         commandLabel.setStyle("-fx-text-fill: white;");
@@ -161,6 +170,33 @@ public class AdventureGameView {
         updateScene(""); //method displays an image and whatever text is supplied
         queueCycle();
 
+        // Movement buttons, subject to change
+        Button northButton = new Button("North");
+        Button southButton = new Button("South");
+        Button westButton = new Button("West");
+        Button eastButton = new Button("East");
+        Collections.addAll(moves, northButton, southButton, westButton, eastButton);
+        for (Button direction : moves) {
+            styleMovementButtons(direction);
+            direction.setOnAction(e -> {
+                submitEvent(direction.getText());
+            });
+            direction.setDisable(true);
+        }
+        VBox northDirection = new VBox(northButton);
+        northDirection.setAlignment(Pos.BOTTOM_CENTER);
+//        northDirection.
+        VBox southDirection = new VBox(southButton);
+        southDirection.setAlignment(Pos.TOP_CENTER);
+        VBox westDirection = new VBox(westButton);
+        westDirection.setAlignment(Pos.CENTER);
+        VBox eastDirection = new VBox(eastButton);
+        eastDirection.setAlignment(Pos.CENTER);
+        gridPane.add(northDirection, 1, 0);
+        gridPane.add(southDirection, 1, 2);
+        gridPane.add(westDirection, 0, 1);
+        gridPane.add(eastDirection, 2, 1);
+
         // adding the text area and submit button to a VBox
         VBox textEntry = new VBox();
         textEntry.setStyle("-fx-background-color: #000000;");
@@ -168,7 +204,7 @@ public class AdventureGameView {
         textEntry.getChildren().addAll(commandLabel, inputTextField);
         textEntry.setSpacing(10);
         textEntry.setAlignment(Pos.CENTER);
-        gridPane.add( textEntry, 0, 2, 3, 1 );
+//        gridPane.add( textEntry, 0, 2, 3, 1 );
 
         // Render everything
         var scene = new Scene( gridPane ,  1000, 800);
@@ -178,6 +214,40 @@ public class AdventureGameView {
         this.stage.show();
 //        updateScene("", "move"); //method displays an image and whatever text is supplied
 
+    }
+
+    /**
+     * CSS styling for the directions
+     * @param direction is the button to style
+     */
+    private void styleMovementButtons(Button direction) {
+        direction.setStyle(
+                "-fx-background-color: rgba(255, 255, 255, 0);" +
+                        "-fx-border-color: rgba(74, 74, 74, 0.075);" +
+                        "-fx-border-width: 0px;" +
+                        "-fx-border-radius: 10px;" +
+                        "-fx-text-fill: #ffffff;" +
+                        "-fx-padding: 2em;" +
+                        "-fx-font-weight: bold;"
+        );
+        // Add hover effect
+        direction.setOnMouseEntered(e -> direction.setStyle(
+                "-fx-text-fill: #ff7583;" +
+                        "-fx-background-color: rgba(255, 255, 255, 0);"+
+                        "-fx-border-width: 0px;" +
+                        "-fx-border-radius: 10px;" +
+                        "-fx-padding: 2em;" +
+                        "-fx-font-weight: bold;"
+        ));
+
+        direction.setOnMouseExited(e -> direction.setStyle(
+                "-fx-text-fill: #ffffff;" +
+                        "-fx-background-color: rgba(255, 255, 255, 0);"+
+                        "-fx-border-width: 0px;" +
+                        "-fx-border-radius: 10px;" +
+                        "-fx-padding: 2em;" +
+                        "-fx-font-weight: bold;"
+        ));
     }
 
 
@@ -211,7 +281,7 @@ public class AdventureGameView {
     private void customizeButton(Button inputButton, int w, int h) {
         inputButton.setPrefSize(w, h);
         inputButton.setFont(new Font("Arial", 16));
-        inputButton.setStyle("-fx-background-color: #17871b; -fx-text-fill: white;");
+        inputButton.setStyle("-fx-background-color: #a81132; -fx-text-fill: white;");
     }
 
     /**
@@ -363,6 +433,146 @@ public class AdventureGameView {
             //finally, articulate the description
             if (textToDisplay == null || textToDisplay.isBlank()) articulateRoomDescription();
         }
+        if (key.equals("puzzle")) {
+            GridPane puzzleDisplay = new GridPane();
+            puzzleDisplay.setPadding(new Insets(20));
+            puzzleDisplay.setBackground(new Background(new BackgroundFill(
+                    Color.valueOf("#000000"),
+                    new CornerRadii(0),
+                    new Insets(0)
+            )));
+
+            //Three columns, three rows for the GridPane
+            ColumnConstraints column1 = new ColumnConstraints(150);
+            ColumnConstraints column2 = new ColumnConstraints(650);
+            ColumnConstraints column3 = new ColumnConstraints(150);
+            column3.setHgrow( Priority.SOMETIMES ); //let some columns grow to take any extra space
+            column1.setHgrow( Priority.SOMETIMES );
+
+            // Row constraints
+            RowConstraints row1 = new RowConstraints();
+            RowConstraints row2 = new RowConstraints( 650 );
+            RowConstraints row3 = new RowConstraints();
+            row1.setVgrow( Priority.SOMETIMES );
+            row3.setVgrow( Priority.SOMETIMES );
+
+            puzzleDisplay.getColumnConstraints().addAll( column1 , column2 , column1 );
+            puzzleDisplay.getRowConstraints().addAll( row1 , row2 , row1 );
+            Label titleText = new Label("COMPLETE THIS PUZZLE TO MOVE ON");
+            titleText.setStyle("-fx-text-fill: white;"+"-fx-font-weight: bold;");
+            titleText.setFont(new Font("Arial", 24));
+            HBox title = new HBox(titleText);
+            title.setAlignment(Pos.BOTTOM_CENTER);
+            puzzleDisplay.add(title,1,0);
+
+            var scene = new Scene( puzzleDisplay ,  1000, 800);
+            this.stage.setScene(scene);
+            this.stage.show();
+//            gridPane.add(burh,0,0);
+//            System.out.println("Puzzle");
+        }
+        if (key.equals("battle")) {
+            GridPane battleDisplay = new GridPane();
+            battleDisplay.setPadding(new Insets(20));
+            battleDisplay.setBackground(new Background(new BackgroundFill(
+                    Color.valueOf("#000000"),
+                    new CornerRadii(0),
+                    new Insets(0)
+            )));
+
+            //Three columns, three rows for the GridPane
+            ColumnConstraints column1 = new ColumnConstraints(150);
+            ColumnConstraints column2 = new ColumnConstraints(650);
+            ColumnConstraints column3 = new ColumnConstraints(150);
+            column3.setHgrow( Priority.SOMETIMES ); //let some columns grow to take any extra space
+            column1.setHgrow( Priority.SOMETIMES );
+
+            // Row constraints
+            RowConstraints row1 = new RowConstraints();
+            RowConstraints row2 = new RowConstraints( 650 );
+            RowConstraints row3 = new RowConstraints();
+            row1.setVgrow( Priority.SOMETIMES );
+            row3.setVgrow( Priority.SOMETIMES );
+
+            battleDisplay.getColumnConstraints().addAll( column1 , column2 , column1 );
+            battleDisplay.getRowConstraints().addAll( row1 , row2 , row1 );
+            Label titleText = new Label("YOU ARE IN A BATTLE NOW");
+            titleText.setStyle("-fx-text-fill: white;"+"-fx-font-weight: bold;");
+            titleText.setFont(new Font("Arial", 24));
+            HBox title = new HBox(titleText);
+            title.setAlignment(Pos.BOTTOM_CENTER);
+            battleDisplay.add(title,1,0);
+            battleDisplay.setAlignment(Pos.CENTER);
+
+            var scene = new Scene( battleDisplay , 1000, 800);
+            this.stage.setScene(scene);
+            this.stage.show();
+        }
+    }
+
+    public void playGame(Minigame minigame) {
+        if (minigame.minigameType.equals("battle")) {
+            GridPane curPane = (GridPane) this.stage.getScene().getRoot();
+//            ProgressBar healthBar = new ProgressBar();
+
+            curPane.add(minigame.createGamePane(this), 1, 1);
+        }
+    }
+
+    public void updateScene(String textToDisplay, Choice choice) { // TODO: Implement MOVE
+
+//        if (key.equals("instructions")) {
+//            roomImageView.setImage(null);
+//            roomImageView.setFitWidth(0);
+//            roomImageView.setFitHeight(0);
+//
+//            formatText(textToDisplay); //format the text to display
+//            roomDescLabel.setPrefWidth(500);
+//            roomDescLabel.setPrefHeight(500);
+//            roomDescLabel.setTextOverrun(OverrunStyle.CLIP);
+//            roomDescLabel.setWrapText(true);
+//            VBox roomPane = new VBox(roomImageView, roomDescLabel);
+//            roomPane.setPadding(new Insets(10));
+//            roomPane.setAlignment(Pos.TOP_CENTER);
+//            roomPane.setStyle("-fx-background-color: #000000;");
+//
+//            gridPane.add(roomPane, 1, 1);
+//            stage.sizeToScene();
+//
+//            //finally, articulate the description
+//            if (textToDisplay == null || textToDisplay.isBlank()) articulateRoomDescription();
+//        }
+        getRoomImage(); //get the image of the current room
+        formatText(textToDisplay); //format the text to display
+        roomDescLabel.setPrefWidth(500);
+        roomDescLabel.setPrefHeight(500);
+        roomDescLabel.setTextOverrun(OverrunStyle.CLIP);
+        roomDescLabel.setWrapText(true);
+        VBox roomPane = new VBox(roomImageView,roomDescLabel);
+        roomPane.setPadding(new Insets(10));
+        roomPane.setAlignment(Pos.TOP_CENTER);
+        roomPane.setStyle("-fx-background-color: #000000;");
+
+
+
+        //finally, articulate the description
+//        if (textToDisplay == null || textToDisplay.isBlank()) articulateRoomDescription();
+
+        HBox clickableOptions = new HBox();
+        for (ChoiceOption option : choice.getOptions()){
+            // TODO: Populate optionsView with option buttons
+//            s += "\n\tOption: " + option.getOptionText();
+            Button button = new Button(option.getOptionText());
+            button.setOnAction(e -> {
+                option.execute(this);
+            });
+            clickableOptions.getChildren().add(button);
+        }
+        clickableOptions.setAlignment(Pos.BOTTOM_CENTER);
+        roomPane.getChildren().add(clickableOptions);
+
+        gridPane.add(roomPane, 1, 1);
+        stage.sizeToScene();
     }
 
     private void queueCycle(){
@@ -371,7 +581,12 @@ public class AdventureGameView {
         if (!q.is_empty()) {
             Interaction i = q.dequeue();
             i.execute(this);
-        } else {q.refresh();}
+        } else {
+            q.refresh();
+            for (Button direction : moves) {
+                direction.setDisable(false);
+            }
+        }
     }
 
     /**
@@ -505,21 +720,7 @@ public class AdventureGameView {
             mediaPlaying = false;
         }
     }
-    public void displayEndingScene() {
-        // EAction: You got here, somehow&NULL& You are worthy of my challenge! Face me&M0003&Against all odds, you beat me! Face me, warrior of a thousand suns!&M005&Damn son you good.
-        Ending e = this.model.getPlayer().computeEnding();
 
-        String pictureFileName = this.model.getDirectoryName() + "/EndingPictures/" + this.model.getPlayer().getOutcomeExecuter().getRecord().getEnding().getPicture();
-        String text = this.model.getPlayer().getOutcomeExecuter().getRecord().getEnding().getMessage();
-
-        ImageView imageView = new ImageView(pictureFileName);
-        this.gridPane.getChildren().add(imageView);
-        roomImageView.setPreserveRatio(true);
-        roomImageView.setFitWidth(400);
-        roomImageView.setFitHeight(400);
-
-        TextArea textLabel = new TextArea(text);
-        this.gridPane.getChildren().add(textLabel);
-    }
-
+    public AdventureGame getModel() {return this.model;}
+    public GridPane getCurrentPane() {return (GridPane) this.stage.getScene().getRoot();}
 }

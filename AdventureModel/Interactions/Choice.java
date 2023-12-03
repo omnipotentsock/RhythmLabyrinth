@@ -1,5 +1,9 @@
 package AdventureModel.Interactions;
 
+import javafx.geometry.Pos;
+import javafx.scene.control.Button;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
 import views.AdventureGameView;
 
 import java.util.ArrayList;
@@ -46,13 +50,18 @@ public class Choice extends Interaction{
 
         // TODO: Display choice dialogue and options retrieved below
         String s = this.dialogueText;
-
-        for (ChoiceOption option : this.options){
-            // TODO: Populate optionsView with option buttons
-            s += "\n\tOption: " + option.getOptionText();
-        }
-
-        adventureGameView.updateScene(s);
+//        HBox clickableOptions = new HBox();
+//        for (ChoiceOption option : this.options){
+//            // TODO: Populate optionsView with option buttons
+////            s += "\n\tOption: " + option.getOptionText();
+//            Button button = new Button(option.getOptionText());
+//            button.setOnAction(e -> {
+//                option.execute(adventureGameView);
+//            });
+//            clickableOptions.getChildren().add(button);
+//        }
+//        clickableOptions.setAlignment(Pos.BOTTOM_CENTER);
+        adventureGameView.updateScene(s, this);
 
         // TODO: Feel free to add imports to AdventureGame or whatever to make sure you can figure out what option is clicked or however you can make this work
     }
@@ -61,4 +70,6 @@ public class Choice extends Interaction{
     protected void setRefreshing(boolean refresh) {this.refreshing = refresh;}
     public boolean getRefreshing(){ return this.refreshing;}
     public String getDialogueText(){return this.dialogueText;}
+
+    public ArrayList<ChoiceOption> getOptions() { return this.options; }
 }

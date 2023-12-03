@@ -1,15 +1,9 @@
 package AdventureModel.Characters;
 
-import AdventureModel.Endings.Ending;
-import AdventureModel.Endings.EndingExecuter;
-import AdventureModel.Minigames.MiniGame;
 import AdventureModel.Movement.Room;
-import AdventureModel.Outcomes.OutcomeExecuter;
-import AdventureModel.Outcomes.Progression;
+import AdventureModel.Outcomes.OutcomeDeterminer;
 
 import java.io.Serializable;
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * This class keeps track of the progress
@@ -20,17 +14,16 @@ public class Player implements Serializable {
      * The current room that the player is located in.
      */
     private Room currentRoom;
-    private OutcomeExecuter outcome;
+
+    private OutcomeDeterminer outcome = new OutcomeDeterminer();
+    public double playerHealth = 100;
+    public double totalHealth = 100;
 
     /**
      * Adventure Game Player Constructor
      */
     public Player(Room currentRoom) {
         this.currentRoom = currentRoom;
-        Progression progression = new Progression();
-        List<MiniGame> miniGames = new ArrayList<>();
-        EndingExecuter endingExecuter = new EndingExecuter();
-        this.outcome = new OutcomeExecuter(progression, miniGames, endingExecuter);
     }
 
     /**
@@ -52,10 +45,10 @@ public class Player implements Serializable {
     }
 
 
-    public OutcomeExecuter getOutcomeExecuter() {
+    public OutcomeDeterminer getOutcome() {
         return outcome;
     }
-    public Ending computeEnding() {
-        return this.outcome.execute();
-    }
+
+    public double getPlayerHealth() { return this.playerHealth; }
+    public double loseHealth(int damage) { return this.playerHealth -= damage; }
 }

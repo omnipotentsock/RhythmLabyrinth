@@ -14,7 +14,7 @@ import java.util.Objects;
 import java.util.Random;
 
 
-public class Puzzle implements MiniGame {
+public class Puzzle extends MiniGame {
     /**
      * This is the Puzzle's associated InterpretationFactory.
      */
