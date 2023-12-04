@@ -51,7 +51,9 @@ public class AdventureGameView {
 
     AdventureGame model; //model of the game
     Stage stage; //stage on which all is rendered
-    Button saveButton, loadButton, helpButton; //buttons
+    Button saveButton, loadButton, helpButton, pauseButton, invertButton; //buttons
+    Boolean invertToggle = false;
+    Boolean menuToggle = false;
     Boolean helpToggle = false; //is help on display?
 
     ArrayList<Button> moves = new ArrayList<>();
@@ -134,42 +136,46 @@ public class AdventureGameView {
         makeButtonAccessible(helpButton, "Help Button", "This button gives game instructions.", "This button gives instructions on the game controls. Click it to learn how to play.");
         addInstructionEvent();
 
+
         HBox topButtons = new HBox();
         topButtons.getChildren().addAll(saveButton, loadButton);
         topButtons.setSpacing(10);
         topButtons.setAlignment(Pos.CENTER);
 
-        inputTextField = new TextField();
-        inputTextField.setFont(new Font("Arial", 16));
-        inputTextField.setFocusTraversable(true);
-
-        inputTextField.setAccessibleRole(AccessibleRole.TEXT_AREA);
-        inputTextField.setAccessibleRoleDescription("Text Entry Box");
-        inputTextField.setAccessibleText("Enter commands in this box.");
-        inputTextField.setAccessibleHelp("This is the area in which you can enter commands you would like to play.  Enter a command and hit return to continue.");
-        addTextHandlingEvent(); //attach an event to this input field
+        pauseButton = new Button("MENU");
+        customizeButton(pauseButton, 200, 50);
+        pauseButton.setOnAction(e -> openMenu(topButtons));
+//        inputTextField = new TextField();
+//        inputTextField.setFont(new Font("Arial", 16));
+//        inputTextField.setFocusTraversable(true);
+//
+//        inputTextField.setAccessibleRole(AccessibleRole.TEXT_AREA);
+//        inputTextField.setAccessibleRoleDescription("Text Entry Box");
+//        inputTextField.setAccessibleText("Enter commands in this box.");
+//        inputTextField.setAccessibleHelp("This is the area in which you can enter commands you would like to play.  Enter a command and hit return to continue.");
+//        addTextHandlingEvent(); //attach an event to this input field
 
         //labels for inventory and room items
-        Label objLabel =  new Label("Objects in Room");
-        objLabel.setAlignment(Pos.CENTER);
-        objLabel.setStyle("-fx-text-fill: white;");
-        objLabel.setFont(new Font("Arial", 16));
-        addClickEvent();
-
-        Label invLabel =  new Label("Your Inventory");
-        invLabel.setAlignment(Pos.CENTER);
-        invLabel.setStyle("-fx-text-fill: white;");
-        invLabel.setFont(new Font("Arial", 16));
+//        Label objLabel =  new Label("Objects in Room");
+//        objLabel.setAlignment(Pos.CENTER);
+//        objLabel.setStyle("-fx-text-fill: white;");
+//        objLabel.setFont(new Font("Arial", 16));
+//        addClickEvent();
+//
+//        Label invLabel =  new Label("Your Inventory");
+//        invLabel.setAlignment(Pos.CENTER);
+//        invLabel.setStyle("-fx-text-fill: white;");
+//        invLabel.setFont(new Font("Arial", 16));
 
         //add all the widgets to the GridPane
 //        gridPane.add( objLabel, 0, 0, 1, 1 );  // Add label
-        gridPane.add( topButtons, 0, 0, 1, 1 );  // Add buttons
+        gridPane.add( pauseButton, 0, 0, 1, 1 );  // Add buttons
         gridPane.add(helpButton, 2,0);
 //        gridPane.add( invLabel, 2, 0, 1, 1 );  // Add label
 
-        Label commandLabel = new Label("What would you like to do?");
-        commandLabel.setStyle("-fx-text-fill: white;");
-        commandLabel.setFont(new Font("Arial", 16));
+//        Label commandLabel = new Label("What would you like to do?");
+//        commandLabel.setStyle("-fx-text-fill: white;");
+//        commandLabel.setFont(new Font("Arial", 16));
 
         updateScene(""); //method displays an image and whatever text is supplied
         queueCycle();
@@ -202,12 +208,12 @@ public class AdventureGameView {
         gridPane.add(eastDirection, 2, 1);
 
         // adding the text area and submit button to a VBox
-        VBox textEntry = new VBox();
-        textEntry.setStyle("-fx-background-color: #000000;");
-        textEntry.setPadding(new Insets(20, 20, 20, 20));
-        textEntry.getChildren().addAll(commandLabel, inputTextField);
-        textEntry.setSpacing(10);
-        textEntry.setAlignment(Pos.CENTER);
+//        VBox textEntry = new VBox();
+//        textEntry.setStyle("-fx-background-color: #000000;");
+//        textEntry.setPadding(new Insets(20, 20, 20, 20));
+//        textEntry.getChildren().addAll(commandLabel, inputTextField);
+//        textEntry.setSpacing(10);
+//        textEntry.setAlignment(Pos.CENTER);
 //        gridPane.add( textEntry, 0, 2, 3, 1 );
 
         // Render everything
@@ -218,6 +224,32 @@ public class AdventureGameView {
         this.stage.show();
 //        updateScene("", "move"); //method displays an image and whatever text is supplied
 
+    }
+    private void openMenu(HBox topButtons) {
+        if (!menuToggle) {
+            menuToggle = true;
+            roomImageView.setImage(null);
+            roomImageView.setFitWidth(0);
+            roomImageView.setFitHeight(0);
+
+            Label textToDisplay = new Label("Save or Load a game. You can also invert the colours for accessibility purposes.");
+            formatText(textToDisplay.getText()); //format the text to display
+            roomDescLabel.setPrefWidth(500);
+            roomDescLabel.setPrefHeight(500);
+            roomDescLabel.setTextOverrun(OverrunStyle.CLIP);
+            roomDescLabel.setWrapText(true);
+            VBox roomPane = new VBox(roomImageView, roomDescLabel, topButtons);
+            roomPane.setPadding(new Insets(10));
+            roomPane.setAlignment(Pos.TOP_CENTER);
+            roomPane.setStyle("-fx-background-color: #000000;");
+
+            gridPane.add(roomPane, 1, 1);
+            stage.sizeToScene();
+        } else {
+            updateScene("");
+            submitEvent("LOOK");
+            menuToggle = false;
+        }
     }
 
     /**
@@ -374,8 +406,6 @@ public class AdventureGameView {
                     }
                     );
             pause.play();
-
-
         }
     }
 
@@ -438,6 +468,7 @@ public class AdventureGameView {
             if (textToDisplay == null || textToDisplay.isBlank()) articulateRoomDescription();
         }
         if (key.equals("puzzle")) {
+            updateScene(textToDisplay);
             GridPane puzzleDisplay = new GridPane();
             puzzleDisplay.setPadding(new Insets(20));
             puzzleDisplay.setBackground(new Background(new BackgroundFill(
@@ -450,32 +481,39 @@ public class AdventureGameView {
             ColumnConstraints column1 = new ColumnConstraints(150);
             ColumnConstraints column2 = new ColumnConstraints(650);
             ColumnConstraints column3 = new ColumnConstraints(150);
-            column3.setHgrow( Priority.SOMETIMES ); //let some columns grow to take any extra space
-            column1.setHgrow( Priority.SOMETIMES );
+//            column3.setHgrow( Priority.SOMETIMES ); //let some columns grow to take any extra space
+//            column1.setHgrow( Priority.SOMETIMES );
 
             // Row constraints
             RowConstraints row1 = new RowConstraints();
             RowConstraints row2 = new RowConstraints( 650 );
             RowConstraints row3 = new RowConstraints();
-            row1.setVgrow( Priority.SOMETIMES );
-            row3.setVgrow( Priority.SOMETIMES );
+//            row1.setVgrow( Priority.SOMETIMES );
+//            row3.setVgrow( Priority.SOMETIMES );
 
-            puzzleDisplay.getColumnConstraints().addAll( column1 , column2 , column1 );
-            puzzleDisplay.getRowConstraints().addAll( row1 , row2 , row1 );
+            puzzleDisplay.getColumnConstraints().addAll( column1 , column2 , column3 );
+            puzzleDisplay.getRowConstraints().addAll( row1 , row2 , row3 );
             Label titleText = new Label("COMPLETE THIS PUZZLE TO MOVE ON");
             titleText.setStyle("-fx-text-fill: white;"+"-fx-font-weight: bold;");
             titleText.setFont(new Font("Arial", 24));
             HBox title = new HBox(titleText);
             title.setAlignment(Pos.BOTTOM_CENTER);
             puzzleDisplay.add(title,1,0);
+            Label instructionText = new Label("Match the sequence shown to you to pass");
+            instructionText.setStyle("-fx-text-fill: white;"+"-fx-font-weight: bold;");
+            titleText.setFont(new Font("Arial", 20));
+            instructionText.setWrapText(true);
+            puzzleDisplay.add(instructionText,2,1);
 
-            var scene = new Scene( puzzleDisplay ,  1000, 800);
-            this.stage.setScene(scene);
+//            var scene = new Scene( puzzleDisplay ,  1000, 800);
+//            this.stage.setScene(scene);
+            this.stage.getScene().setRoot(puzzleDisplay);
             this.stage.show();
 //            gridPane.add(burh,0,0);
 //            System.out.println("Puzzle");
         }
-        if (key.equals("battle")) {
+        else if (key.equals("battle")) {
+            updateScene(textToDisplay);
             GridPane battleDisplay = new GridPane();
             battleDisplay.setPadding(new Insets(20));
             battleDisplay.setBackground(new Background(new BackgroundFill(
@@ -508,8 +546,9 @@ public class AdventureGameView {
             battleDisplay.add(title,1,0);
             battleDisplay.setAlignment(Pos.CENTER);
 
-            var scene = new Scene( battleDisplay , 1000, 800);
-            this.stage.setScene(scene);
+//            var scene = new Scene( battleDisplay , 1000, 800);
+//            this.stage.setScene(scene);
+            this.stage.getScene().setRoot(battleDisplay);
             this.stage.show();
         }
     }
@@ -521,6 +560,19 @@ public class AdventureGameView {
 
             curPane.add(minigame.createGamePane(this), 1, 1);
         }
+        else if (minigame.minigameType.equals("puzzle")) {
+            GridPane curPane = (GridPane) this.stage.getScene().getRoot();
+//            ProgressBar healthBar = new ProgressBar();
+//            curPane.setAlignment(Pos.CENTER);
+            curPane.add(minigame.createGamePane(this), 1, 1);
+        }
+    }
+
+    public void finishGame() {
+//        this.stage.getScene().
+//        var scene = new Scene( gridPane , 1000, 800);
+        this.stage.getScene().setRoot(gridPane);
+        this.stage.show();
     }
 
     public void updateScene(String textToDisplay, Choice choice) { // TODO: Implement MOVE

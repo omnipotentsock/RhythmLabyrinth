@@ -88,7 +88,7 @@ public class Battle extends Minigame {
         });
         targetButton.setStyle(
                 "-fx-background-radius: 50em;" +
-                        "-fx-background-color: #e35f73"
+                        "-fx-background-color: #e35f73;"
         );
         random = new Random();
 
@@ -103,7 +103,7 @@ public class Battle extends Minigame {
                 });
             } else {
                 executorService.shutdown();
-
+                adventureGameView.finishGame();
             }
             if (!pressed && !firstIteration) {
                 Platform.runLater(() -> {
