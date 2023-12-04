@@ -147,6 +147,9 @@ public class AdventureGame implements Serializable {
                     return "GAME OVER";
                 else return "FORCED";
             } //something is up here! We are dead or we won.
+            if (this.player.getCurrentRoom().getVisited()) {
+                return "YES";
+            }
             return null;
         } else if(Arrays.asList(this.actionVerbs).contains(inputArray[0])) {
             if(inputArray[0].equals("QUIT")) { return "GAME OVER"; } //time to stop!
