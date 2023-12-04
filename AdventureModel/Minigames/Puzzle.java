@@ -21,7 +21,17 @@ import java.util.concurrent.ThreadLocalRandom;
 
 
 public class Puzzle extends Minigame {
+    private String minigameID = "NULL";
     public String minigameType;
+    /**
+     * This is the Puzzle's accuracy cutoff between PerformanceEnding and SatisfactoryEnding.
+     */
+    private Double PerfSatCutoff;
+    /**
+     * This is the Puzzle's accuracy cutoff between SatisfactoryEnding and MediocreEnding.
+     */
+    private Double SatMedCutoff;
+
     private Integer sequenceLength; // CPU Sequence that user must complete
     private static String currDigit; // The current button that the user has selected
     public static ArrayList<Integer> sequenceArray = new ArrayList<>(); // The array in which the sequence is stored
@@ -29,8 +39,18 @@ public class Puzzle extends Minigame {
     private static ArrayList<Button> buttons = new ArrayList<>();
     private static int currentIndex = 0;
     private static int maxSequence = 5;
+    private static int sequences = 1;
     public Puzzle() {
         super("puzzle");
+    }
+    public Puzzle(String id, String[] parameters, String[] thresholds) {
+        super("puzzle");
+        this.minigameID = id;
+        sequences = Integer.parseInt(parameters[0]);
+        maxSequence = Integer.parseInt(parameters[1]);
+
+        this.PerfSatCutoff = Double.parseDouble(thresholds[1]);
+        this.SatMedCutoff = Double.parseDouble(thresholds[0]);
     }
     public void execute(AdventureGameView adventureGameView) {
         adventureGameView.playGame(this);

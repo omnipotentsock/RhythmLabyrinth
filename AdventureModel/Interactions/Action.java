@@ -4,12 +4,14 @@ import AdventureModel.Minigames.*;
 import AdventureModel.Minigames.Battle.Battle;
 import views.AdventureGameView;
 
+import java.util.HashMap;
+
 public class Action extends Interaction{
 
     /**
      * Minigame object to be executed
      */
-    private final Minigame minigame = new Puzzle(); // Temporary test
+    private String minigameID;
 //    private final Minigame minigame = null;
     private String dialogueText;
     private String afterText;
@@ -21,22 +23,27 @@ public class Action extends Interaction{
         // parsed is ["Wolf is attacking you!","M001","He backs away."]
         this.dialogueText = parsed[0];
         this.afterText = parsed[2];
+        this.minigameID = parsed[1];
 
-        String minigameID = parsed[1];
         this.refreshing = false;
     }
 
     // NOTE!! Action instances are never in Room.forcedQueue! They are executed after Option instance is executed!!
     public void execute(AdventureGameView adventureGameView){
-            adventureGameView.updateScene(this.dialogueText + "\nMINIGAME\n " + this.afterText, this.minigame.minigameType);
-            this.minigame.execute(adventureGameView); //TODO: MAKE SURE WHAT THE METHOD FOR STARTING A MINIGAME WILL BE BEFORE MERGEREQ
-
+        HashMap<String, Minigame> minigames = adventureGameView.getModel().getMinigames();
+        if (minigames.containsKey(this.minigameID)){
+            Minigame minigame = minigames.get(this.minigameID);
+            adventureGameView.updateScene(this.dialogueText + this.afterText, minigame.minigameType);
+            minigame.execute(adventureGameView); //TODO: MAKE SURE WHAT THE METHOD FOR STARTING A MINIGAME WILL BE BEFORE MERGEREQ
+        }
+        else {System.out.println("MINIGAME " + this.minigameID + " does not exist!");}
     }
+
     protected void setDialogueText(String text) {
-        // TODO: IMPLEMENT SOMEHOW
+        this.dialogueText = text;
     }
     protected void setRefreshing(boolean refresh) {
-        // TODO: IMPLEMENT SOMEHOW
+        this.refreshing = refresh;
     }
     public boolean getRefreshing(){ return this.refreshing;}
     public String getDialogueText(){return this.dialogueText;}
