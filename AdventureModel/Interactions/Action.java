@@ -1,11 +1,16 @@
 package AdventureModel.Interactions;
 
 import AdventureModel.Minigames.*;
+import AdventureModel.Minigames.Battle.Battle;
 import views.AdventureGameView;
 
 public class Action extends Interaction{
 
-    private final Minigame minigame = null;
+    /**
+     * Minigame object to be executed
+     */
+    private final Minigame minigame = new Puzzle(); // Temporary test
+//    private final Minigame minigame = null;
     private String dialogueText;
     private String afterText;
     private boolean refreshing;
@@ -23,10 +28,9 @@ public class Action extends Interaction{
 
     // NOTE!! Action instances are never in Room.forcedQueue! They are executed after Option instance is executed!!
     public void execute(AdventureGameView adventureGameView){
-        if (this.minigame != null){
-            adventureGameView.updateScene(this.dialogueText + "\nMINIGAME\n " + this.afterText);
-            this.minigame.execute(); //TODO: MAKE SURE WHAT THE METHOD FOR STARTING A MINIGAME WILL BE BEFORE MERGEREQ
-        }
+            adventureGameView.updateScene(this.dialogueText + "\nMINIGAME\n " + this.afterText, this.minigame.minigameType);
+            this.minigame.execute(adventureGameView); //TODO: MAKE SURE WHAT THE METHOD FOR STARTING A MINIGAME WILL BE BEFORE MERGEREQ
+
     }
     protected void setDialogueText(String text) {
         // TODO: IMPLEMENT SOMEHOW
