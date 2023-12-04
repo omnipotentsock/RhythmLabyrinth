@@ -80,7 +80,7 @@ public class Battle extends Minigame {
         targetButton.setMinSize(BUTTON_WIDTH, BUTTON_HEIGHT);
         targetButton.setMaxSize(BUTTON_WIDTH, BUTTON_HEIGHT);
         targetButton.setOnAction(e -> {
-            enemyHealth -= 10;
+            enemyHealth -= 10; //TODO: Enemy takes damage
             Platform.runLater(() -> root.getChildren().remove(targetButton));
             flashScreen(background, "#09663e");
             enemyHealthBar.setProgress(enemyHealth/totalHealth);
@@ -92,7 +92,7 @@ public class Battle extends Minigame {
         );
         random = new Random();
 
-        int interval = 800;
+        int interval = 800; //TODO: Rate Attribute
 
         ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
         executorService.scheduleAtFixedRate(() -> {
@@ -133,7 +133,7 @@ public class Battle extends Minigame {
     }
 
     private void takeDamage(Player player) {
-        player.loseHealth(10);
+        player.loseHealth(10); //TODO: Player loses health
         flashScreen(background, "#780727");
     }
 

@@ -133,7 +133,7 @@ public class Puzzle extends Minigame {
      */
     private void generateSequence() {
         Random random = new Random();
-        int randomNum = ThreadLocalRandom.current().nextInt(1, maxSequence + 1);
+        int randomNum = ThreadLocalRandom.current().nextInt(1, maxSequence + 1); // TODO: seqLength and maxSeq
         for (int i = 0; i < randomNum; i++) {  // Adjust the sequence length as needed
             int randomIndex = random.nextInt(9);
             sequenceArray.add(randomIndex);

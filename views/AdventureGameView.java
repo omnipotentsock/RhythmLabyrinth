@@ -15,6 +15,10 @@ import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.Scene;
 import javafx.scene.control.*;
+import javafx.scene.effect.Blend;
+import javafx.scene.effect.BlendMode;
+import javafx.scene.effect.ColorAdjust;
+import javafx.scene.effect.ColorInput;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.KeyCode;
@@ -53,9 +57,12 @@ public class AdventureGameView {
     Stage stage; //stage on which all is rendered
     Button saveButton, loadButton, helpButton, pauseButton, invertButton; //buttons
     Boolean invertToggle = false;
+    ColorInput color;
+    private Blend colorInversionBlend = new Blend(BlendMode.DIFFERENCE);
     Boolean menuToggle = false;
     Boolean helpToggle = false; //is help on display?
 
+    String clearText = "You have cleared this room!";
     ArrayList<Button> moves = new ArrayList<>();
     public GridPane gridPane = new GridPane(); //to hold images and buttons
     Label roomDescLabel = new Label(); //to hold room description and/or instructions
@@ -142,30 +149,48 @@ public class AdventureGameView {
         topButtons.setSpacing(10);
         topButtons.setAlignment(Pos.CENTER);
 
-        pauseButton = new Button("MENU");
+        invertButton = new Button("Invert Color");
+        customizeButton(invertButton, 200, 50);
+        color = new ColorInput();
+        color.setWidth(Double.MAX_VALUE);
+        color.setHeight(Double.MAX_VALUE);
+        invertButton.setOnAction(e -> {
+            if (!invertToggle) {
+                color.setPaint(Color.WHITE);
+                colorInversionBlend.setBottomInput(color);
+
+                this.stage.getScene().getRoot().setEffect(colorInversionBlend);
+                this.invertToggle = true;
+            } else {
+                this.stage.getScene().getRoot().setEffect(null);
+                this.invertToggle = false;
+            }
+        });
+
+        pauseButton = new Button("Menu");
         customizeButton(pauseButton, 200, 50);
         pauseButton.setOnAction(e -> openMenu(topButtons));
-//        inputTextField = new TextField();
-//        inputTextField.setFont(new Font("Arial", 16));
-//        inputTextField.setFocusTraversable(true);
-//
-//        inputTextField.setAccessibleRole(AccessibleRole.TEXT_AREA);
-//        inputTextField.setAccessibleRoleDescription("Text Entry Box");
-//        inputTextField.setAccessibleText("Enter commands in this box.");
-//        inputTextField.setAccessibleHelp("This is the area in which you can enter commands you would like to play.  Enter a command and hit return to continue.");
-//        addTextHandlingEvent(); //attach an event to this input field
+        inputTextField = new TextField();
+        inputTextField.setFont(new Font("Arial", 16));
+        inputTextField.setFocusTraversable(true);
+
+        inputTextField.setAccessibleRole(AccessibleRole.TEXT_AREA);
+        inputTextField.setAccessibleRoleDescription("Text Entry Box");
+        inputTextField.setAccessibleText("Enter commands in this box.");
+        inputTextField.setAccessibleHelp("This is the area in which you can enter commands you would like to play.  Enter a command and hit return to continue.");
+        addTextHandlingEvent(); //attach an event to this input field
 
         //labels for inventory and room items
-//        Label objLabel =  new Label("Objects in Room");
-//        objLabel.setAlignment(Pos.CENTER);
-//        objLabel.setStyle("-fx-text-fill: white;");
-//        objLabel.setFont(new Font("Arial", 16));
-//        addClickEvent();
-//
-//        Label invLabel =  new Label("Your Inventory");
-//        invLabel.setAlignment(Pos.CENTER);
-//        invLabel.setStyle("-fx-text-fill: white;");
-//        invLabel.setFont(new Font("Arial", 16));
+        Label objLabel =  new Label("Objects in Room");
+        objLabel.setAlignment(Pos.CENTER);
+        objLabel.setStyle("-fx-text-fill: white;");
+        objLabel.setFont(new Font("Arial", 16));
+        addClickEvent();
+
+        Label invLabel =  new Label("Your Inventory");
+        invLabel.setAlignment(Pos.CENTER);
+        invLabel.setStyle("-fx-text-fill: white;");
+        invLabel.setFont(new Font("Arial", 16));
 
         //add all the widgets to the GridPane
 //        gridPane.add( objLabel, 0, 0, 1, 1 );  // Add label
@@ -173,9 +198,9 @@ public class AdventureGameView {
         gridPane.add(helpButton, 2,0);
 //        gridPane.add( invLabel, 2, 0, 1, 1 );  // Add label
 
-//        Label commandLabel = new Label("What would you like to do?");
-//        commandLabel.setStyle("-fx-text-fill: white;");
-//        commandLabel.setFont(new Font("Arial", 16));
+        Label commandLabel = new Label("What would you like to do?");
+        commandLabel.setStyle("-fx-text-fill: white;");
+        commandLabel.setFont(new Font("Arial", 16));
 
         updateScene(""); //method displays an image and whatever text is supplied
         queueCycle();
@@ -238,7 +263,7 @@ public class AdventureGameView {
             roomDescLabel.setPrefHeight(500);
             roomDescLabel.setTextOverrun(OverrunStyle.CLIP);
             roomDescLabel.setWrapText(true);
-            VBox roomPane = new VBox(roomImageView, roomDescLabel, topButtons);
+            VBox roomPane = new VBox(roomImageView, roomDescLabel, topButtons, this.invertButton);
             roomPane.setPadding(new Insets(10));
             roomPane.setAlignment(Pos.TOP_CENTER);
             roomPane.setStyle("-fx-background-color: #000000;");
@@ -247,7 +272,8 @@ public class AdventureGameView {
             stage.sizeToScene();
         } else {
             updateScene("");
-            submitEvent("LOOK");
+            queueCycle();
+//            submitEvent("LOOK");
             menuToggle = false;
         }
     }
@@ -257,6 +283,7 @@ public class AdventureGameView {
      * @param direction is the button to style
      */
     private void styleMovementButtons(Button direction) {
+        String prevText = direction.getText();
         direction.setStyle(
                 "-fx-background-color: rgba(255, 255, 255, 0);" +
                         "-fx-border-color: rgba(74, 74, 74, 0.075);" +
@@ -267,23 +294,29 @@ public class AdventureGameView {
                         "-fx-font-weight: bold;"
         );
         // Add hover effect
-        direction.setOnMouseEntered(e -> direction.setStyle(
-                "-fx-text-fill: #ff7583;" +
-                        "-fx-background-color: rgba(255, 255, 255, 0);"+
-                        "-fx-border-width: 0px;" +
-                        "-fx-border-radius: 10px;" +
-                        "-fx-padding: 2em;" +
-                        "-fx-font-weight: bold;"
-        ));
+        direction.setOnMouseEntered(e -> {
+            direction.setStyle(
+                    "-fx-text-fill: #ff7583;" +
+                            "-fx-background-color: rgba(255, 255, 255, 0);" +
+                            "-fx-border-width: 0px;" +
+                            "-fx-border-radius: 10px;" +
+                            "-fx-padding: 2em;" +
+                            "-fx-font-weight: bold;"
+            );
+            direction.setText("Move " + prevText);
+        });
 
-        direction.setOnMouseExited(e -> direction.setStyle(
-                "-fx-text-fill: #ffffff;" +
-                        "-fx-background-color: rgba(255, 255, 255, 0);"+
-                        "-fx-border-width: 0px;" +
-                        "-fx-border-radius: 10px;" +
-                        "-fx-padding: 2em;" +
-                        "-fx-font-weight: bold;"
-        ));
+        direction.setOnMouseExited(e -> {
+            direction.setStyle(
+                    "-fx-text-fill: #ffffff;" +
+                            "-fx-background-color: rgba(255, 255, 255, 0);" +
+                            "-fx-border-width: 0px;" +
+                            "-fx-border-radius: 10px;" +
+                            "-fx-padding: 2em;" +
+                            "-fx-font-weight: bold;"
+            );
+            direction.setText(prevText);
+        });
     }
 
 
@@ -390,6 +423,8 @@ public class AdventureGameView {
         if (output == null || (!output.equals("GAME OVER") && !output.equals("FORCED") && !output.equals("HELP"))) {
             updateScene(output);
             queueCycle();
+        } else if (output.equals("YES")) {
+            updateScene(clearText);
         } else if (output.equals("GAME OVER")) {
             updateScene("");
             PauseTransition pause = new PauseTransition(Duration.seconds(10));
@@ -407,6 +442,7 @@ public class AdventureGameView {
                     );
             pause.play();
         }
+//        queueCycle();
     }
 
 
@@ -551,6 +587,13 @@ public class AdventureGameView {
             this.stage.getScene().setRoot(battleDisplay);
             this.stage.show();
         }
+        if (invertToggle) {
+//            color.setPaint(Color.WHITE);
+//            colorInversionBlend.setBottomInput(color);
+            this.stage.getScene().getRoot().setEffect(colorInversionBlend);
+        } else {
+            this.stage.getScene().getRoot().setEffect(null);
+        }
     }
 
     public void playGame(Minigame minigame) {
@@ -642,6 +685,8 @@ public class AdventureGameView {
             for (Button direction : moves) {
                 direction.setDisable(false);
             }
+            updateScene(this.clearText);
+            this.model.getPlayer().getCurrentRoom().setVisited();
         }
     }
 
@@ -707,7 +752,8 @@ public class AdventureGameView {
             helpToggle = true;
         } else {
             updateScene("");
-            submitEvent("LOOK");
+//            submitEvent("LOOK");
+            queueCycle();
             helpToggle = false;
         }
     }

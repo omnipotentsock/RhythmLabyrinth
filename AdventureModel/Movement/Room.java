@@ -152,6 +152,8 @@ public class Room implements Serializable {
         return this.isVisited;
     }
 
+    public void setVisited() {this.isVisited = true;}
+
 
     /**
      * Getter method for the motionTable attribute.
