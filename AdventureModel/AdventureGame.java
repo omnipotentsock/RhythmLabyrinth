@@ -1,6 +1,7 @@
 package AdventureModel;
 
 import AdventureModel.Characters.Player;
+import AdventureModel.Minigames.Minigame;
 import AdventureModel.Movement.Passage;
 import AdventureModel.Movement.PassageTable;
 import AdventureModel.Movement.Room;
@@ -15,6 +16,7 @@ public class AdventureGame implements Serializable {
     private final String directoryName; //An attribute to store the Introductory text of the game.
     private String helpText; //A variable to store the Help text of the game. This text is displayed when the user types "HELP" command.
     private final HashMap<Integer, Room> rooms; //A list of all the rooms in the game.
+    private final HashMap<String, Minigame> minigames; //A list of all the minigames in the game.
     private HashMap<String,String> synonyms = new HashMap<>(); //A HashMap to store synonyms of commands.
     private final String[] actionVerbs = {"QUIT","INVENTORY"}; //List of action verbs (other than motions) that exist in all games. Motion vary depending on the room and game.
     public Player player; //The Player of the game.
@@ -29,6 +31,7 @@ public class AdventureGame implements Serializable {
     public AdventureGame(String name){
         this.synonyms = new HashMap<>();
         this.rooms = new HashMap<>();
+        this.minigames = new HashMap<>();
         this.directoryName = "Games/" + name; //all games files are in the Games directory!
         try {
             setUpGame();
@@ -216,4 +219,7 @@ public class AdventureGame implements Serializable {
     }
 
 
+    public HashMap<String, Minigame> getMinigames() {
+        return minigames;
+    }
 }

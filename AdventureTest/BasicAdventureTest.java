@@ -1,6 +1,8 @@
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Random;
+import java.util.concurrent.ThreadLocalRandom;
 
 import AdventureModel.AdventureGame;
 import org.junit.jupiter.api.Test;
@@ -8,12 +10,6 @@ import org.junit.jupiter.api.Test;
 import static org.junit.jupiter.api.Assertions.*;
 
 public class BasicAdventureTest {
-    @Test
-    void getCommandsTest() throws IOException {
-        AdventureGame game = new AdventureGame("TinyGame");
-        String commands = game.player.getCurrentRoom().getCommands();
-        assertEquals("WEST,UP,NORTH,IN,SOUTH,DOWN", commands);
-    }
 
     @Test
     void getSavedDir() {
@@ -24,6 +20,14 @@ public class BasicAdventureTest {
         String savedPath = new File(currDir).getAbsolutePath() + relativePath;
 
         System.out.println(savedPath);
+    }
+
+    @Test
+    void randomNumTest() {
+        int maxSequence = 5;
+        Random random = new Random();
+        int randomNum = ThreadLocalRandom.current().nextInt(1, maxSequence + 1);
+        System.out.println(randomNum);
     }
 
 

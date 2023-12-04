@@ -4,6 +4,8 @@ import AdventureModel.Interactions.Action;
 import AdventureModel.Interactions.Choice;
 import AdventureModel.Interactions.NPCDialogue;
 import AdventureModel.Interactions.SingleDialogue;
+import AdventureModel.Minigames.*;
+import AdventureModel.Minigames.Battle.Battle;
 import AdventureModel.Movement.*;
 
 import java.io.BufferedReader;
@@ -36,6 +38,7 @@ public class AdventureLoader {
     public void loadGame() throws IOException { // TODO: Parse Minigames and NPCs
         parseRooms();
         parseSynonyms();
+        parseMinigames();
         this.game.setHelpText(parseOtherFile("help"));
     }
 
@@ -107,6 +110,40 @@ public class AdventureLoader {
             }
             this.game.getRooms().put(room.getRoomNumber(), room);
         }
+
+    }
+
+    /**
+     * Parse Minigames File
+     */
+    private void parseMinigames() throws IOException {
+        String roomFileName = this.adventureName + "/gameFiles/minigames.txt";
+        BufferedReader buff = new BufferedReader(new FileReader(roomFileName));
+
+        String line = buff.readLine();
+
+        while (true){
+            line = buff.readLine();
+            if (line.equals("----")){line = buff.readLine(); break;}
+        }
+
+        String[] minigame, attributes, thresholds;
+        String id;
+        while (line != null && !line.equals("")){
+            minigame = line.split(" ");
+            id = minigame[0];
+
+            if (minigame[1].equals("Battle")){ // TODO: ADD TO MINIGAME ARRAYLIST IN ADVENTUREGAME
+                this.game.getMinigames().put(id, new Battle(id, minigame[2].split("/"),  minigame[3].split("/"))); // TODO: ADD PARAMETERS
+            }
+            else if (minigame[1].equals("Puzzle")){
+                this.game.getMinigames().put(id, new Puzzle(id, minigame[2].split("/"),  minigame[3].split("/"))); // TODO: ADD PARAMETERS
+            }
+            else {throw new IOException("Minigame Parsing Error: Make sure correct minigame type has been given.");}
+
+        line = buff.readLine();
+        }
+
 
     }
 

@@ -26,8 +26,19 @@ import java.util.concurrent.TimeUnit;
 
 public class Battle extends Minigame {
     public String minigameType;
-    public double enemyHealth = 100;
-    public double totalHealth = 100;
+    public String minigameID;
+    public double totalHealth = 100; // TODO: To parse
+    public double enemyHealth = totalHealth;
+    public int damage;
+    /**
+     * This is the Battle's accuracy cutoff between PerformanceEnding and SatisfactoryEnding.
+     */
+    private Double PerfSatCutoff;
+    /**
+     * This is the Battle's accuracy cutoff between SatisfactoryEnding and MediocreEnding.
+     */
+    private Double SatMedCutoff;
+
     private final int BUTTON_WIDTH = 60;
     private final int BUTTON_HEIGHT = 60;
     Button targetButton;
@@ -36,9 +47,21 @@ public class Battle extends Minigame {
     Rectangle background;
     boolean pressed = false;
     boolean firstIteration = true;
+    private int interval = 300;
 
     public Battle() {
         super("battle");
+    }
+
+    public Battle(String ID, String[] parameters, String[] thresholds) {
+        super("battle");
+        minigameID = ID;
+        this.totalHealth = Integer.parseInt(parameters[2]);
+        this.interval = Integer.parseInt(parameters[0]);
+        this.damage = Integer.parseInt(parameters[1]);
+
+        this.PerfSatCutoff = Double.parseDouble(thresholds[1]);
+        this.SatMedCutoff = Double.parseDouble(thresholds[0]);
     }
     public void execute(AdventureGameView adventureGameView) {
         adventureGameView.playGame(this);
@@ -80,7 +103,7 @@ public class Battle extends Minigame {
         targetButton.setMinSize(BUTTON_WIDTH, BUTTON_HEIGHT);
         targetButton.setMaxSize(BUTTON_WIDTH, BUTTON_HEIGHT);
         targetButton.setOnAction(e -> {
-            enemyHealth -= 10; //TODO: Enemy takes damage
+            enemyHealth -= 10; // Damage taken by enemy
             Platform.runLater(() -> root.getChildren().remove(targetButton));
             flashScreen(background, "#09663e");
             enemyHealthBar.setProgress(enemyHealth/totalHealth);
@@ -92,7 +115,7 @@ public class Battle extends Minigame {
         );
         random = new Random();
 
-        int interval = 800; //TODO: Rate Attribute
+        int interval = this.interval; //TODO: Rate Attribute
 
         ScheduledExecutorService executorService = Executors.newScheduledThreadPool(1);
         executorService.scheduleAtFixedRate(() -> {
@@ -133,7 +156,7 @@ public class Battle extends Minigame {
     }
 
     private void takeDamage(Player player) {
-        player.loseHealth(10); //TODO: Player loses health
+        player.loseHealth(this.damage); //TODO: Player loses health
         flashScreen(background, "#780727");
     }
 
