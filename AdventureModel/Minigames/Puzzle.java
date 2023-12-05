@@ -33,11 +33,11 @@ public class Puzzle extends Minigame {
     private Double SatMedCutoff;
     private int attempts = 0;
 
-    private static String currDigit; // The current button that the user has selected
-    public static ArrayList<Integer> sequenceArray = new ArrayList<>(); // The array in which the sequence is stored
-    private static ArrayList<Integer> userSequence = new ArrayList<>(); // The array in which the user has input their sequence
-    private static ArrayList<Button> buttons = new ArrayList<>();
-    private static int currentIndex = 0;
+    private String currDigit; // The current button that the user has selected
+    public ArrayList<Integer> sequenceArray = new ArrayList<>(); // The array in which the sequence is stored
+    private ArrayList<Integer> userSequence = new ArrayList<>(); // The array in which the user has input their sequence
+    private ArrayList<Button> buttons = new ArrayList<>();
+    private int currentIndex = 0;
     private int sequencesComplete = 0;
     public int sequenceLength;
     public int sequences;
@@ -178,6 +178,7 @@ public class Puzzle extends Minigame {
             }
         });
         timer.start();
+        timer.restart();
     }
 
 
@@ -262,6 +263,7 @@ public class Puzzle extends Minigame {
                 createGamePane(adventureGameView);
             } else {
                 System.out.println("Congratulations! Sequences match! Completed in " + this.attempts + " attempts!");
+                // For some reason, even when a new game is started, it builds off the old sequence instead of a brand new one.
                 adventureGameView.finishGame();
             }
         } else {
