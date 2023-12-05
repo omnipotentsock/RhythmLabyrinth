@@ -279,7 +279,7 @@ public class AdventureGameView {
     }
 
     /**
-     * CSS styling for the directions
+     * Styling for the directions buttons
      * @param direction is the button to style
      */
     private void styleMovementButtons(Button direction) {
@@ -442,7 +442,6 @@ public class AdventureGameView {
                     );
             pause.play();
         }
-//        queueCycle();
     }
 
 
@@ -480,6 +479,13 @@ public class AdventureGameView {
         if (textToDisplay == null || textToDisplay.isBlank()) articulateRoomDescription();
     }
 
+    /**
+     * updateScene
+     * ---------------------
+     * Overloaded to set up the minigame displays
+     * @param textToDisplay text we want to show
+     * @param key determines which display to show
+     */
     public void updateScene(String textToDisplay, String key) { // TODO: Implement MOVE
 
         if (key.equals("instructions")) {
@@ -517,15 +523,11 @@ public class AdventureGameView {
             ColumnConstraints column1 = new ColumnConstraints(150);
             ColumnConstraints column2 = new ColumnConstraints(650);
             ColumnConstraints column3 = new ColumnConstraints(150);
-//            column3.setHgrow( Priority.SOMETIMES ); //let some columns grow to take any extra space
-//            column1.setHgrow( Priority.SOMETIMES );
 
             // Row constraints
             RowConstraints row1 = new RowConstraints();
             RowConstraints row2 = new RowConstraints( 650 );
             RowConstraints row3 = new RowConstraints();
-//            row1.setVgrow( Priority.SOMETIMES );
-//            row3.setVgrow( Priority.SOMETIMES );
 
             puzzleDisplay.getColumnConstraints().addAll( column1 , column2 , column3 );
             puzzleDisplay.getRowConstraints().addAll( row1 , row2 , row3 );
@@ -541,12 +543,8 @@ public class AdventureGameView {
             instructionText.setWrapText(true);
             puzzleDisplay.add(instructionText,2,1);
 
-//            var scene = new Scene( puzzleDisplay ,  1000, 800);
-//            this.stage.setScene(scene);
             this.stage.getScene().setRoot(puzzleDisplay);
             this.stage.show();
-//            gridPane.add(burh,0,0);
-//            System.out.println("Puzzle");
         }
         else if (key.equals("battle")) {
             updateScene(textToDisplay);
@@ -582,65 +580,47 @@ public class AdventureGameView {
             battleDisplay.add(title,1,0);
             battleDisplay.setAlignment(Pos.CENTER);
 
-//            var scene = new Scene( battleDisplay , 1000, 800);
-//            this.stage.setScene(scene);
             this.stage.getScene().setRoot(battleDisplay);
             this.stage.show();
         }
         if (invertToggle) {
-//            color.setPaint(Color.WHITE);
-//            colorInversionBlend.setBottomInput(color);
             this.stage.getScene().getRoot().setEffect(colorInversionBlend);
         } else {
             this.stage.getScene().getRoot().setEffect(null);
         }
     }
 
+    /**
+     * Method for displaying and executing the minigames
+     * @param minigame the minigame being played
+     */
     public void playGame(Minigame minigame) {
         if (minigame.minigameType.equals("battle")) {
             GridPane curPane = (GridPane) this.stage.getScene().getRoot();
-//            ProgressBar healthBar = new ProgressBar();
-
             curPane.add(minigame.createGamePane(this), 1, 1);
         }
         else if (minigame.minigameType.equals("puzzle")) {
             GridPane curPane = (GridPane) this.stage.getScene().getRoot();
-//            ProgressBar healthBar = new ProgressBar();
-//            curPane.setAlignment(Pos.CENTER);
             curPane.add(minigame.createGamePane(this), 1, 1);
         }
     }
 
+    /**
+     * Exits the minigame and returns to main GUI displaying rooms
+     */
     public void finishGame() {
-//        this.stage.getScene().
-//        var scene = new Scene( gridPane , 1000, 800);
         this.stage.getScene().setRoot(gridPane);
         this.stage.show();
     }
 
+    /**
+     * updateScene
+     * ----------------------
+     * Overloaded to show the choice options for playing a minigame
+     * @param textToDisplay the text prompt for the choice
+     * @param choice the choices that are available for the player
+     */
     public void updateScene(String textToDisplay, Choice choice) { // TODO: Implement MOVE
-
-//        if (key.equals("instructions")) {
-//            roomImageView.setImage(null);
-//            roomImageView.setFitWidth(0);
-//            roomImageView.setFitHeight(0);
-//
-//            formatText(textToDisplay); //format the text to display
-//            roomDescLabel.setPrefWidth(500);
-//            roomDescLabel.setPrefHeight(500);
-//            roomDescLabel.setTextOverrun(OverrunStyle.CLIP);
-//            roomDescLabel.setWrapText(true);
-//            VBox roomPane = new VBox(roomImageView, roomDescLabel);
-//            roomPane.setPadding(new Insets(10));
-//            roomPane.setAlignment(Pos.TOP_CENTER);
-//            roomPane.setStyle("-fx-background-color: #000000;");
-//
-//            gridPane.add(roomPane, 1, 1);
-//            stage.sizeToScene();
-//
-//            //finally, articulate the description
-//            if (textToDisplay == null || textToDisplay.isBlank()) articulateRoomDescription();
-//        }
         getRoomImage(); //get the image of the current room
         formatText(textToDisplay); //format the text to display
         roomDescLabel.setPrefWidth(500);
@@ -652,15 +632,8 @@ public class AdventureGameView {
         roomPane.setAlignment(Pos.TOP_CENTER);
         roomPane.setStyle("-fx-background-color: #000000;");
 
-
-
-        //finally, articulate the description
-//        if (textToDisplay == null || textToDisplay.isBlank()) articulateRoomDescription();
-
         HBox clickableOptions = new HBox();
         for (ChoiceOption option : choice.getOptions()){
-            // TODO: Populate optionsView with option buttons
-//            s += "\n\tOption: " + option.getOptionText();
             Button button = new Button(option.getOptionText());
             button.setOnAction(e -> {
                 option.execute(this);
@@ -746,13 +719,11 @@ public class AdventureGameView {
      * -- Again, REMOVE whatever nodes are within the cell beforehand!
      */
     public void showInstructions() {
-
         if (!helpToggle) {
             updateScene(this.model.getInstructions(), "instructions");
             helpToggle = true;
         } else {
             updateScene("");
-//            submitEvent("LOOK");
             queueCycle();
             helpToggle = false;
         }
@@ -823,6 +794,19 @@ public class AdventureGameView {
         }
     }
 
+    /**
+     * getModel
+     * -------------
+     * Getter method that returns the AdventureGame model
+     * @return AdventureGame
+     */
     public AdventureGame getModel() {return this.model;}
+
+    /**
+     * getCurrentPane
+     * ----------------
+     * getter method that returns the current gridpane on the scene
+     * @return GridPane
+     */
     public GridPane getCurrentPane() {return (GridPane) this.stage.getScene().getRoot();}
 }
