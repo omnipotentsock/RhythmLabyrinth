@@ -17,7 +17,7 @@ public class Action extends Interaction{
     private String afterText;
     private boolean refreshing;
 
-    public Action(String str){ // TODO: GET MINIGAME? IDK
+    public Action(String str){
         // Currently str = "Yes>Wolf is attacking you!&M001&He backs away."
         String[] parsed = str.split("&", -1);
         // parsed is ["Wolf is attacking you!","M001","He backs away."]
@@ -34,7 +34,7 @@ public class Action extends Interaction{
         if (minigames.containsKey(this.minigameID)){
             Minigame minigame = minigames.get(this.minigameID);
             adventureGameView.updateScene(this.dialogueText + this.afterText, minigame.minigameType);
-            minigame.execute(adventureGameView); //TODO: MAKE SURE WHAT THE METHOD FOR STARTING A MINIGAME WILL BE BEFORE MERGEREQ
+            minigame.execute(adventureGameView);
         }
         else {System.out.println("MINIGAME " + this.minigameID + " does not exist!");}
     }

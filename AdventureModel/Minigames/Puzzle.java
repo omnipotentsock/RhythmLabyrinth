@@ -39,8 +39,8 @@ public class Puzzle extends Minigame {
     private static ArrayList<Button> buttons = new ArrayList<>();
     private static int currentIndex = 0;
     private int sequencesComplete = 0;
-    private static int sequenceLength = 5;
-    private static int sequences = 1;
+    public int sequenceLength;
+    public int sequences;
     public Puzzle() {
         super("puzzle");
     }
@@ -156,6 +156,7 @@ public class Puzzle extends Minigame {
             int randomIndex = random.nextInt(9);
             sequenceArray.add(randomIndex);
         }
+        System.out.println(sequenceArray);
     }
 
     /**
@@ -256,8 +257,8 @@ public class Puzzle extends Minigame {
     private void checkUserSequence(AdventureGameView adventureGameView) {
         if (Puzzle.ComparisonSequence.compare(sequenceArray, userSequence)) {
             this.attempts++;
+            this.sequencesComplete++;
             if (this.sequencesComplete != this.sequences){
-                this.sequencesComplete++;
                 createGamePane(adventureGameView);
             } else {
                 System.out.println("Congratulations! Sequences match! Completed in " + this.attempts + " attempts!");

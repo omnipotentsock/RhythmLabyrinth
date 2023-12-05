@@ -143,8 +143,6 @@ public class AdventureLoader {
 
         line = buff.readLine();
         }
-
-
     }
 
      /**
