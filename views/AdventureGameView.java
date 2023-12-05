@@ -36,10 +36,7 @@ import javafx.util.Duration;
 import javafx.scene.AccessibleRole;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.Collections;
-import java.util.Random;
+import java.util.*;
 
 /**
  * Class AdventureGameView.
@@ -428,12 +425,8 @@ public class AdventureGameView {
         } else if (output.equals("YES")) {
             updateScene(clearText);
         } else if (output.equals("GAME OVER")) {
-            updateScene("");
-            PauseTransition pause = new PauseTransition(Duration.seconds(10));
-            pause.setOnFinished(event -> {
-                Platform.exit();
-            });
-            pause.play();
+            System.out.println("You gotta set up the ending here lol"); // TODO: Set up ending.
+            Platform.exit();
         } else if (output.equals("FORCED")) {
             String roomDesc = this.model.getPlayer().getCurrentRoom().getRoomDescription();
             updateScene(roomDesc + "\n\nObjects in this room:\n");
@@ -445,9 +438,7 @@ public class AdventureGameView {
             pause.play();
         }
     }
-
-
-
+    
 
     /**
      * updateScene
@@ -675,7 +666,7 @@ public class AdventureGameView {
         stage.sizeToScene();
     }
 
-    private void queueCycle(){
+    public void queueCycle(){
         Room room = this.model.getPlayer().getCurrentRoom();
         ForcedQueue q = room.getQueue();
         if (!q.is_empty()) {
@@ -690,7 +681,9 @@ public class AdventureGameView {
         } else {
             q.refresh();
             for (Button direction : moves) {
-                direction.setDisable(false);
+                String[] s = this.model.getPlayer().getCurrentRoom().getCommands().split(",");
+                List<String> list = Arrays.asList(s);
+                if (list.contains(direction.getText().toUpperCase())) {direction.setDisable(false);}
             }
             this.model.getPlayer().getCurrentRoom().setVisited();
         }
