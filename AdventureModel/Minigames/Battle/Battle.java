@@ -49,9 +49,20 @@ public class Battle extends Minigame {
     public Battle() {
         super("battle");
     }
+
+    /**
+     * Starts the game logic and display
+     * @param adventureGameView
+     */
     public void execute(AdventureGameView adventureGameView) {
         adventureGameView.playGame(this);
     }
+
+    /**
+     * Makes the main pane for displaying the gameplay
+     * @param adventureGameView
+     * @return Pane
+     */
     @Override
     public Pane createGamePane(AdventureGameView adventureGameView) {
         ProgressBar playerHealthBar = new ProgressBar();
@@ -62,20 +73,15 @@ public class Battle extends Minigame {
                 new Rotate(-90, 0, 0)
         );
         playerHealthBar.setStyle("-fx-accent: #cf94ff;");
-//        VBox pHealth = new VBox(playerHealthBar);
-//        pHealth.setAlignment(Pos.TOP_CENTER);
         adventureGameView.getCurrentPane().add(playerHealthBar, 2, 1);
 
         ProgressBar enemyHealthBar = new ProgressBar();
         enemyHealthBar.setMinWidth(200); // Set the width of the health bar
         enemyHealthBar.setProgress(1);
         enemyHealthBar.getTransforms().setAll(
-//                new Translate(enemyHealthBar.getWidth(), enemyHealthBar.getHeight()),
                 new Rotate(-90, 0, 0)
         );
         enemyHealthBar.setStyle("-fx-accent: red;");
-//        VBox eHealth = new VBox(enemyHealthBar);
-//        pHealth.setAlignment(Pos.BOTTOM_CENTER);
         adventureGameView.getCurrentPane().add(enemyHealthBar, 0, 1);
 
         Player player = adventureGameView.getModel().getPlayer();
@@ -133,6 +139,9 @@ public class Battle extends Minigame {
         return root;
     }
 
+    /**
+     * Moves the button to a new random location
+     */
     private void relocateButton() {
         root.getChildren().remove(targetButton);
         int x = Math.abs((int) (root.getWidth() - BUTTON_WIDTH));
@@ -147,12 +156,21 @@ public class Battle extends Minigame {
         root.getChildren().add(targetButton);
     }
 
+    /**
+     * When the player takes damage, they lose health and the screen flashes red
+     * @param player
+     */
     private void takeDamage(Player player) {
         player.loseHealth(10); //TODO: Player loses health
         this.accuracy = player.getPlayerHealth()/ player.totalHealth;
         flashScreen(background, "#780727");
     }
 
+    /**
+     * creates a flashing effect depending on who takes damage
+     * @param bg
+     * @param color
+     */
     private void flashScreen(Rectangle bg, String color) {
         Color flashColor = Color.web(color);
 
@@ -178,19 +196,44 @@ public class Battle extends Minigame {
         bg.setFill(flashColor);
         fadeInTransition.play();
     }
+    /**
+     * This method notifies the PuzzleInterpretationFactory to create a corresponding
+     * PuzzleInterpretation object.
+     * @return an Interpretation object.
+     */
     public Interpretation formInterpretation() {
         this.battleInterpretationFactory.accept(this);
         return this.battleInterpretationFactory.createInterpretation();
     }
+
+    /**
+     * Getter for the cutoff threshold between perfect and satisfactory
+     * @return Double for threshold
+     */
     public Double getPerfSatCutoff() {
         return this.PerfSatCutoff;
     }
+
+    /**
+     * Getter for the cutoff threshold between satisfactory and medium
+     * @return Double for threshold
+     */
     public Double getSatMedCutoff() {
         return this.SatMedCutoff;
     }
+    /**
+     * This method returns the Player's accuracy.
+     * @return a Double value.
+     */
     public Double getAccuracy() {
         return this.accuracy;
     }
+    /**
+     * The impact value will be determined as the ratio between the largest number of
+     * consecutively correct inputs to the number of correct inputs in the user input.
+     * This method returns the impact value.
+     * @return a Double value
+     */
     public Double consecutiveImpact() {
         return Double.valueOf(highestConsecutive);
     }

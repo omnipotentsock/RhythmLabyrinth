@@ -41,58 +41,42 @@ public class Puzzle extends Minigame {
     public Puzzle() {
         super("puzzle");
     }
+
+    /**
+     * Starts the game logic and display
+     * @param adventureGameView
+     */
     public void execute(AdventureGameView adventureGameView) {
         adventureGameView.playGame(this);
 
     }
+
+    /**
+     * Makes the main pane for displaying the gameplay
+     * @param adventureGameView
+     * @return Pane
+     */
     @Override
-//    public Pane createGamePane(AdventureGameView adventureGameView) {return null;};
-    // The actual button being pressed
-//    public static void main(String[] args) {
-//
-//    }
+    public Pane createGamePane(AdventureGameView adventureGameView) {
+        Pane root = new Pane();
+        root.setMaxSize(650,650);
+        Platform.runLater(() -> {
+            GridPane panel = createButtonGrid(adventureGameView);
+
+            root.getChildren().add(panel);
+            generateSequence();
+            runCPUSequence();
+        });
+        return root;
+    }
 
     /**
      * createButtonGrid
      * ----------------
      * Forms the actual 3x3 grid containing the buttons in GUI form
+     * @param adventureGameView
+     * @return
      */
-    public Pane createGamePane(AdventureGameView adventureGameView) {
-//        JFrame frame = new JFrame("Color Button Grid");
-//        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        Pane root = new Pane();
-        root.setMaxSize(650,650);
-//        SwingNode frame = new SwingNode();
-//        frame.setSize(300, 300);
-//        SwingUtilities.invokeLater(() -> {
-//            JPanel panel = createButtonGrid();
-//            frame.setContent(panel);
-////            Puzzle puzzle = new Puzzle();
-////            puzzle.createGamePane(adventureGameView);
-//            root.getChildren().add(frame);
-//            generateSequence();
-//            runCPUSequence();
-//        });
-        Platform.runLater(() -> {
-            GridPane panel = createButtonGrid(adventureGameView);
-//            frame.setContent(panel);
-//            Puzzle puzzle = new Puzzle();
-//            puzzle.createGamePane(adventureGameView);
-            root.getChildren().add(panel);
-            generateSequence();
-            runCPUSequence();
-        });
-
-
-//        frame.setLocationRelativeTo(null);
-//        frame.setVisible(true);
-
-//        Rectangle background = new Rectangle(650,500);
-//        background.setFill(javafx.scene.paint.Color.TRANSPARENT);
-//        root.getChildren().add(background);
-
-        return root;
-    }
     private GridPane createButtonGrid(AdventureGameView adventureGameView) {
         //Three columns, three rows for the GridPane
         ColumnConstraints column1 = new ColumnConstraints(150);
@@ -113,14 +97,10 @@ public class Puzzle extends Minigame {
 
         int counter = 0;
         for (int i = 1; i <= 9; i++) {
-//            SwingUtilities.invokeLater(() -> {
-//
-//            });
             if ((i-1)%3 == 0){
                 counter += 1;
             }
             Button button = new Button(Integer.toString(i));
-//            button.addActionListener(new Puzzle.ButtonClickListener());
             button.setOnAction(e -> {
                 actionPerformed(button, adventureGameView);
             });
@@ -129,7 +109,6 @@ public class Puzzle extends Minigame {
             button.setOnMouseReleased(e -> button.setStyle("-fx-background-color: #fff0f3;" + "-fx-padding: 5em;"));
             buttons.add(button);
             panel.add(button, (i-1)%3, counter);
-//            button.repaint();
         }
         panel.setAlignment(Pos.CENTER);
         return panel;
@@ -177,19 +156,12 @@ public class Puzzle extends Minigame {
      * @param button
      */
     private void flashButtonColor(Button button) {
-//        button.setBackground(Background.fill(Color.RED));  // Adjust the color as needed
         button.setStyle("-fx-background-color: #f0627f;" + "-fx-padding: 5em;");
-//        button.setOpaque(true);
 
         Timer timer = new Timer(500, new ActionListener() {
             @Override
             public void actionPerformed(ActionEvent e) {
                 button.setStyle("-fx-background-color: #fff0f3;" + "-fx-padding: 5em;");
-
-//                    button.setOpaque(false);
-//                SwingUtilities.invokeLater(() -> {
-//                    button.repaint();
-//                });
             }
         });
         timer.setRepeats(false);
@@ -197,22 +169,13 @@ public class Puzzle extends Minigame {
     }
 
     /**
-     * ButtonClickListener
+     * actionPerformed
      * -------------------
      * Records the button index and source pressed in the user sequence
      */
-//    private class ButtonClickListener implements ActionListener {
-//        @Override
-//    }
     public void actionPerformed(Button source, AdventureGameView adventureGameView) {
-//        Button source = (Button) e.getSource();
-//            int buttonIndex = buttons.indexOf(source);
         int buttonIndex = Integer.parseInt(source.getText()) - 1;
-        // ==BELOW LINE==: records the button that was pressed
-//            System.out.println("Button " + (buttonIndex + 1) + " clicked");
         userSequence.add(buttonIndex);
-//            System.out.println(sequenceArray);
-//            System.out.println(userSequence);
         checkUserSequence(adventureGameView);
     }
 
@@ -261,6 +224,7 @@ public class Puzzle extends Minigame {
             }
         }
     }
+
     /**
      * This method notifies the PuzzleInterpretationFactory to create a corresponding
      * PuzzleInterpretation object.
@@ -271,9 +235,19 @@ public class Puzzle extends Minigame {
         this.puzzleInterpretationFactory.accept(this);
         return this.puzzleInterpretationFactory.createInterpretation();
     }
+
+    /**
+     * Getter for the cutoff threshold between perfect and satisfactory
+     * @return Double for threshold
+     */
     public Double getPerfSatCutoff() {
         return this.PerfSatCutoff;
     }
+
+    /**
+     * Getter for the cutoff threshold between satisfactory and medium
+     * @return Double for threshold
+     */
     public Double getSatMedCutoff() {
         return this.SatMedCutoff;
     }
