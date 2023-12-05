@@ -2,6 +2,7 @@ package AdventureModel.Characters;
 
 import AdventureModel.Movement.Room;
 import AdventureModel.Outcomes.OutcomeDeterminer;
+import AdventureModel.Outcomes.OutcomeExecuter;
 
 import java.io.Serializable;
 
@@ -15,7 +16,7 @@ public class Player implements Serializable {
      */
     private Room currentRoom;
 
-    private OutcomeDeterminer outcome = new OutcomeDeterminer();
+    private OutcomeExecuter outcome = new OutcomeExecuter();
     public double playerHealth = 100;
     public double totalHealth = 100;
 
@@ -45,7 +46,7 @@ public class Player implements Serializable {
     }
 
 
-    public OutcomeDeterminer getOutcome() {
+    public OutcomeExecuter getOutcome() {
         return outcome;
     }
 

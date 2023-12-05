@@ -2,6 +2,9 @@ package AdventureModel.Minigames.Battle;
 
 import AdventureModel.AdventureGame;
 import AdventureModel.Characters.Player;
+import AdventureModel.Interpretations.BattleInterpretationFactory;
+import AdventureModel.Interpretations.Interpretation;
+import AdventureModel.Interpretations.InterpretationFactory;
 import AdventureModel.Minigames.Minigame;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
@@ -28,6 +31,7 @@ public class Battle extends Minigame {
     public String minigameType;
     public double enemyHealth = 100;
     public double totalHealth = 100;
+    private double accuracy = 1;
     private final int BUTTON_WIDTH = 60;
     private final int BUTTON_HEIGHT = 60;
     Button targetButton;
@@ -36,6 +40,11 @@ public class Battle extends Minigame {
     Rectangle background;
     boolean pressed = false;
     boolean firstIteration = true;
+    int highestConsecutive = 0;
+    int curConsecutive = 0;
+    private BattleInterpretationFactory battleInterpretationFactory;
+    private Double PerfSatCutoff;
+    private Double SatMedCutoff;
 
     public Battle() {
         super("battle");
@@ -85,6 +94,11 @@ public class Battle extends Minigame {
             flashScreen(background, "#09663e");
             enemyHealthBar.setProgress(enemyHealth/totalHealth);
             this.pressed = true;
+
+            curConsecutive += 1;
+            if (curConsecutive > highestConsecutive) {
+                highestConsecutive = curConsecutive;
+            }
         });
         targetButton.setStyle(
                 "-fx-background-radius: 50em;" +
@@ -109,6 +123,7 @@ public class Battle extends Minigame {
                 Platform.runLater(() -> {
                     takeDamage(player);
                     playerHealthBar.setProgress(player.playerHealth / player.totalHealth);
+                    curConsecutive = 0;
                     System.out.println(player.playerHealth);
                 });
             }
@@ -134,6 +149,7 @@ public class Battle extends Minigame {
 
     private void takeDamage(Player player) {
         player.loseHealth(10); //TODO: Player loses health
+        this.accuracy = player.getPlayerHealth()/ player.totalHealth;
         flashScreen(background, "#780727");
     }
 
@@ -162,6 +178,20 @@ public class Battle extends Minigame {
         bg.setFill(flashColor);
         fadeInTransition.play();
     }
-
-//    private
+    public Interpretation formInterpretation() {
+        this.battleInterpretationFactory.accept(this);
+        return this.battleInterpretationFactory.createInterpretation();
+    }
+    public Double getPerfSatCutoff() {
+        return this.PerfSatCutoff;
+    }
+    public Double getSatMedCutoff() {
+        return this.SatMedCutoff;
+    }
+    public Double getAccuracy() {
+        return this.accuracy;
+    }
+    public Double consecutiveImpact() {
+        return Double.valueOf(highestConsecutive);
+    }
 }

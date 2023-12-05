@@ -1,6 +1,9 @@
 package AdventureModel.Minigames;
 
 import AdventureModel.AdventureGame;
+import AdventureModel.Interpretations.Interpretation;
+import AdventureModel.Interpretations.InterpretationFactory;
+import AdventureModel.Interpretations.PuzzleInterpretationFactory;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingNode;
 import javafx.geometry.Pos;
@@ -29,6 +32,12 @@ public class Puzzle extends Minigame {
     private static ArrayList<Button> buttons = new ArrayList<>();
     private static int currentIndex = 0;
     private static int maxSequence = 5;
+    private double accuracy = 0.0;
+    public int correctNums = 0;
+    private PuzzleInterpretationFactory puzzleInterpretationFactory;
+    private Double PerfSatCutoff;
+    private Double SatMedCutoff;
+
     public Puzzle() {
         super("puzzle");
     }
@@ -237,13 +246,89 @@ public class Puzzle extends Minigame {
     private void checkUserSequence(AdventureGameView adventureGameView) {
         if (Puzzle.ComparisonSequence.compare(sequenceArray, userSequence)) {
             System.out.println("Congratulations! Sequences match!");
+            this.accuracy = 1;
             adventureGameView.finishGame();
         } else {
             if (sequenceArray.size() == userSequence.size()) {
                 System.out.println("Incorrect sequence. Try again.");
+                for (int i = 0; i < sequenceArray.size(); i++) {
+                    if (userSequence.get(i) == sequenceArray.get(i)) {
+                        this.correctNums += 1;
+                    }
+                }
+                this.accuracy = correctNums/sequenceArray.size();
                 adventureGameView.finishGame();
             }
         }
+    }
+    /**
+     * This method notifies the PuzzleInterpretationFactory to create a corresponding
+     * PuzzleInterpretation object.
+     * @return an Interpretation object.
+     */
+    @Override
+    public Interpretation formInterpretation() {
+        this.puzzleInterpretationFactory.accept(this);
+        return this.puzzleInterpretationFactory.createInterpretation();
+    }
+    public Double getPerfSatCutoff() {
+        return this.PerfSatCutoff;
+    }
+    public Double getSatMedCutoff() {
+        return this.SatMedCutoff;
+    }
+
+    /**
+     * This method returns the Player's accuracy.
+     * @return a Double value.
+     */
+    public Double getAccuracy() {
+        return this.accuracy;
+    }
+
+    /**
+     * The impact value will be determined as the ratio between the largest number of
+     * consecutively correct inputs to the number of correct inputs in the user input.
+     * This method returns the impact value.
+     * @return a Double value
+     */
+    public Double consecutiveImpact() {
+        int correctCounter = 0;
+        int index = 0;
+        boolean currCorrect = false;
+        boolean prevCorrect;
+        int maxConsecutive = 0;
+        for (int i = 0; i < userSequence.size(); i++) {
+            // If 'current' was correct the last time, then that means previous is now correct.
+            if (currCorrect) {
+                prevCorrect = true;
+            } else {
+                prevCorrect = false;
+            }
+            //##################################################################################
+            if (this.userSequence.get(i) == this.sequenceArray.get(i)) {
+                correctCounter++;
+                // If they match, current is correct again.
+                currCorrect = true;
+            } else {
+                // Otherwise, current is now false. Update maxConsecutive, and reassign index.
+                if ((i - index) > maxConsecutive) {
+                    maxConsecutive = i - index;
+                }
+                index = i;
+                currCorrect = false;
+            }
+            //##################################################################################
+            if (currCorrect && !prevCorrect) {
+                index = i;
+            }
+        }
+        if (currCorrect) {
+            if ((userSequence.size() - index) > maxConsecutive) {
+                maxConsecutive = userSequence.size() - index;
+            }
+        }
+        return Double.valueOf(maxConsecutive / (double) correctCounter);
     }
 
 }
