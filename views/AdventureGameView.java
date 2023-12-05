@@ -444,7 +444,6 @@ public class AdventureGameView {
                     );
             pause.play();
         }
-//        queueCycle();
     }
 
 
@@ -680,6 +679,9 @@ public class AdventureGameView {
         Room room = this.model.getPlayer().getCurrentRoom();
         ForcedQueue q = room.getQueue();
         if (!q.is_empty()) {
+            for (Button direction : moves) {
+                direction.setDisable(true);
+            }
             Interaction i = q.dequeue();
             this.currentInteraction = i;
             i.execute(this);
@@ -690,7 +692,6 @@ public class AdventureGameView {
             for (Button direction : moves) {
                 direction.setDisable(false);
             }
-            updateScene(this.clearText);
             this.model.getPlayer().getCurrentRoom().setVisited();
         }
     }

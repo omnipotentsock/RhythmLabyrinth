@@ -17,7 +17,7 @@ End of road
 --queue
 SDialogue: Prisoner holding area. Basement stairs down to west. Crumbling wall to east. Jail cell south.-true
 SDialogue: There's a guard twitching on the floor with blood spilt all around the floor.-false
-Choice: Do you kick him?-false-Yes>The guard attacks you!&M002&He crumples onto the floor./No>&NULL&The guard stops quivering, and lays motionless.
+Choice: Do you kick him?-false-Yes>&M002&The guard crumples onto the floor after fighting back./No>&NULL&The guard stops quivering, and lays motionless.
 --passages
 SOUTH       001
 EAST       007
@@ -35,9 +35,9 @@ WEST      009
 004
 Valley beside a stream
 --queue
-SDialogue: A goblin is inside the room, feasting on some poor rodent. It glares at you as soon as you step inside.-false
-Choice: Do you fight him, or try to talk your way out of this?-false-FIGHT>You catch the goblin off guard&M005&The goblin shrieks and dies./BLUFF>&M004&You tell the goblin about the new promotion RAID: Shadow Legends is holding outside the dungeon. He rushes off.
 SDialogue: Room with shit in it. Door to rest of basement south. Stairs up to fountain north.-true
+SDialogue: A goblin is inside the room, feasting on some poor rodent. It glares at you as soon as you step inside.-false
+Choice: Do you fight him, or try to talk your way out of this?-false-FIGHT>&M005&The goblin shrieks and dies./BLUFF>&M004&You tell the goblin about the new promotion RAID: Shadow Legends is holding outside the dungeon. He rushes off.
 --passages
 NORTH      005
 SOUTH      003
@@ -63,7 +63,7 @@ SOUTH      010
 Curtain2
 --queue
 SDialogue: Room with weak wall that player will break. Banquet hall through north wall. Prisoner holding area to west.-true
-Action: The wall looks fragile. Break it?&M003&
+Choice: The wall looks fragile. Break it?-false-BREAK IT>&M003&The wall collapses, providing a passage.
 --passages
 NORTH      008
 WEST      002
