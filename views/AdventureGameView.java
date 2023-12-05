@@ -1,6 +1,7 @@
 package views;
 
 import AdventureModel.AdventureGame;
+import AdventureModel.Endings.SatisfactoryEnding;
 import AdventureModel.Interactions.Choice;
 import AdventureModel.Interactions.ChoiceOption;
 import AdventureModel.Interactions.Interaction;
@@ -8,6 +9,7 @@ import AdventureModel.Minigames.Battle.Battle;
 import AdventureModel.Minigames.Minigame;
 import AdventureModel.Movement.ForcedQueue;
 import AdventureModel.Movement.Room;
+import AdventureModel.Outcomes.OutcomeExecuter;
 import javafx.animation.PauseTransition;
 import javafx.animation.Timeline;
 import javafx.application.Platform;
@@ -426,7 +428,19 @@ public class AdventureGameView {
             updateScene(clearText);
         } else if (output.equals("GAME OVER")) {
             System.out.println("You gotta set up the ending here lol"); // TODO: Set up ending.
-            Platform.exit();
+
+            ForcedQueue currQ = this.model.player.getCurrentRoom().getQueue();
+            while (!currQ.is_empty()){
+                currQ.dequeue();
+            }
+            ForcedQueue q = new SatisfactoryEnding().getQueue();
+            while(!q.is_empty()){
+                currQ.enqueue(q.dequeue());
+            }
+
+//            PauseTransition pause = new PauseTransition(Duration.seconds(3));
+//            pause.setOnFinished(event -> Platform.exit());
+//            pause.play();
         } else if (output.equals("FORCED")) {
             String roomDesc = this.model.getPlayer().getCurrentRoom().getRoomDescription();
             updateScene(roomDesc + "\n\nObjects in this room:\n");
@@ -612,7 +626,17 @@ public class AdventureGameView {
         this.model.getPlayer().refreshHealth();
     }
 
-    public void updateScene(String textToDisplay, Choice choice) { // TODO: Implement MOVE
+    /** addMinigame
+     * -------------
+     * Adds minigame to outcomeExecutor's minigames attribute
+     * @param minigame Minigame to be added
+     */
+    public void addMinigame(Minigame minigame){
+        OutcomeExecuter outcome = this.model.player.getOutcome();
+        outcome.addMinigame(minigame);
+    }
+
+    public void updateScene(String textToDisplay, Choice choice) {
 
 //        if (key.equals("instructions")) {
 //            roomImageView.setImage(null);
@@ -654,8 +678,6 @@ public class AdventureGameView {
 
         HBox clickableOptions = new HBox();
         for (ChoiceOption option : choice.getOptions()){
-            // TODO: Populate optionsView with option buttons
-//            s += "\n\tOption: " + option.getOptionText();
             Button button = new Button(option.getOptionText());
             int w = 2000 / choice.getOptions().size();
             customizeButton(button, w, 5);

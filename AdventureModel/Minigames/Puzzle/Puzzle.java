@@ -286,6 +286,7 @@ public class Puzzle extends Minigame {
                 if (this.streak > this.highestStreak){
                     this.highestStreak = (double) (this.streak);
                 }
+                adventureGameView.addMinigame(this);
                 adventureGameView.finishGame();
             }
         } else {

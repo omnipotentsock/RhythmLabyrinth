@@ -1,5 +1,7 @@
 package AdventureModel.Endings;
 
+import AdventureModel.Movement.ForcedQueue;
+
 public interface Ending {
     /**
      * This method executes the consequences associated with the specific ending.
@@ -23,4 +25,10 @@ public interface Ending {
      * @return a description String
      */
     String getPicture();
+
+    /**
+     * This method returns the Ending's respective queue.
+     * @return Ending's queue attribute
+     */
+    ForcedQueue getQueue();
 }

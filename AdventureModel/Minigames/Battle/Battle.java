@@ -127,6 +127,7 @@ public class Battle extends Minigame {
                 });
             } else {
                 executorService.shutdown();
+                adventureGameView.addMinigame(this);
                 adventureGameView.finishGame();
             }
             if (!pressed && !firstIteration) {

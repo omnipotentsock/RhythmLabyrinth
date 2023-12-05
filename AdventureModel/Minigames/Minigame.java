@@ -8,6 +8,8 @@ import views.AdventureGameView;
 
 public abstract class Minigame {
     public String minigameType;
+    public String minigameID;
+
     public Minigame(String type) {
         this.minigameType = type;
     }

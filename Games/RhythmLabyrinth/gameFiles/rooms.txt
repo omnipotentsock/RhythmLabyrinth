@@ -2,12 +2,12 @@
 Prison cell
 --queue
 SDialogue: You open your eyes, finding yourself leaning against a cold brick wall.-false
-SDialogue: A bad move against the leader of the resistance has led to your imprisonment.-false
+SDialogue: A misstep against the leader of the labyrinth, known only as The Beast, has led to your predicament.-false
 SDialogue: Unfortunately for them, you don't know when to quit.-false
-SDialogue: "I'll just have to make my way to the altar. <BOSSMAN>'s gotta pay." you mutter to yourself.-false
+SDialogue: "I'll just have to make my way to the altar. The Beast will pay." you mutter to yourself.-false
 SDialogue: You get up, and look around you.-false
 SDialogue: You are in a jail cell. The door is locked, but you are a skilled lockpicker.-false
-SDialogue: COMPLETE THE PUZZLE TO SUCCESSFULLY PICK THE LOCK-false
+SDialogue: >> Click the buttons in the sequence shown <<-false
 Action: &M001&You unlock the cell door with ease.
 SDialogue: You find yourself inside an opened jail cell.-true
 --passages
@@ -18,7 +18,7 @@ Prisoner holding area
 --queue
 SDialogue: A cold, dark, prisoner holding area is where you find yourself. You notice stairs that lead downwards to a basement to the west, a crumbling wall to east, and your jail cell south.-true
 SDialogue: There's a guard twitching on the floor with blood spilt all around the floor. He lunges at you!-false
-SDialogue: Objective >> Click the circles as they appear onscreen before they disappear to deal damage. Missed circles instead deal damage to you.-false
+SDialogue: >> Click the circles as they appear onscreen before they disappear to deal damage. Missed circles instead deal damage to you. <<-false
 Action: &M002&The guard collapses, shudders, and then lays motionless.
 --passages
 SOUTH       001
@@ -59,8 +59,8 @@ WEST      006
 006
 Mausoleum of the Mistress
 --queue
-SDialogue: A lovely marble tomb adorns a lush green and stony platform, engraved with the name of the late mistress. A marble bridge lies to the east. <BOSSMAN>'s altar is just over to the south.-true
-SDialogue: Suddenly, a hand tears through the earth behind you. The Queen is here to defend <BOSSMAN>!-false
+SDialogue: A lovely marble tomb adorns a lush green and stony platform, engraved with the name of the late mistress. A marble bridge lies to the east. The Beast's altar is just over to the south.-true
+SDialogue: Suddenly, a hand tears through the earth behind you. The Queen is here to defend The Beast!-false
 Action: &M007&The hag's inanimate corpse lies still as a static breeze. However, her hand still grasps your ankle.
 Action: &M008&You deftly kick her hand away, freeing you from her rotten clutches.
 --passages
@@ -87,7 +87,7 @@ WEST      005
 009
 Tunnel to Altar
 --queue
-SDialogue: An old tunnel that seems to lead to <BOSSMAN>'s altar due north. The basement corridor lies to the east.-true
+SDialogue: An old tunnel that seems to lead to The Beast's altar due north. The basement corridor lies to the east.-true
 SDialogue: A grate blocks your path. It seems like your lockpicking skills might come in handy. But perhaps it might be best to use brute force.-false
 Choice: Detach the grate, or break it?-false-DETACH>&M010&The grate comes off, silent as a mouse on Christmas Eve, leaving the path free for you to continue towards./BREAK>&M011&You tear open the grate a new one. It flies off its hinges, leaving the path free for you to continue towards.
 
@@ -98,7 +98,7 @@ EAST      003
 010
 Altar
 --queue
-SDialogue: Altar room!! Fuck yeahh!!-true
+SDialogue: PLACEHOLDER-true
 --passages
 FORCED     0
 
