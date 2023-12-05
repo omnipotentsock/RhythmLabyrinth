@@ -104,7 +104,7 @@ public class Battle extends Minigame {
         targetButton.setMinSize(BUTTON_WIDTH, BUTTON_HEIGHT);
         targetButton.setMaxSize(BUTTON_WIDTH, BUTTON_HEIGHT);
         targetButton.setOnAction(e -> {
-            enemyHealth -= 10; // Damage taken by enemy
+            enemyHealth -= adventureGameView.getModel().player.damage; // Damage taken by enemy
             Platform.runLater(() -> root.getChildren().remove(targetButton));
             flashScreen(background, "#09663e");
             enemyHealthBar.setProgress(enemyHealth/totalHealth);

@@ -5,6 +5,7 @@ import AdventureModel.Endings.EndingExecuter;
 import AdventureModel.Minigames.Minigame;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -16,7 +17,7 @@ public class OutcomeExecuter implements Serializable {
     /**
      * This is a List of Minigames that the Player has completed so far.
      */
-    private HashMap<String,Minigame> minigames;
+    private ArrayList<Minigame> minigames;
     /**
      * This is an EndingExecuter object that executes a specific ending, provided that it
      * is given as an input (via setEnding).
@@ -29,7 +30,7 @@ public class OutcomeExecuter implements Serializable {
      * @param minigames a List<Minigame> type
      * @param endingExecuter an EndingExecuter type
      */
-    public OutcomeExecuter(Progression record, HashMap<String,Minigame> minigames, EndingExecuter endingExecuter) {
+    public OutcomeExecuter(Progression record, ArrayList<Minigame> minigames, EndingExecuter endingExecuter) {
         this.record = record;
         this.minigames = minigames;
         this.endingExecuter = endingExecuter;
@@ -39,7 +40,7 @@ public class OutcomeExecuter implements Serializable {
      * the appropriate ending, and executes the sequences associated with that ending.
      */
     public Ending execute() {
-        for (Minigame minigame : minigames.values()) {
+        for (Minigame minigame : minigames) {
             this.record.update(minigame.formInterpretation().interpret());
         }
         this.endingExecuter.setEnding(this.record.getEnding());
@@ -50,11 +51,11 @@ public class OutcomeExecuter implements Serializable {
      * This returns the list of Minigames the Player has completed so far
      * @return the list of Minigames
      */
-    public HashMap<String,Minigame> getMinigames() {
+    public ArrayList<Minigame> getMinigames() {
         return this.minigames;
     }
 
-    public void addMinigame(Minigame minigame){this.minigames.put(minigame.minigameID, minigame);}
+    public void addMinigame(Minigame minigame){this.minigames.add(minigame);}
 
     /**
      * This returns the size of the list of Minigames the Player has completed so far
