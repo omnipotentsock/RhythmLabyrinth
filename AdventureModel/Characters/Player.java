@@ -51,4 +51,6 @@ public class Player implements Serializable {
 
     public double getPlayerHealth() { return this.playerHealth; }
     public double loseHealth(int damage) { return this.playerHealth -= damage; }
+
+    public void refreshHealth(){this.playerHealth = 100.0;}
 }

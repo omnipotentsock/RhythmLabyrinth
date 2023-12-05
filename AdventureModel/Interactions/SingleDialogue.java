@@ -23,7 +23,6 @@ public class SingleDialogue extends Interaction {
     }
 
     public void execute(AdventureGameView adventureGameView) {
-        // TODO: Display text on GUI
         adventureGameView.updateScene(dialogueText);
     }
     protected void setDialogueText(String text) {

@@ -1,5 +1,6 @@
 package AdventureModel.Interactions;
 
+import AdventureModel.Characters.Player;
 import AdventureModel.Minigames.*;
 import AdventureModel.Minigames.Battle.Battle;
 import views.AdventureGameView;
@@ -31,6 +32,8 @@ public class Action extends Interaction{
     // NOTE!! Action instances are never in Room.forcedQueue! They are executed after Option instance is executed!!
     public void execute(AdventureGameView adventureGameView){
         HashMap<String, Minigame> minigames = adventureGameView.getModel().getMinigames();
+        Player player = adventureGameView.getModel().player;
+        player.refreshHealth();
         if (minigames.containsKey(this.minigameID)){
             Minigame minigame = minigames.get(this.minigameID);
             adventureGameView.updateScene(this.dialogueText + this.afterText, minigame.minigameType);
