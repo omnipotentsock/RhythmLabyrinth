@@ -29,6 +29,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.layout.*;
 import javafx.scene.input.KeyCode;
 import javafx.scene.text.Font;
+import javafx.scene.text.TextAlignment;
 import javafx.stage.Stage;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
@@ -407,7 +408,6 @@ public class AdventureGameView {
             String roomDesc = this.model.getPlayer().getCurrentRoom().getRoomDescription() + "\n\nAvailable moves:" +
                     this.model.getPlayer().getCurrentRoom().getCommands();
             roomDescLabel.setText(roomDesc);
-            articulateRoomDescription(); //all we want, if we are looking, is to repeat description.
             return;
         } else if (text.equalsIgnoreCase("HELP") || text.equalsIgnoreCase("H")) {
             showInstructions();
@@ -460,6 +460,8 @@ public class AdventureGameView {
         roomDescLabel.setPrefHeight(500);
         roomDescLabel.setTextOverrun(OverrunStyle.CLIP);
         roomDescLabel.setWrapText(true);
+        roomDescLabel.setTextAlignment(TextAlignment.CENTER);
+
         VBox roomPane = new VBox(roomImageView,roomDescLabel);
         roomPane.setPadding(new Insets(10));
         roomPane.setAlignment(Pos.TOP_CENTER);
@@ -468,8 +470,6 @@ public class AdventureGameView {
         gridPane.add(roomPane, 1, 1);
         stage.sizeToScene();
 
-        //finally, articulate the description
-        if (textToDisplay == null || textToDisplay.isBlank()) articulateRoomDescription();
     }
 
     public void updateScene(String textToDisplay, String key) {
@@ -484,6 +484,8 @@ public class AdventureGameView {
             roomDescLabel.setPrefHeight(500);
             roomDescLabel.setTextOverrun(OverrunStyle.CLIP);
             roomDescLabel.setWrapText(true);
+            roomDescLabel.setAlignment(Pos.CENTER);
+
             VBox roomPane = new VBox(roomImageView, roomDescLabel);
             roomPane.setPadding(new Insets(10));
             roomPane.setAlignment(Pos.TOP_CENTER);
@@ -493,7 +495,6 @@ public class AdventureGameView {
             stage.sizeToScene();
 
             //finally, articulate the description
-            if (textToDisplay == null || textToDisplay.isBlank()) articulateRoomDescription();
         }
         if (key.equals("puzzle")) {
             updateScene(textToDisplay);
@@ -608,6 +609,7 @@ public class AdventureGameView {
 //        var scene = new Scene( gridPane , 1000, 800);
         this.stage.getScene().setRoot(gridPane);
         this.stage.show();
+        this.model.getPlayer().refreshHealth();
     }
 
     public void updateScene(String textToDisplay, Choice choice) { // TODO: Implement MOVE
@@ -639,6 +641,7 @@ public class AdventureGameView {
         roomDescLabel.setPrefHeight(500);
         roomDescLabel.setTextOverrun(OverrunStyle.CLIP);
         roomDescLabel.setWrapText(true);
+        roomDescLabel.setAlignment(Pos.CENTER);
         VBox roomPane = new VBox(roomImageView,roomDescLabel);
         roomPane.setPadding(new Insets(10));
         roomPane.setAlignment(Pos.TOP_CENTER);
@@ -654,6 +657,8 @@ public class AdventureGameView {
             // TODO: Populate optionsView with option buttons
 //            s += "\n\tOption: " + option.getOptionText();
             Button button = new Button(option.getOptionText());
+            int w = 2000 / choice.getOptions().size();
+            customizeButton(button, w, 5);
             button.setOnAction(e -> {
                 option.execute(this);
             });
@@ -680,6 +685,7 @@ public class AdventureGameView {
             ;
         } else {
             q.refresh();
+            q.dequeue().execute(this);
             for (Button direction : moves) {
                 String[] s = this.model.getPlayer().getCurrentRoom().getCommands().split(",");
                 List<String> list = Arrays.asList(s);
@@ -791,25 +797,6 @@ public class AdventureGameView {
     }
 
 
-    /**
-     * This method articulates Room Descriptions
-     */
-    public void articulateRoomDescription() {
-        String musicFile;
-        String adventureName = this.model.getDirectoryName();
-        String roomName = this.model.getPlayer().getCurrentRoom().getRoomName();
-
-        if (!this.model.getPlayer().getCurrentRoom().getVisited()) musicFile = "./" + adventureName + "/sounds/" + roomName.toLowerCase() + "-long.mp3" ;
-        else musicFile = "./" + adventureName + "/sounds/" + roomName.toLowerCase() + "-short.mp3" ;
-        musicFile = musicFile.replace(" ","-");
-
-        Media sound = new Media(new File(musicFile).toURI().toString());
-
-        mediaPlayer = new MediaPlayer(sound);
-        mediaPlayer.play();
-        mediaPlaying = true;
-
-    }
 
     /**
      * This method stops articulations 
