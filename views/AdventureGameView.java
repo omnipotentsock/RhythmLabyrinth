@@ -215,7 +215,9 @@ public class AdventureGameView {
         for (Button direction : moves) {
             styleMovementButtons(direction);
             direction.setOnAction(e -> {
-                submitEvent(direction.getText());
+                String[] move = direction.getText().split(" ");
+
+                submitEvent(move[1].toUpperCase());
             });
             direction.setDisable(true);
         }

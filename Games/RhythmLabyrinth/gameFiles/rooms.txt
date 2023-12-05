@@ -17,7 +17,7 @@ SOUTH      004
 End of road
 --queue
 SDialogue: You are at the end of a road at the top of a small hill. You can see a small building in the valley to the east.-true
-Action: A wild Pokémon has appeared!&M0002&
+Action: A wild Pokémon has appeared!&M003&
 --passages
 EAST       001
 WEST       003
