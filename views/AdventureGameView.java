@@ -438,7 +438,7 @@ public class AdventureGameView {
             pause.play();
         }
     }
-    
+
 
     /**
      * updateScene

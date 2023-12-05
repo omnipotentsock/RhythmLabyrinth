@@ -70,7 +70,7 @@ SOUTH      010
 007
 Curtain2
 --queue
-SDialogue: Room with weak wall that player will break. Banquet hall through north wall. Prisoner holding area to west.-true
+SDialogue: You arrive at a crumbling wall. You can make out a banquet hall through the wall. The prisoner holding area is to the west.-true
 Choice: The wall looks fragile. Break it?-false-BREAK IT>&M003&The wall collapses, providing a passage.
 --passages
 NORTH      008
