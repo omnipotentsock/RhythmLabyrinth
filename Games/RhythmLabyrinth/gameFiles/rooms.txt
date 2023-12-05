@@ -1,55 +1,92 @@
 001
 Outside building
 --queue
-SDialogue: You enter the cave, lit dimly by glowing ashes.-true
-SDialogue: You notice a bloodied corpse on the floor, upon which a white lamblike being crouches over, holding an ethereal white bow.-false
-SDialogue: Hovering around its shoulder, a purple wolf head floats restlessly about.-false
-NPCDialogue: LAMB! Tell me a story.-false-WOLF
-NPCDialogue: There was once a pale man with dark hair who was very lonely.-false-LAMB
-NPCDialogue: Why was it lonely?-false-WOLF
-Choice: Do you interrupt him?-false-Yes>Wolf is attacking you!&M001&He backs away./No>&M002&They do not notice you.
+SDialogue: You open your eyes, finding yourself leaning against a cold brick wall.-false
+SDialogue: A bad move against the leader of the resistance has led to your imprisonment.-false
+SDialogue: Unfortunately for them, you don't know when to quit.-false
+SDialogue: "I'll just have to make my way to the altar. <BOSSMAN>'s gotta pay." you mutter to yourself.-false
+SDialogue: You get up, and look around you.-false
+SDialogue: You are in a jail cell. The door is locked, but you are a skilled lockpicker.-false
+Action: COMPLETE THE PUZZLE TO SUCCESSFULLY PICK THE LOCK&M001&
+SDialogue: You find yourself inside an opened jail cell.-true
 --passages
-WEST       002
-NORTH      003
-SOUTH      004
+NORTH       002
 
 002
 End of road
 --queue
-SDialogue: You are at the end of a road at the top of a small hill. You can see a small building in the valley to the east.-true
-Action: A wild Pokémon has appeared!&M003&
+SDialogue: Prisoner holding area. Basement stairs down to west. Crumbling wall to east. Jail cell south.-true
+SDialogue: There's a guard twitching on the floor with blood spilt all around the floor.-false
+Choice: Do you kick him?-false-Yes>The guard attacks you!&M002&He crumples onto the floor./No>&NULL&The guard stops quivering, and lays motionless.
 --passages
-EAST       001
+SOUTH       001
+EAST       007
 WEST       003
 
 003
 Inside building
 --queue
-SDialogue: You are inside a building, a well house for a large spring.-true
+SDialogue: Basement. Door to room north. Bridge west. Stairs up to prisoner holding area east.-true
 --passages
-SOUTH      001
-WEST       005
-NORTH      010
+NORTH      004
+EAST       002
+WEST      009
 
 004
 Valley beside a stream
 --queue
-SDialogue: You are in a valley in the forest beside a stream tumbling along a rocky bed.  The stream is flowing to the south.-true
+SDialogue: A goblin is inside the room, feasting on some poor rodent. It glares at you as soon as you step inside.-false
+Choice: Do you fight him, or try to talk your way out of this?-false-FIGHT>You catch the goblin off guard&M005&The goblin shrieks and dies./BLUFF>&M004&You tell the goblin about the new promotion RAID: Shadow Legends is holding outside the dungeon. He rushes off.
+SDialogue: Room with shit in it. Door to rest of basement south. Stairs up to fountain north.-true
 --passages
-NORTH      001
-SOUTH      005
+NORTH      005
+SOUTH      003
 
 005
 Slit in rock
 --queue
-SDialogue: At your feet all the water of the stream splashes into a two-inch slit in the rock.  To the south, the streambed is bare rock.-true
+SDialogue: Fountain. Stairs down to south. Banquet hall to east. Bridge to queen's grave west.-true
 --passages
-NORTH      004
+SOUTH      004
+EAST      008
+WEST      006
+
+006
+Curtain1
+--queue
+SDialogue: Queen's tomb. Bridge to fountain east. Altar room to south.-true
+--passages
+EAST      005
 SOUTH      010
+
+007
+Curtain2
+--queue
+SDialogue: Room with weak wall that player will break. Banquet hall through north wall. Prisoner holding area to west.-true
+Action: The wall looks fragile. Break it?&M003&
+--passages
+NORTH      008
+WEST      002
+
+008
+Curtain3
+--queue
+SDialogue: Banquet hall. Crumbled wall to south. Fountain room to west.-true
+--passages
+SOUTH      007
+WEST      005
+
+009
+Missing Treasures
+--queue
+SDialogue: Grate to altar to north. Basement room to east.-true
+--passages
+NORTH      010
+EAST      003
 
 010
 Victory
-SDialogue: You have collected all the treasures and are admitted to the Adventurer's Hall of Fame.  Congratulations!-true
+SDialogue: Altar room!! Fuck yeahh!!-true
 --passages
 FORCED     0
 
