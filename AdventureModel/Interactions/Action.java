@@ -11,7 +11,7 @@ public class Action extends Interaction{
     /**
      * Minigame object to be executed
      */
-    private String minigameID;
+    private final String minigameID;
 //    private final Minigame minigame = null;
     private String dialogueText;
     private String afterText;
@@ -35,8 +35,10 @@ public class Action extends Interaction{
             Minigame minigame = minigames.get(this.minigameID);
             adventureGameView.updateScene(this.dialogueText + this.afterText, minigame.minigameType);
             minigame.execute(adventureGameView);
-        }
-        else {System.out.println("MINIGAME " + this.minigameID + " does not exist!");}
+        } else if (minigameID.equals("NULL")) {
+            adventureGameView.getModel().getPlayer().getCurrentRoom().getQueue().refresh();
+            adventureGameView.updateScene(this.afterText);
+        } else {System.out.println("MINIGAME " + this.minigameID + " does not exist!");}
     }
 
     protected void setDialogueText(String text) {

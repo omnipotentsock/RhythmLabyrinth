@@ -27,8 +27,8 @@ import java.util.concurrent.TimeUnit;
 public class Battle extends Minigame {
     public String minigameType;
     public String minigameID;
-    public double totalHealth = 100; // TODO: To parse
-    public double enemyHealth = totalHealth;
+    public double totalHealth; // TODO: To parse
+    public double enemyHealth;
     public int damage;
     /**
      * This is the Battle's accuracy cutoff between PerformanceEnding and SatisfactoryEnding.
@@ -57,6 +57,7 @@ public class Battle extends Minigame {
         super("battle");
         minigameID = ID;
         this.totalHealth = Integer.parseInt(parameters[2]);
+        this.enemyHealth = Integer.parseInt(parameters[2]);
         this.interval = Integer.parseInt(parameters[0]);
         this.damage = Integer.parseInt(parameters[1]);
 

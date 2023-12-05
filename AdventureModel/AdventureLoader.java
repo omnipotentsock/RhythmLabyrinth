@@ -2,7 +2,6 @@ package AdventureModel;
 
 import AdventureModel.Interactions.Action;
 import AdventureModel.Interactions.Choice;
-import AdventureModel.Interactions.NPCDialogue;
 import AdventureModel.Interactions.SingleDialogue;
 import AdventureModel.Minigames.*;
 import AdventureModel.Minigames.Battle.Battle;
@@ -72,9 +71,6 @@ public class AdventureLoader {
                 switch (query[0]){
                     case "SDialogue:":
                         queue.enqueue(new SingleDialogue(query[1]));
-                        break;
-                    case "NPCDialogue:":
-                        queue.enqueue(new NPCDialogue(query[1]));
                         break;
                     case "Choice:":
                         queue.enqueue(new Choice(query[1]));

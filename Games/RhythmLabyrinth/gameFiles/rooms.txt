@@ -7,7 +7,8 @@ SDialogue: Unfortunately for them, you don't know when to quit.-false
 SDialogue: "I'll just have to make my way to the altar. <BOSSMAN>'s gotta pay." you mutter to yourself.-false
 SDialogue: You get up, and look around you.-false
 SDialogue: You are in a jail cell. The door is locked, but you are a skilled lockpicker.-false
-Action: COMPLETE THE PUZZLE TO SUCCESSFULLY PICK THE LOCK&M001&
+SDialogue: COMPLETE THE PUZZLE TO SUCCESSFULLY PICK THE LOCK-false
+Action: &M001&You unlock the cell door with ease.
 SDialogue: You find yourself inside an opened jail cell.-true
 --passages
 NORTH       002
@@ -15,9 +16,10 @@ NORTH       002
 002
 End of road
 --queue
-SDialogue: Prisoner holding area. Basement stairs down to west. Crumbling wall to east. Jail cell south.-true
-SDialogue: There's a guard twitching on the floor with blood spilt all around the floor.-false
-Choice: Do you kick him?-false-Yes>&M002&The guard crumples onto the floor after fighting back./No>&NULL&The guard stops quivering, and lays motionless.
+SDialogue: A cold, dark, prisoner holding area is where you find yourself. You notice stairs that lead downwards to a basement to the west, a crumbling wall to east, and your jail cell south.-true
+SDialogue: There's a guard twitching on the floor with blood spilt all around the floor. He lunges at you!-false
+SDialogue: CLICK ON THE CIRCLES ON TIME TO DEAL DAMAGE, LEST YOU TAKE DAMAGE.-false
+Action: &M002&The guard collapses, shudders, and then lays motionless.
 --passages
 SOUTH       001
 EAST       007
@@ -26,7 +28,7 @@ WEST       003
 003
 Inside building
 --queue
-SDialogue: Basement. Door to room north. Bridge west. Stairs up to prisoner holding area east.-true
+SDialogue: The basement you're in is damp and dark. You see a wooden door to a room to your North. Off to the west, you notice a musty grate. There are stairs leading up to prisoner holding area to the east.-true
 --passages
 NORTH      004
 EAST       002
@@ -35,9 +37,9 @@ WEST      009
 004
 Valley beside a stream
 --queue
-SDialogue: Room with shit in it. Door to rest of basement south. Stairs up to fountain north.-true
+SDialogue: You enter the room, and are immediately greeted with a foul stench. The door to the south leads to the rest of basement. There are also stairs that lead up north, a soft humming of flowing water echoing through.-true
 SDialogue: A goblin is inside the room, feasting on some poor rodent. It glares at you as soon as you step inside.-false
-Choice: Do you fight him, or try to talk your way out of this?-false-FIGHT>&M005&The goblin shrieks and dies./BLUFF>&M004&You tell the goblin about the new promotion RAID: Shadow Legends is holding outside the dungeon. He rushes off.
+Choice: Do you fight him, or try to talk your way out of this?-false-FIGHT>&M005&The goblin shrieks and dies./BLUFF>&NULL&You tell the goblin about the new promotion RAID: Shadow Legends is holding outside the dungeon. He rushes off.
 --passages
 NORTH      005
 SOUTH      003
@@ -45,7 +47,10 @@ SOUTH      003
 005
 Slit in rock
 --queue
-SDialogue: Fountain. Stairs down to south. Banquet hall to east. Bridge to queen's grave west.-true
+SDialogue: A pristine fountain decorates the center of this room. Stairs lead down south to the basement, and an extravagant banquet hall lies to the east. A marble bridge to the west can also be seen.-true
+SDialogue: In a moment of weakness, you trudge towards the fountain, not having drank water in what seems like millennia.-false
+SDialogue: However, your throat is so parched that you start choking on the water!-false
+Action: &M009&You settle down, and gather your bearings and wits.
 --passages
 SOUTH      004
 EAST      008
@@ -54,7 +59,10 @@ WEST      006
 006
 Curtain1
 --queue
-SDialogue: Queen's tomb. Bridge to fountain east. Altar room to south.-true
+SDialogue: A lovely marble tomb adorns this lush green and stony platform, engraved with the name of the late mistress. A marble bridge lies to the east. <BOSSMAN>'s altar is just over to the south.-true
+SDialogue: Suddenly, a hand tears through the earth behind you. The Queen is here to defend <BOSSMAN>!-false
+Action: &M007&The hag's inanimate corpse lies still as a static breeze. However, her hand still grasps your ankle.
+Action: &M008&You deftly kick her hand away, freeing you from her rotten clutches.
 --passages
 EAST      005
 SOUTH      010
@@ -71,7 +79,7 @@ WEST      002
 008
 Curtain3
 --queue
-SDialogue: Banquet hall. Crumbled wall to south. Fountain room to west.-true
+SDialogue: A banquet hall that can only be described as royal and over the top decorates your vision. A crumbling wall lies to south, with a beautiful fountain to the west.-true
 --passages
 SOUTH      007
 WEST      005
@@ -79,13 +87,17 @@ WEST      005
 009
 Missing Treasures
 --queue
-SDialogue: Grate to altar to north. Basement room to east.-true
+SDialogue: An old grate that seems to lead to <BOSSMAN>'s altar to the north. The basement corridor lies to the east.-true
+SDialogue: It seems like your lockpicking skills might come in handy. But perhaps it might be best to use brute force.-false
+Choice: Detach the grate, or break it?-false-DETACH>&M010&The grate comes off, silent as a mouse on Christmas Eve, leaving the path free for you to continue towards./BREAK>&M011&You tear open the grate a new one. It flies off its hinges, leaving the path free for you to continue towards.
+
 --passages
 NORTH      010
 EAST      003
 
 010
 Victory
+--queue
 SDialogue: Altar room!! Fuck yeahh!!-true
 --passages
 FORCED     0
