@@ -31,14 +31,15 @@ public class Puzzle extends Minigame {
      * This is the Puzzle's accuracy cutoff between SatisfactoryEnding and MediocreEnding.
      */
     private Double SatMedCutoff;
+    private int attempts = 0;
 
-    private Integer sequenceLength; // CPU Sequence that user must complete
     private static String currDigit; // The current button that the user has selected
     public static ArrayList<Integer> sequenceArray = new ArrayList<>(); // The array in which the sequence is stored
     private static ArrayList<Integer> userSequence = new ArrayList<>(); // The array in which the user has input their sequence
     private static ArrayList<Button> buttons = new ArrayList<>();
     private static int currentIndex = 0;
-    private static int maxSequence = 5;
+    private int sequencesComplete = 0;
+    private static int sequenceLength = 5;
     private static int sequences = 1;
     public Puzzle() {
         super("puzzle");
@@ -47,7 +48,7 @@ public class Puzzle extends Minigame {
         super("puzzle");
         this.minigameID = id;
         sequences = Integer.parseInt(parameters[0]);
-        maxSequence = Integer.parseInt(parameters[1]);
+        sequenceLength = Integer.parseInt(parameters[1]);
 
         this.PerfSatCutoff = Double.parseDouble(thresholds[1]);
         this.SatMedCutoff = Double.parseDouble(thresholds[0]);
@@ -86,10 +87,8 @@ public class Puzzle extends Minigame {
 //        });
         Platform.runLater(() -> {
             GridPane panel = createButtonGrid(adventureGameView);
-//            frame.setContent(panel);
-//            Puzzle puzzle = new Puzzle();
-//            puzzle.createGamePane(adventureGameView);
             root.getChildren().add(panel);
+
             generateSequence();
             runCPUSequence();
         });
@@ -153,8 +152,7 @@ public class Puzzle extends Minigame {
      */
     private void generateSequence() {
         Random random = new Random();
-        int randomNum = ThreadLocalRandom.current().nextInt(1, maxSequence + 1); // TODO: seqLength and maxSeq
-        for (int i = 0; i < randomNum; i++) {  // Adjust the sequence length as needed
+        for (int i = 0; i < this.sequenceLength; i++) {  // Adjust the sequence length as needed
             int randomIndex = random.nextInt(9);
             sequenceArray.add(randomIndex);
         }
@@ -180,6 +178,7 @@ public class Puzzle extends Minigame {
         });
         timer.start();
     }
+
 
     /**
      * flashButtonColour
@@ -256,12 +255,20 @@ public class Puzzle extends Minigame {
      */
     private void checkUserSequence(AdventureGameView adventureGameView) {
         if (Puzzle.ComparisonSequence.compare(sequenceArray, userSequence)) {
-            System.out.println("Congratulations! Sequences match!");
-            adventureGameView.finishGame();
+            this.attempts++;
+            if (this.sequencesComplete != this.sequences){
+                this.sequencesComplete++;
+                createGamePane(adventureGameView);
+            } else {
+                System.out.println("Congratulations! Sequences match! Completed in " + this.attempts + " attempts!");
+                adventureGameView.finishGame();
+            }
         } else {
             if (sequenceArray.size() == userSequence.size()) {
                 System.out.println("Incorrect sequence. Try again.");
-                adventureGameView.finishGame();
+                this.userSequence = (ArrayList<Integer>) this.sequenceArray.clone();
+                this.attempts++;
+                createGamePane(adventureGameView);
             }
         }
     }
