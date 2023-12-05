@@ -1,7 +1,7 @@
 package AdventureModel.Interpretations;
 
-import AdventureModel.Minigames.MiniGame;
-import AdventureModel.Minigames.Puzzle.Puzzle;
+import AdventureModel.Minigames.Minigame;
+import AdventureModel.Minigames.Puzzle;
 
 public class PuzzleInterpretationFactory implements InterpretationFactory {
     private Puzzle target;
@@ -10,7 +10,7 @@ public class PuzzleInterpretationFactory implements InterpretationFactory {
         return new PuzzleInterpretation(this.target);
     }
 
-    public void accept(MiniGame miniGame) {
-        this.target = (Puzzle) miniGame;
+    public void accept(Minigame minigame) {
+        this.target = (Puzzle) minigame;
     }
 }

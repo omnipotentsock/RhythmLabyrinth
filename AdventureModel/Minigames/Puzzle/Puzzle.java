@@ -33,6 +33,9 @@ public class Puzzle extends Minigame {
     private Double SatMedCutoff;
     private int attempts = 0;
 
+    private int streak = 0;
+    private Double highestStreak = 0.0;
+
     private String currDigit; // The current button that the user has selected
     public ArrayList<Integer> sequenceArray = new ArrayList<>(); // The array in which the sequence is stored
     private ArrayList<Integer> userSequence = new ArrayList<>(); // The array in which the user has input their sequence
@@ -228,6 +231,22 @@ public class Puzzle extends Minigame {
         checkUserSequence(adventureGameView);
     }
 
+    public Double accuracy() {
+        return (this.sequences / this.attempts) / 1.0;
+    }
+
+    public Double getPerfSatCutoff() {
+        return this.PerfSatCutoff;
+    }
+
+    public Double getSatMedCutoff() {
+        return this.SatMedCutoff;
+    }
+
+    public Double consecutiveImpact() {
+        return this.highestStreak / this.sequences;
+    }
+
 
     /**
      * ComparisonSequence
@@ -259,11 +278,14 @@ public class Puzzle extends Minigame {
         if (Puzzle.ComparisonSequence.compare(sequenceArray, userSequence)) {
             this.attempts++;
             this.sequencesComplete++;
+            this.streak++;
             if (this.sequencesComplete != this.sequences){
                 createGamePane(adventureGameView);
             } else {
                 System.out.println("Congratulations! Sequences match! Completed in " + this.attempts + " attempts!");
-                // For some reason, even when a new game is started, it builds off the old sequence instead of a brand new one.
+                if (this.streak > this.highestStreak){
+                    this.highestStreak = (double) (this.streak);
+                }
                 adventureGameView.finishGame();
             }
         } else {
@@ -271,6 +293,10 @@ public class Puzzle extends Minigame {
                 System.out.println("Incorrect sequence. Try again.");
                 this.userSequence = (ArrayList<Integer>) this.sequenceArray.clone();
                 this.attempts++;
+                if (this.streak > this.highestStreak){
+                    this.highestStreak = (double) this.streak;
+                }
+                this.streak = 0;
                 createGamePane(adventureGameView);
             }
         }

@@ -1,7 +1,7 @@
 package AdventureModel.Interpretations;
 
 import AdventureModel.Minigames.Battle.Battle;
-import AdventureModel.Minigames.MiniGame;
+import AdventureModel.Minigames.Minigame;
 
 public class BattleInterpretationFactory implements InterpretationFactory {
     private Battle target;
@@ -10,7 +10,7 @@ public class BattleInterpretationFactory implements InterpretationFactory {
         return new BattleInterpretation(this.target);
     }
     @Override
-    public void accept(MiniGame miniGame) {
+    public void accept(Minigame miniGame) {
         this.target = (Battle) miniGame;
     }
 }

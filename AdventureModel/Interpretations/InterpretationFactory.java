@@ -1,6 +1,6 @@
 package AdventureModel.Interpretations;
 
-import AdventureModel.Minigames.MiniGame;
+import AdventureModel.Minigames.Minigame;
 
 public interface InterpretationFactory {
     /**
@@ -13,7 +13,7 @@ public interface InterpretationFactory {
 
     /**
      * This method accepts a Mini-game so that it can create a corresponding Interpretation object.
-     * @param miniGame is a type MiniGame
+     * @param minigame is a type Minigame
      */
-    void accept(MiniGame miniGame);
+    void accept(Minigame minigame);
 }

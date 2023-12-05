@@ -43,22 +43,13 @@ public class Choice extends Interaction{
      */
     @Override
     public void execute(AdventureGameView adventureGameView) {
-
-        System.out.println(this.dialogueText); // TODO: Display choice dialogue and options retrieved below
         String s = this.dialogueText;
-
-        for (ChoiceOption option : this.options){
-            System.out.println(option.getOptionText()); // TODO: Populate optionsView with option buttons
-            s += "\n\tOption: " + option.getOptionText();
-        }
-
-        adventureGameView.updateScene(s);
-
-        // TODO: Feel free to add imports to AdventureGame or whatever to make sure you can figure out what option is clicked or however you can make this work
+        adventureGameView.updateScene(s, this);
     }
 
     protected void setDialogueText(String text) {this.dialogueText = text;}
     protected void setRefreshing(boolean refresh) {this.refreshing = refresh;}
     public boolean getRefreshing(){ return this.refreshing;}
     public String getDialogueText(){return this.dialogueText;}
+    public ArrayList<ChoiceOption> getOptions() { return this.options; }
 }

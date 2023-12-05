@@ -2,7 +2,7 @@ package AdventureModel.Outcomes;
 
 import AdventureModel.Endings.Ending;
 import AdventureModel.Endings.EndingExecuter;
-import AdventureModel.Minigames.MiniGame;
+import AdventureModel.Minigames.Minigame;
 
 import java.io.Serializable;
 import java.util.List;
@@ -13,9 +13,9 @@ public class OutcomeExecuter implements Serializable {
      */
     private Progression record;
     /**
-     * This is a List of MiniGames that the Player has completed so far.
+     * This is a List of Minigames that the Player has completed so far.
      */
-    private List<MiniGame> miniGames;
+    private List<Minigame> minigames;
     /**
      * This is an EndingExecuter object that executes a specific ending, provided that it
      * is given as an input (via setEnding).
@@ -25,40 +25,40 @@ public class OutcomeExecuter implements Serializable {
     /**
      * This is the constructor method.
      * @param record a Progression type
-     * @param miniGames a List<MiniGame> type
+     * @param minigames a List<Minigame> type
      * @param endingExecuter an EndingExecuter type
      */
-    public OutcomeExecuter(Progression record, List<MiniGame> miniGames, EndingExecuter endingExecuter) {
+    public OutcomeExecuter(Progression record, List<Minigame> minigames, EndingExecuter endingExecuter) {
         this.record = record;
-        this.miniGames = miniGames;
+        this.minigames = minigames;
         this.endingExecuter = endingExecuter;
     }
     /**
-     * This method iterates through all the MiniGames the Player has completed, determines
+     * This method iterates through all the Minigames the Player has completed, determines
      * the appropriate ending, and executes the sequences associated with that ending.
      */
     public Ending execute() {
-        for (MiniGame miniGame : miniGames) {
-            this.record.update(miniGame.formInterpretation().interpret());
+        for (Minigame minigame : minigames) {
+            this.record.update(minigame.formInterpretation().interpret());
         }
         this.endingExecuter.setEnding(this.record.getEnding());
         return this.endingExecuter.executeEnding();
     }
 
     /**
-     * This returns the list of MiniGames the Player has completed so far
-     * @return the list of MiniGames
+     * This returns the list of Minigames the Player has completed so far
+     * @return the list of Minigames
      */
-    public List<MiniGame> getMiniGames() {
-        return this.miniGames;
+    public List<Minigame> getMinigames() {
+        return this.minigames;
     }
 
     /**
-     * This returns the size of the list of MiniGames the Player has completed so far
-     * @return the size of the list of MiniGames
+     * This returns the size of the list of Minigames the Player has completed so far
+     * @return the size of the list of Minigames
      */
     public int miniGamesCompleted() {
-        return this.miniGames.size();
+        return this.minigames.size();
     }
     public EndingExecuter getEndingExecuter() {
         return this.endingExecuter;

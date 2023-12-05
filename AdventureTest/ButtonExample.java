@@ -1,4 +1,4 @@
-package views;
+package AdventureTest;
 
 import javax.swing.*;
 import java.awt.event.ActionEvent;
