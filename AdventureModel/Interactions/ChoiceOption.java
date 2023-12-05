@@ -20,6 +20,7 @@ public class ChoiceOption implements Serializable {
     // NOTE!! Option instances are never in Room.forcedQueue! They are only executed after Option button is clicked!!
     public void execute(AdventureGameView adventureGameView) {
         this.action.execute(adventureGameView);
+        adventureGameView.currentInteraction = new SingleDialogue(".-true");
     }
 
     public String getOptionText() {
