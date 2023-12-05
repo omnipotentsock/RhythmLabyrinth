@@ -73,6 +73,7 @@ public class AdventureGameView {
 
     private MediaPlayer mediaPlayer; //to play audio
     private boolean mediaPlaying; //to know if the audio is playing
+    public Interaction currentInteraction = null;
 
     /**
      * Adventure Game View Constructor
@@ -480,7 +481,7 @@ public class AdventureGameView {
         if (textToDisplay == null || textToDisplay.isBlank()) articulateRoomDescription();
     }
 
-    public void updateScene(String textToDisplay, String key) { // TODO: Implement MOVE
+    public void updateScene(String textToDisplay, String key) {
 
         if (key.equals("instructions")) {
             roomImageView.setImage(null);
@@ -679,7 +680,10 @@ public class AdventureGameView {
         ForcedQueue q = room.getQueue();
         if (!q.is_empty()) {
             Interaction i = q.dequeue();
+            this.currentInteraction = i;
             i.execute(this);
+        } else if (this.currentInteraction.getClass() == new Choice(".-false-.>.&NULL&.").getClass()) {
+            ;
         } else {
             q.refresh();
             for (Button direction : moves) {
