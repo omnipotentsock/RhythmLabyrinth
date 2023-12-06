@@ -17,7 +17,5 @@ public abstract class Minigame {
 
     public abstract Pane createGamePane(AdventureGameView adventureGameView);
 
-    public Interpretation formInterpretation() {
-        return null;
-    }
+    public abstract Interpretation formInterpretation();
 }

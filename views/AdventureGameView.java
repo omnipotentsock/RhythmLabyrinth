@@ -1,6 +1,7 @@
 package views;
 
 import AdventureModel.AdventureGame;
+import AdventureModel.Endings.Ending;
 import AdventureModel.Endings.SatisfactoryEnding;
 import AdventureModel.Interactions.Choice;
 import AdventureModel.Interactions.ChoiceOption;
@@ -70,7 +71,6 @@ public class AdventureGameView {
     VBox objectsInInventory = new VBox(); //to hold inventory items
     ImageView roomImageView; //to hold room image
     TextField inputTextField; //for user input
-
     private MediaPlayer mediaPlayer; //to play audio
     private boolean mediaPlaying; //to know if the audio is playing
     public Interaction currentInteraction = null;
@@ -427,16 +427,13 @@ public class AdventureGameView {
         } else if (output.equals("YES")) {
             updateScene(clearText);
         } else if (output.equals("GAME OVER")) {
-            System.out.println("You gotta set up the ending here lol"); // TODO: Set up ending.
-
-            ForcedQueue currQ = this.model.player.getCurrentRoom().getQueue();
-            while (!currQ.is_empty()){
-                currQ.dequeue();
+            Ending finalEnding = this.model.getPlayer().getOutcome().execute();
+            ForcedQueue currQ = finalEnding.getQueue();
+            this.model.getPlayer().getCurrentRoom().setQueue(currQ);
+            while (!this.model.getPlayer().getCurrentRoom().getQueue().is_empty()) {
+                queueCycle();
             }
-            ForcedQueue q = new SatisfactoryEnding().getQueue();
-            while(!q.is_empty()){
-                currQ.enqueue(q.dequeue());
-            }
+            this.updateSceneWithImageAndText(finalEnding.getPicture(), finalEnding.getMessage());
 
 //            PauseTransition pause = new PauseTransition(Duration.seconds(3));
 //            pause.setOnFinished(event -> Platform.exit());
@@ -757,6 +754,41 @@ public class AdventureGameView {
         roomImageView.setAccessibleText(this.model.getPlayer().getCurrentRoom().getRoomDescription());
         roomImageView.setFocusTraversable(true);
     }
+
+    private void getEndingImage(String fileName) {
+        String filePath = this.model.getDirectoryName() + "/Games/RhythmLabyrinth/EndingPictures/" + fileName + ".png";
+
+        Image endingImage = new Image(filePath);
+        roomImageView = new ImageView(endingImage);
+        roomImageView.setPreserveRatio(true);
+        roomImageView.setFitWidth(400);
+        roomImageView.setFitHeight(400);
+    }
+    /**
+     * Update the scene with a new image and text.
+     *
+     * @param imagePath The path to the new image.
+     * @param newText The new text to display.
+     */
+    public void updateSceneWithImageAndText(String imagePath, String newText) {
+        // Update the image
+        getEndingImage(imagePath);
+
+        // Update the text
+        formatText(newText); // Assuming formatText formats and sets the text to roomDescLabel
+        roomDescLabel.setText(newText);
+
+        // Refresh the layout if needed
+        VBox roomPane = new VBox(roomImageView, roomDescLabel);
+        roomPane.setPadding(new Insets(10));
+        roomPane.setAlignment(Pos.TOP_CENTER);
+        roomPane.setStyle("-fx-background-color: #000000;");
+
+        // Update the gridPane with the new roomPane
+        gridPane.add(roomPane, 1, 1);
+        stage.sizeToScene(); // Adjust the size of the stage to fit the new content
+    }
+
 
     /*
      * Show the game instructions.

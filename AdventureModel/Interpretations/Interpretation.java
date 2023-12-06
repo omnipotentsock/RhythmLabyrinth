@@ -3,9 +3,9 @@ package AdventureModel.Interpretations;
 import jtuples.Pair;
 
 public interface Interpretation {
-    final String performanceEnding = "PERFORMANCE_ENDING";
-    final String satisfactoryEnding = "SATISFACTORY_ENDING";
-    final String mediocreEnding = "MEDIOCRE_ENDING";
+    final String performanceEnding = "PERFORMANCE";
+    final String satisfactoryEnding = "SATISFACTORY";
+    final String mediocreEnding = "MEDIOCRE";
 
     /**
      * This method, in a Mini-game context, interprets the result of its execute method
