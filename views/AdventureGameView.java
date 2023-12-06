@@ -428,13 +428,16 @@ public class AdventureGameView {
             updateScene(clearText);
         } else if (output.equals("GAME OVER")) {
             Ending finalEnding = this.model.getPlayer().getOutcome().execute();
-            ForcedQueue currQ = finalEnding.getQueue();
-            this.model.getPlayer().getCurrentRoom().setQueue(currQ);
-            while (!this.model.getPlayer().getCurrentRoom().getQueue().is_empty()) {
-                queueCycle();
+            ForcedQueue currQ = this.model.player.getCurrentRoom().getQueue();
+            while (!currQ.is_empty()){
+                currQ.dequeue();
             }
-            this.updateSceneWithImageAndText(finalEnding.getPicture(), finalEnding.getMessage());
+            ForcedQueue q = finalEnding.getQueue();
+            while(!q.is_empty()){
+                currQ.enqueue(q.dequeue());
+            }
 
+//            this.updateSceneWithImageAndText(finalEnding.getPicture(), finalEnding.getMessage());
 //            PauseTransition pause = new PauseTransition(Duration.seconds(3));
 //            pause.setOnFinished(event -> Platform.exit());
 //            pause.play();
@@ -539,7 +542,7 @@ public class AdventureGameView {
             HBox title = new HBox(titleText);
             title.setAlignment(Pos.BOTTOM_CENTER);
             puzzleDisplay.add(title,1,0);
-            Label instructionText = new Label("Match the sequence shown to you to pass");
+            Label instructionText = new Label("Wait for the CPU to finish a sequence and match the sequence shown to you to pass");
             instructionText.setStyle("-fx-text-fill: white;"+"-fx-font-weight: bold;");
             titleText.setFont(new Font("Arial", 20));
             instructionText.setWrapText(true);

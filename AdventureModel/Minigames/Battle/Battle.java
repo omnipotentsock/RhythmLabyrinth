@@ -28,7 +28,6 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class Battle extends Minigame implements Serializable {
-
     private final BattleInterpretationFactory battleInterpretationFactory = new BattleInterpretationFactory();
     public String minigameType;
     public String minigameID;
