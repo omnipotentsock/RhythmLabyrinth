@@ -5,7 +5,7 @@ import AdventureModel.Interactions.Choice;
 import AdventureModel.Interactions.SingleDialogue;
 import AdventureModel.Minigames.*;
 import AdventureModel.Minigames.Battle.Battle;
-import AdventureModel.Minigames.Puzzle;
+import AdventureModel.Minigames.Puzzle.Puzzle;
 import AdventureModel.Movement.*;
 
 import java.io.BufferedReader;

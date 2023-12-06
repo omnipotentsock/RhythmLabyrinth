@@ -1,6 +1,6 @@
 package AdventureModel.Interpretations;
 
-import AdventureModel.Minigames.Puzzle;
+import AdventureModel.Minigames.Puzzle.Puzzle;
 import jtuples.Pair;
 
 public class PuzzleInterpretation implements Interpretation {

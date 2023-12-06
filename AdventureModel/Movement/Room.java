@@ -188,4 +188,7 @@ public class Room implements Serializable {
     public ForcedQueue getQueue() {
         return queue;
     }
+    public void setQueue(ForcedQueue forcedQueue){
+        this.queue = forcedQueue;
+    }
 }

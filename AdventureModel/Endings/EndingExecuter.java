@@ -10,7 +10,7 @@ public class EndingExecuter {
      * is currently referencing.
      */
     public Ending executeEnding() {
-        this.state.executeEnding();
+//        this.state.executeEnding();
         return this.state;
     }
 
