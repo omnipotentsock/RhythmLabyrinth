@@ -7,8 +7,9 @@ import AdventureModel.Movement.ForcedQueue;
 import views.AdventureGameView;
 
 import java.io.File;
+import java.io.Serializable;
 
-public class SatisfactoryEnding implements Ending{
+public class SatisfactoryEnding implements Ending, Serializable {
 
     private ForcedQueue queue = new ForcedQueue();
 

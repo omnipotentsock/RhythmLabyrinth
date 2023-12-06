@@ -3,6 +3,7 @@ package AdventureModel;
 import AdventureModel.Interactions.Action;
 import AdventureModel.Interactions.Choice;
 import AdventureModel.Interactions.SingleDialogue;
+import AdventureModel.Interactions.upgradeShop;
 import AdventureModel.Minigames.*;
 import AdventureModel.Minigames.Battle.Battle;
 import AdventureModel.Minigames.Puzzle.Puzzle;
@@ -79,8 +80,10 @@ public class AdventureLoader {
                     case "Action:":
                         queue.enqueue(new Action(query[1]));
                         break;
+                    case "Upgrade:":
+                        queue.enqueue(new upgradeShop(query[1]));
+                        break;
                 }
-
                 line = buff.readLine();
             }
 

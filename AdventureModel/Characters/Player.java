@@ -7,6 +7,7 @@ import AdventureModel.Outcomes.OutcomeExecuter;
 import AdventureModel.Outcomes.Progression;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 
@@ -15,6 +16,7 @@ import java.util.List;
  * of the player in the game.
  */
 public class Player implements Serializable {
+    public double damage = 10.0;
     /**
      * The current room that the player is located in.
      */
@@ -29,7 +31,7 @@ public class Player implements Serializable {
      */
     public Player(Room currentRoom) {
         this.currentRoom = currentRoom;
-        this.outcome = new OutcomeExecuter(new Progression(), new HashMap<String,Minigame>(), new EndingExecuter());
+        this.outcome = new OutcomeExecuter(new Progression(), new ArrayList<>(), new EndingExecuter());
     }
 
     /**

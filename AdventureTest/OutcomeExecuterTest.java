@@ -17,11 +17,11 @@ public class OutcomeExecuterTest {
     @Test
     void ProgressionTest() {
         Progression progression = new Progression();
-        HashMap<String, Minigame> minigames = new HashMap<>();
+        ArrayList<Minigame> minigames = new ArrayList<>();
 
         Battle b1 = new Battle("M002", new String[]{"1150","10","50"} , new String[]{"55","85"});
         b1.setPlayerHP(Double.valueOf(98/99.0));
-        minigames.put("M002", b1);
+        minigames.add(b1);
 
 
         EndingExecuter endingExecuter = new EndingExecuter();

@@ -2,7 +2,9 @@ package AdventureModel.Endings;
 
 import views.AdventureGameView;
 
-public class EndingExecuter {
+import java.io.Serializable;
+
+public class EndingExecuter implements Serializable {
     private Ending state;
 
     /**
