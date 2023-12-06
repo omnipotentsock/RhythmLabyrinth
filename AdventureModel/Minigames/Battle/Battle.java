@@ -19,12 +19,13 @@ import javafx.scene.transform.Translate;
 import javafx.util.Duration;
 import views.AdventureGameView;
 
+import java.io.Serializable;
 import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class Battle extends Minigame {
+public class Battle extends Minigame implements Serializable {
     public String minigameType;
     public String minigameID;
     public double totalHealth; // TODO: To parse

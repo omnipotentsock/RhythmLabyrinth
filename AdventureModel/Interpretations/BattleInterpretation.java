@@ -3,7 +3,9 @@ package AdventureModel.Interpretations;
 import AdventureModel.Minigames.Battle.Battle;
 import jtuples.Pair;
 
-public class BattleInterpretation implements Interpretation {
+import java.io.Serializable;
+
+public class BattleInterpretation implements Interpretation, Serializable {
     private Double impact;
     private Battle target;
     @Override

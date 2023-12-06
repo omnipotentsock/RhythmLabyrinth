@@ -3,7 +3,9 @@ package AdventureModel.Interpretations;
 import AdventureModel.Minigames.Battle.Battle;
 import AdventureModel.Minigames.Minigame;
 
-public class BattleInterpretationFactory implements InterpretationFactory {
+import java.io.Serializable;
+
+public class BattleInterpretationFactory implements InterpretationFactory, Serializable {
     private Battle target;
     @Override
     public Interpretation createInterpretation() {

@@ -6,7 +6,9 @@ import AdventureModel.Interpretations.Interpretation;
 import javafx.scene.layout.Pane;
 import views.AdventureGameView;
 
-public abstract class Minigame {
+import java.io.Serializable;
+
+public abstract class Minigame implements Serializable {
     public String minigameType;
     public String minigameID;
 

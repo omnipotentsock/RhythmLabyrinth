@@ -5,8 +5,9 @@ import AdventureModel.Movement.ForcedQueue;
 import views.AdventureGameView;
 
 import java.io.File;
+import java.io.Serializable;
 
-public class MediocreEnding implements Ending {
+public class MediocreEnding implements Ending, Serializable {
 
     private ForcedQueue queue = new ForcedQueue();
     private final String message = "The fate of the world rested in your hands, and you have let it to rot!";
