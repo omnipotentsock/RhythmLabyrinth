@@ -79,7 +79,8 @@ WEST      002
 008
 Banquet hall
 --queue
-SDialogue: A banquet hall that can only be described as royal and over the top decorates your vision. A crumbling wall lies to south, with a beautiful fountain to the west.-true
+SDialogue: A banquet hall that can only be described as royal and over the top decorates your vision. It's enveloped by an invisible aura, that seems to make you stronger the more you engage in activity. A crumbling wall lies to south, with a beautiful fountain to the west.-true
+Upgrade: 1 HP-10,3 DMG-8,4 HP-20
 --passages
 SOUTH      007
 WEST      005
@@ -98,7 +99,7 @@ EAST      003
 010
 Altar
 --queue
-SDialogue: PLACEHOLDER-true
+SDialogue: It's morbin time.-true
 --passages
 FORCED     0
 

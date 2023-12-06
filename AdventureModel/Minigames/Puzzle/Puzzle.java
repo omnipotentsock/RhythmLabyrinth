@@ -17,13 +17,14 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.Serializable;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.concurrent.ThreadLocalRandom;
 
 
-public class Puzzle extends Minigame {
+public class Puzzle extends Minigame implements Serializable {
     private String minigameID = "NULL";
     public String minigameType;
     private final PuzzleInterpretationFactory puzzleInterpretationFactory = new PuzzleInterpretationFactory();

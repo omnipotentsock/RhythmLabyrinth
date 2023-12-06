@@ -21,12 +21,14 @@ import javafx.scene.transform.Translate;
 import javafx.util.Duration;
 import views.AdventureGameView;
 
+import java.io.Serializable;
 import java.util.Random;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-public class Battle extends Minigame {
+public class Battle extends Minigame implements Serializable {
+
     private final BattleInterpretationFactory battleInterpretationFactory = new BattleInterpretationFactory();
     public String minigameType;
     public String minigameID;
@@ -109,7 +111,7 @@ public class Battle extends Minigame {
         targetButton.setMinSize(BUTTON_WIDTH, BUTTON_HEIGHT);
         targetButton.setMaxSize(BUTTON_WIDTH, BUTTON_HEIGHT);
         targetButton.setOnAction(e -> {
-            enemyHealth -= 10; // Damage taken by enemy
+            enemyHealth -= adventureGameView.getModel().player.damage; // Damage taken by enemy
             Platform.runLater(() -> root.getChildren().remove(targetButton));
             flashScreen(background, "#09663e");
             enemyHealthBar.setProgress(enemyHealth/totalHealth);
