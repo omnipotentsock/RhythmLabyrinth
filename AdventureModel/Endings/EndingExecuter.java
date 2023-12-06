@@ -12,7 +12,7 @@ public class EndingExecuter implements Serializable {
      * is currently referencing.
      */
     public Ending executeEnding() {
-        this.state.executeEnding();
+//        this.state.executeEnding();
         return this.state;
     }
 

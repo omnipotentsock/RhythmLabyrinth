@@ -1,6 +1,8 @@
 package AdventureModel.Minigames.Puzzle;
 
 import AdventureModel.AdventureGame;
+import AdventureModel.Interpretations.Interpretation;
+import AdventureModel.Interpretations.PuzzleInterpretationFactory;
 import AdventureModel.Minigames.Minigame;
 import javafx.application.Platform;
 import javafx.embed.swing.SwingNode;
@@ -25,6 +27,7 @@ import java.util.concurrent.ThreadLocalRandom;
 public class Puzzle extends Minigame implements Serializable {
     private String minigameID = "NULL";
     public String minigameType;
+    private final PuzzleInterpretationFactory puzzleInterpretationFactory = new PuzzleInterpretationFactory();
     /**
      * This is the Puzzle's accuracy cutoff between PerformanceEnding and SatisfactoryEnding.
      */
@@ -37,7 +40,6 @@ public class Puzzle extends Minigame implements Serializable {
 
     private int streak = 0;
     private Double highestStreak = 0.0;
-
     private String currDigit; // The current button that the user has selected
     public ArrayList<Integer> sequenceArray = new ArrayList<>(); // The array in which the sequence is stored
     private ArrayList<Integer> userSequence = new ArrayList<>(); // The array in which the user has input their sequence
@@ -304,5 +306,9 @@ public class Puzzle extends Minigame implements Serializable {
             }
         }
     }
-
+    @Override
+    public Interpretation formInterpretation() {
+        this.puzzleInterpretationFactory.accept(this);
+        return this.puzzleInterpretationFactory.createInterpretation();
+    }
 }

@@ -19,7 +19,5 @@ public abstract class Minigame implements Serializable {
 
     public abstract Pane createGamePane(AdventureGameView adventureGameView);
 
-    public Interpretation formInterpretation() {
-        return null;
-    }
+    public abstract Interpretation formInterpretation();
 }

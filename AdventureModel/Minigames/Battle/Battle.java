@@ -2,6 +2,8 @@ package AdventureModel.Minigames.Battle;
 
 import AdventureModel.AdventureGame;
 import AdventureModel.Characters.Player;
+import AdventureModel.Interpretations.BattleInterpretationFactory;
+import AdventureModel.Interpretations.Interpretation;
 import AdventureModel.Minigames.Minigame;
 import javafx.animation.FadeTransition;
 import javafx.animation.Interpolator;
@@ -26,6 +28,8 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
 public class Battle extends Minigame implements Serializable {
+
+    private final BattleInterpretationFactory battleInterpretationFactory = new BattleInterpretationFactory();
     public String minigameType;
     public String minigameID;
     public double totalHealth; // TODO: To parse
@@ -40,6 +44,7 @@ public class Battle extends Minigame implements Serializable {
      */
     private Double SatMedCutoff;
 
+    private Double playerHP;
     private final int BUTTON_WIDTH = 60;
     private final int BUTTON_HEIGHT = 60;
     Button targetButton;
@@ -95,6 +100,7 @@ public class Battle extends Minigame implements Serializable {
         adventureGameView.getCurrentPane().add(enemyHealthBar, 0, 1);
 
         Player player = adventureGameView.getModel().getPlayer();
+        playerHP = player.getPlayerHealth();
         root = new Pane();
         root.setMaxSize(650,500);
         background = new Rectangle(650,500);
@@ -134,6 +140,7 @@ public class Battle extends Minigame implements Serializable {
             if (!pressed && !firstIteration) {
                 Platform.runLater(() -> {
                     takeDamage(player);
+                    playerHP = player.getPlayerHealth();
                     playerHealthBar.setProgress(player.playerHealth / player.totalHealth);
                     System.out.println(player.playerHealth);
                 });
@@ -189,5 +196,23 @@ public class Battle extends Minigame implements Serializable {
         fadeInTransition.play();
     }
 
+    @Override
+    public Interpretation formInterpretation() {
+        this.battleInterpretationFactory.accept(this);
+        return this.battleInterpretationFactory.createInterpretation();
+    }
+    public Double getPlayerHealth() {
+        return Double.valueOf((double) playerHP / totalHealth);
+    }
+    public void setPlayerHP(Double hp) {
+        this.playerHP = hp;
+    }
+    public Double getPerfSatCutoff() {
+        return this.PerfSatCutoff;
+    }
+
+    public Double getSatMedCutoff() {
+        return this.SatMedCutoff;
+    }
 //    private
 }
