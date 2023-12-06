@@ -5,3 +5,4 @@ out/
 *.log
 *.class
 
+*.ser
